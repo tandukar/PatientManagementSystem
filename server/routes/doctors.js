@@ -67,7 +67,7 @@ router.patch('/updateDoc/:doctorId', async(req, res) => {
         });
         res.send(updateDoc);
 
-    } catch (err) {
+    } catch (err) {  
         res.json(err.message);
     }
 })
