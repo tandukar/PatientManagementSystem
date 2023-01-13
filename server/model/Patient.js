@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 //creating patient schema
 
 const patientSchema = mongoose.Schema({
-    regdNo: {
-        type: Number,
+    // regdNo: {
+    //     type: Number,
 
-    },
+    // },
     firstname: {
         type: String,
         required: [true, "First Name required"],
@@ -27,7 +27,7 @@ const patientSchema = mongoose.Schema({
         type: String,
         required: [true, "Last Name required"],
     },
-    Consultant: {
+    consultant: {
         type: String,
         required: [true, "Consultant Name required"],
     },

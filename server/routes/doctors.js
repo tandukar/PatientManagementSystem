@@ -67,7 +67,7 @@ router.patch('/updateDoc/:doctorId', async(req, res) => {
         });
         res.send(updateDoc);
 
-    } catch (err) {  
+    } catch (err) {
         res.json(err.message);
     }
 })
@@ -99,7 +99,7 @@ router.post('/login', async(req, res) => {
 
     //Create and assing token 
     const token = jwt.sign({ _id: user.id }, process.env.TOKEN);
-    res.header('auth-token', token).send(token);
+    res.header('auth-token', token)
     res.send('login')
 })
 module.exports = router;
