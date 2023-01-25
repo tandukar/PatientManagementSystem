@@ -27,10 +27,16 @@ const patientSchema = mongoose.Schema({
         type: String,
         required: [true, "Last Name required"],
     },
-    consultant: {
+    email: {
         type: String,
-        required: [true, "Consultant Name required"],
+        min: 9,
+        max: 255,
     },
+    number: {
+        type: String,
+        required: true,
+        match: /^\d{10}$/
+    }
 }, {
     timestamps: true,
     get: time => time.toDateString()

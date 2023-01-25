@@ -12,7 +12,3 @@ function auth(req, res, next) {
         res.status(400).send('INVALID TOKEN')
     }
 }
-
-
-
-//Build A Node.js API Authentication With JWT Tutorial developedbyed   1:12:14
