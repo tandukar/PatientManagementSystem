@@ -5,6 +5,7 @@ require('dotenv/config');
 
 
 const docRoute = require('./routes/doctors');
+const recepRoute = require('./routes/receptionists');
 
 //middlewares
 app.use(express.json());
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 
 //routes middlewares
 app.use('/api/doctors', docRoute);
+app.use('/api/receptionists', recepRoute);
 
 app.listen(5000, () => {
     console.log("port running in 5000")
