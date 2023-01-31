@@ -17,6 +17,7 @@ const corsOptions = {
     origin: true, //included origin as true
     credentials: true, //included credentials as true
 };
+const recepRoute = require('./routes/receptionists');
 
 //middlewares
 app.use(express.json());
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 app.use("/api/doctors", docRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/auth", authRoute);
+app.use('/api/receptionists', recepRoute);
 
 app.listen(5000, () => {
     console.log("port running in 5000");
