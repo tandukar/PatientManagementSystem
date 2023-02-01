@@ -1,16 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    mode: "jit",
     content: [
-        "./src/**/*.{js,jsx,ts,tsx}",
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
     ],
     theme: {
-        extend: {
-            fontFamily: {
-                poppins: "Poppins",
-                kaushan: "Kaushan Script",
-            },
-        },
+        extend: {},
     },
     plugins: [],
 }
