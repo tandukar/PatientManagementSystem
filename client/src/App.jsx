@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from './components/pages/sidebar/Sidebar';
+import AdminDashboard from './components/pages/adminDashboard/AdminDashboard';
 
 function App() {
   return (
     <div>
-      <Navbar />
+      <AdminDashboard />
       {/* other components */}
     </div>
   );

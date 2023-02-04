@@ -44,7 +44,7 @@ const Sidebar = () => {
                       <span className="inline-block  pr-3">
                         <MdPeopleOutline className="w-7 h-7" />
                       </span>
-                      Recetpionist
+                      Receptionist
                     </a>
                   </li>
                   <li className="py-2 ">
