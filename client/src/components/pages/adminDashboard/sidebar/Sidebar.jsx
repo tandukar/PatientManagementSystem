@@ -14,7 +14,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       <div className="flex">
 
         <div 
-        className="flex flex-col h-screen p-5 bg-blue-700 w-60 "
+        className="flex flex-col h-screen p-5 bg-custom-blue w-60 "
 
         
         onMouseEnter={() => setvisibleIcon(true)}
