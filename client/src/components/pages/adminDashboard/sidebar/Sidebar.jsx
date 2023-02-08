@@ -3,26 +3,39 @@ import React from "react";
 import { RiHomeLine } from "react-icons/ri";
 import { MdPeopleOutline } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
+import { RxCross2 } from "react-icons/rx";
 
-const Sidebar = () => {
+
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+  const [visibleIcon, setvisibleIcon] = React.useState(false);
+
   return (
     <>
       <div className="flex">
-        {/* flex: This class makes the <div> a flex container.
--flex-col: This class makes the <div> a vertical flex container, where the child elements are arranged in a column.
--h-screen: This class sets the height of the <div> to the full height of the screen.
--p-3: This class adds 3 units of padding to the <div>.
--bg-white: This class sets the background color of the <div> to white.
--shadow: This class adds a drop shadow to the <div>.
--w-60: This class sets the width of the <div> to 60% of its parent container. */}
 
-        <div className="flex flex-col h-screen p-5 bg-blue-700 w-60">
+        <div 
+        className="flex flex-col h-screen p-5 bg-blue-700 w-60 "
+
+        
+        onMouseEnter={() => setvisibleIcon(true)}
+        onMouseLeave={() => setvisibleIcon(false)}>
           <div className="space-y-3">
-            {/*this adds margi between elements within a container */}
-            <div className="flex items-center">
-              <h2 className="text-2xl text-white font-bold "> Remedial</h2>
-            </div>
-            <div className="flex items-center">
+          <div className="flex flex-row ">
+                <div className="flex w-2/3 items-center">
+                  <h2 className="text-2xl text-white font-bold "> Remedial</h2>
+                </div>
+
+                <div className="flex w-1/3 items-center justify-end ">
+                  <RxCross2
+                    onClick={() => setSidebarOpen(false)}
+
+                    className={`${
+                      visibleIcon ? "opacity-1" : "opacity-0"
+                    } hover:opacity-1  text-white  h-6 w-6  transform transition-all duration-300 ease-in-out`}
+                  />
+                </div>
+              </div>
+            <div className="flex items-center ">
               <nav>
                 <ul className="list-none text-lg mt-9">
                   <li className="py-2 ">
@@ -75,6 +88,8 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
+         {/* )} */}
+
     </>
   );
 };
