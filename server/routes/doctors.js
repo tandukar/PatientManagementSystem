@@ -93,9 +93,10 @@ router.post('/login', async(req, res) => {
     //checking if email exists
     const user = await Doctor.findOne({ email: req.body.email });
     if (!user) return res.send("Email or Password is wrong");
+    //res.send(user.password)
 
     const validPwd = await bcrypt.compare(req.body.password, user.password);
-    if (!validPwd) return res.send("Email or Password is wrong");
+    if (!validPwd) return res.send(" Password is wrong");
 
     //Create and assing token 
     const token = jwt.sign({ _id: user.id }, process.env.TOKEN);
