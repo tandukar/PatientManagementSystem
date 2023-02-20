@@ -16,14 +16,14 @@ const DocDashboard = () => {
       <div className="flex flex-wrap ">
         <div className="w-1/2 p-4   ">
           <div className="flex flex-wrap  mt-5">
-            <div className="w-1/2 p-4 font-bold text-blue-700 text-xl">
+            <div className="w-1/2 p-4 font-bold text-custom-blue text-xl">
               Registered Doctors
             </div>
             <div className="w-1/2 p-4 ">
-              <div className="relative   border border-blue-700 p-2 rounded-3xl">
+              <div className="relative   border border-custom-blue p-2 rounded-3xl">
                 <input
                   type="text"
-                  className="w-full pl-10 text-sm outline-none  text-blue-700"
+                  className="w-full pl-10 text-sm outline-none  text-custom-blue"
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={(event) => setsearchTerm(event.target.value)}
@@ -32,7 +32,7 @@ const DocDashboard = () => {
                   className="absolute right-0 top-0 p-2 "
                   onClick={printHandler}
                 >
-                  <CiSearch className="w-6 h-6  text-blue-700" />
+                  <CiSearch className="w-6 h-6  text-custom-blue" />
                 </button>
               </div>
             </div>
@@ -41,7 +41,7 @@ const DocDashboard = () => {
             {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
             <div className="bg-white rounded-xl h-10 p-2 flex flex-row  ">
-              <div className="w-2/4 ml-5 font-bold text-blue-700 text-md ">
+              <div className="w-2/4 ml-5 font-bold text-custom-blue text-md ">
                 Dr.Milan Maharjan
               </div>
               <div className="w-1/4    font-bold  text-gray-500 text-md text-end">
@@ -54,7 +54,7 @@ const DocDashboard = () => {
             {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
             <div className="bg-white rounded-xl h-10 p-2 flex flex-row  ">
-              <div className="w-2/4 ml-5 font-bold text-blue-700 text-md ">
+              <div className="w-2/4 ml-5 font-bold text-custom-blue text-md ">
                 Dr.Milan Maharjan
               </div>
               <div className="w-1/4    font-bold  text-gray-500 text-md text-end">
@@ -67,7 +67,7 @@ const DocDashboard = () => {
             {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
             <div className="bg-white rounded-xl h-10 p-2 flex flex-row  ">
-              <div className="w-2/4 ml-5 font-bold text-blue-700 text-md ">
+              <div className="w-2/4 ml-5 font-bold text-custom-blue text-md ">
                 Dr.Milan Maharjan
               </div>
               <div className="w-1/4    font-bold  text-gray-500 text-md text-end">
@@ -80,7 +80,7 @@ const DocDashboard = () => {
             {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
             <div className="bg-white rounded-xl h-10 p-2 flex flex-row  ">
-              <div className="w-2/4 ml-5 font-bold text-blue-700 text-md ">
+              <div className="w-2/4 ml-5 font-bold text-custom-blue text-md ">
                 Dr.Milan Maharjan
               </div>
               <div className="w-1/4    font-bold  text-gray-500 text-md text-end">
@@ -97,7 +97,7 @@ const DocDashboard = () => {
 
         <div className="w-1/2 p-4 md:mx-auto">
           <div className="flex flex-col p-4 gap-8  mt-5  ml-10">
-            <div className=" font-bold text-blue-700 text-xl">
+            <div className=" font-bold text-custom-blue text-xl">
               Register Doctors
             </div>
             <div className="flex flex-col gap-4 p-6 rounded-xl">
@@ -230,7 +230,7 @@ const DocDashboard = () => {
 
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className=" mt-10 mb-10  text-center">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
+                <button className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
                   Submit
                 </button>
               </div>
