@@ -23,8 +23,8 @@ const Login = () => {
               <div className="text-center font-bold text-3xl text-gray-700 ">
                 Welcome Back
               </div>
-              <div class=" md:container md:mx-auto ">
-                <label class="form-label inline-block mb-2 text-gray-700">
+              <div className=" md:container md:mx-auto ">
+                <label className="form-label inline-block mb-2 text-gray-700">
                   Email
                 </label>
                 <input
@@ -35,8 +35,8 @@ const Login = () => {
                   onChange={(event) => setEmail(event.target.value)}
                 />
               </div>
-              <div class="  md:container md:mx-auto ">
-                <label class="form-label inline-block mb-2 text-gray-700">
+              <div className="  md:container md:mx-auto ">
+                <label className="form-label inline-block mb-2 text-gray-700">
                   Password
                 </label>
                 <input

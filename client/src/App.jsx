@@ -5,8 +5,8 @@ import Login from './components/pages/Login/Login';
 function App() {
   return (
     <div>
-      <AdminDashboard />
-      {/* <Login /> */}
+      {/* <AdminDashboard /> */}
+      <Login />
       {/* other components */}
     </div>
   );
