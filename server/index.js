@@ -7,7 +7,7 @@ require('dotenv/config');
 
 const docRoute = require('./routes/doctors');
 const adminRoute = require('./routes/admin');
-// const adminRoute = require('./initializeAdmin');
+const authRoute = require('./routes/auth');
 
 const initializeAdmin = require('./initializeAdmin');
 
@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
 //routes middlewares
 app.use('/api/doctors', docRoute);
 app.use('/api/admin', adminRoute);
+app.use('/api/auth', authRoute);
 
 app.listen(5000, () => {
     console.log("port running in 5000")
