@@ -42,8 +42,8 @@ const Login = () => {
                 <input
                   type="Text"
                   className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  placeholder="Password"
                   value={password}
+                  placeholder="Password"
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </div>
