@@ -1,13 +1,40 @@
 import React from "react";
-
+import axios from "axios";
+import AdminDashboard from "../adminDashboard/AdminDashboard";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [password, setPassword] = React.useState([]);
   const [email, setEmail] = React.useState([]);
+  const navigate = useNavigate();
 
   const printHandler = (event) => {
     console.log(email, password);
   };
 
+  const submitHandler = (event) => {
+    event.preventDefault();
+    axios
+      .post("http://localhost:5000/api/auth/login", {
+        email: email,
+        password: password,
+      })
+
+      .then((res) => {
+        console.log(email, password);
+        console.log(res.data.msg);
+        if(res.data.msg){
+          sessionStorage.setItem("token", res.data.msg);
+          navigate("/admin");
+        }
+        else{
+          alert("Invalid Credentials")
+        }
+       
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <div className="flex flex-row">
@@ -17,10 +44,10 @@ const Login = () => {
             src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
           />
         </div>
-        <div className="w-3/4  bg-slate-100">
-          <div className="flex justify-center items-center h-screen">
-            <div className="flex flex-col gap-4">
-              <div className="text-center font-bold text-3xl text-gray-700 ">
+        <div className="w-3/4  ">
+          <div className="flex justify-center items-center h-screen ">
+            <div className="flex flex-col gap-4 max-w-screen-md mx-auto ">
+              <div className="text-left font-bold text-3xl text-gray-700 ">
                 Welcome Back
               </div>
               <div className=" md:container md:mx-auto ">
@@ -29,9 +56,8 @@ const Login = () => {
                 </label>
                 <input
                   type="Email"
-                  className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  className="bg-slate-100 appearance-none border-2  rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   value={email}
-                  placeholder="Email"
                   onChange={(event) => setEmail(event.target.value)}
                 />
               </div>
@@ -41,16 +67,15 @@ const Login = () => {
                 </label>
                 <input
                   type="Text"
-                  className="bg-white appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  className="bg-gray-100 appearance-none border-2  rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:"
                   value={password}
-                  placeholder="Password"
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </div>
-              <div className="  text-center">
+              <div className="text-left pt-2">
                 <button
-                  className="w-full  text-white bg-custom-blue hover:bg-blue-700  font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
-                  onClick={printHandler}
+                  className="w-1/2  text-white bg-custom-blue hover:bg-blue-700  font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+                  onClick={submitHandler}
                 >
                   Submit
                 </button>
