@@ -102,8 +102,8 @@ const DocDashboard = () => {
             </div>
             <div className="flex flex-col gap-4 p-6 rounded-xl">
               <div className="flex flex-row gap-2">
-                <div class=" md:container md:mx-auto ">
-                  <label class="form-label inline-block mb-2 text-gray-700">
+                <div className=" md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-gray-700">
                     First name
                   </label>
                   <input
@@ -113,10 +113,10 @@ const DocDashboard = () => {
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
-                <div class="  md:container md:mx-auto ">
+                <div className="  md:container md:mx-auto ">
                   <label
-                    for="exampleEmail0"
-                    class="form-label inline-block mb-2 text-gray-700"
+                    htmlFor ="exampleEmail0"
+                    className="form-label inline-block mb-2 text-gray-700"
                   >
                     Last name
                   </label>
@@ -130,8 +130,8 @@ const DocDashboard = () => {
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
               <div className="flex flex-row gap-2">
-                <div class=" md:container md:mx-auto ">
-                  <label class="form-label inline-block mb-2 text-gray-700">
+                <div className=" md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-gray-700">
                     Age
                   </label>
                   <input
@@ -141,8 +141,8 @@ const DocDashboard = () => {
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
-                <div class=" md:container md:mx-auto ">
-                  <label class="form-label inline-block mb-2 text-gray-700">
+                <div className=" md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-gray-700">
                     Sex
                   </label>
                   <input
@@ -152,10 +152,10 @@ const DocDashboard = () => {
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
-                <div class="  md:container md:mx-auto ">
+                <div className="  md:container md:mx-auto ">
                   <label
-                    for="exampleEmail0"
-                    class="form-label inline-block mb-2 text-gray-700"
+                    htmlFor ="exampleEmail0"
+                    className="form-label inline-block mb-2 text-gray-700"
                   >
                     Phone Number
                   </label>
@@ -168,8 +168,8 @@ const DocDashboard = () => {
               </div>
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className="flex flex-row gap-2">
-                <div class="  md:container md:mx-auto ">
-                  <label class="form-label inline-block mb-2 text-gray-700">
+                <div className="  md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-gray-700">
                     Email
                   </label>
                   <input
@@ -179,8 +179,8 @@ const DocDashboard = () => {
                   />
                 </div>
 
-                <div class=" md:container md:mx-auto ">
-                  <label class="form-label inline-block mb-2 text-gray-700">
+                <div className=" md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-gray-700">
                     Address
                   </label>
                   <input
@@ -192,8 +192,8 @@ const DocDashboard = () => {
               </div>
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className="flex flex-row gap-2">
-                <div class="  md:container md:mx-auto ">
-                  <label class="form-label inline-block mb-2 text-gray-700">
+                <div className="  md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-gray-700">
                     Qualification
                   </label>
                   <input
@@ -203,8 +203,8 @@ const DocDashboard = () => {
                   />
                 </div>
 
-                <div class=" md:container md:mx-auto ">
-                  <label class="form-label inline-block mb-2 text-gray-700">
+                <div className=" md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-gray-700">
                     Specialization
                   </label>
                   <input
@@ -216,8 +216,8 @@ const DocDashboard = () => {
               </div>
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className="flex flex-row gap-2 w-1/2">
-                <div class="  md:container md:mx-auto ">
-                  <label class="form-label inline-block mb-2 text-gray-700">
+                <div className="  md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-gray-700">
                     Schedule
                   </label>
                   <input
