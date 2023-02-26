@@ -75,7 +75,7 @@ const DocDashboard = () => {
             <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
               <div className="flex flex-row gap-2">
                 <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     First name
                   </label>
                   <input
@@ -87,7 +87,7 @@ const DocDashboard = () => {
                 <div className="  md:container md:mx-auto ">
                   <label
                     htmlFor ="exampleEmail0"
-                    className="form-label inline-block mb-2 text-gray-700"
+                    className="form-label inline-block mb-2 text-custom-blue"
                   >
                     Last name
                   </label>
@@ -101,7 +101,7 @@ const DocDashboard = () => {
 
               <div className="flex flex-row gap-2">
                 <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     Age
                   </label>
                   <input
@@ -111,7 +111,7 @@ const DocDashboard = () => {
                   />
                 </div>
                 <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     Sex
                   </label>
                   <input
@@ -123,7 +123,7 @@ const DocDashboard = () => {
                 <div className="  md:container md:mx-auto ">
                   <label
                     htmlFor ="exampleEmail0"
-                    className="form-label inline-block mb-2 text-gray-700"
+                    className="form-label inline-block mb-2 text-custom-blue"
                   >
                     Phone Number
                   </label>
@@ -136,7 +136,7 @@ const DocDashboard = () => {
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className="flex flex-row gap-2">
                 <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     Email
                   </label>
                   <input
@@ -146,7 +146,7 @@ const DocDashboard = () => {
                 </div>
 
                 <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     Address
                   </label>
                   <input
@@ -158,7 +158,7 @@ const DocDashboard = () => {
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className="flex flex-row gap-2">
                 <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     Qualification
                   </label>
                   <input
@@ -168,7 +168,7 @@ const DocDashboard = () => {
                 </div>
 
                 <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     Specialization
                   </label>
                   <input
@@ -180,7 +180,7 @@ const DocDashboard = () => {
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className="flex flex-row gap-2 w-1/2">
                 <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     Schedule
                   </label>
                   <input
