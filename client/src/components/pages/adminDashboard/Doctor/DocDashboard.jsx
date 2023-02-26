@@ -8,15 +8,36 @@ const DocDashboard = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);
   const [email, setEmail] = React.useState([]);
 
+  const loop = Array.from({ length: 5 }, (_, i) => (
+    <div className="bg-white rounded-xl h-10 p-2 flex flex-row" key={i}>
+      <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
+        Dr.Milan Maharjan
+      </div>
+      <div className="w-1/4 font-bold text-gray-500 text-md text-end">Edit</div>
+      <div className="w-1/4 font-bold text-red-700 text-md text-end mr-5">
+        Delete
+      </div>
+    </div>
+  ));
+
   const printHandler = (event) => {
     console.log(searchTerm);
   };
   return (
     <>
-      <div className="flex flex-wrap ">
+      <div className="flex flex-wrap">
+        {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
         <div className="w-1/2 p-4   ">
           <div className="flex flex-wrap  mt-5">
-            <div className="w-1/2 p-4 font-bold text-custom-blue text-xl">
+            {/* ```````````````````````````````````````` */}
+            <div className="flex flex-row mt-9 h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white text-2xl font-bold mb-5">
+              <div className=" flex w-1/2">Registered Doctors</div>
+              <div className="flex  w-1/2 justify-center items-center">
+                <div className="text-8xl font-bold text-white">12</div>
+              </div>
+            </div>
+            {/* ```````````````````````````````````````` */}
+            <div className="w-1/2 p-4 mt-7font-bold text-custom-blue text-xl font-bold">
               Registered Doctors
             </div>
             <div className="w-1/2 p-4 ">
@@ -37,60 +58,11 @@ const DocDashboard = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4 p-3 bg-slate-200 rounded-xl">
-            {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
-            <div className="bg-white rounded-xl h-10 p-2 flex flex-row  ">
-              <div className="w-2/4 ml-5 font-bold text-custom-blue text-md ">
-                Dr.Milan Maharjan
-              </div>
-              <div className="w-1/4    font-bold  text-gray-500 text-md text-end">
-                Edit
-              </div>
-              <div className="w-1/4  font-bold text-red-700 text-md text-end mr-5">
-                Delete
-              </div>
-            </div>
-            {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-
-            <div className="bg-white rounded-xl h-10 p-2 flex flex-row  ">
-              <div className="w-2/4 ml-5 font-bold text-custom-blue text-md ">
-                Dr.Milan Maharjan
-              </div>
-              <div className="w-1/4    font-bold  text-gray-500 text-md text-end">
-                Edit
-              </div>
-              <div className="w-1/4  font-bold text-red-700 text-md text-end mr-5">
-                Delete
-              </div>
-            </div>
-            {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-
-            <div className="bg-white rounded-xl h-10 p-2 flex flex-row  ">
-              <div className="w-2/4 ml-5 font-bold text-custom-blue text-md ">
-                Dr.Milan Maharjan
-              </div>
-              <div className="w-1/4    font-bold  text-gray-500 text-md text-end">
-                Edit
-              </div>
-              <div className="w-1/4  font-bold text-red-700 text-md text-end mr-5">
-                Delete
-              </div>
-            </div>
-            {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-
-            <div className="bg-white rounded-xl h-10 p-2 flex flex-row  ">
-              <div className="w-2/4 ml-5 font-bold text-custom-blue text-md ">
-                Dr.Milan Maharjan
-              </div>
-              <div className="w-1/4    font-bold  text-gray-500 text-md text-end">
-                Edit
-              </div>
-              <div className="w-1/4  font-bold text-red-700 text-md text-end mr-5">
-                Delete
-              </div>
-            </div>
-            {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+          <div className="flex flex-col gap-4 p-3 bg-slate-200 rounded-lg">
+            {/* ```````````````````````````````````````` */}
+            {loop}
+            {/* ```````````````````````````````````````` */}
           </div>
         </div>
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
@@ -100,7 +72,7 @@ const DocDashboard = () => {
             <div className=" font-bold text-custom-blue text-xl">
               Register Doctors
             </div>
-            <div className="flex flex-col gap-4 p-6 rounded-xl">
+            <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
               <div className="flex flex-row gap-2">
                 <div className=" md:container md:mx-auto ">
                   <label className="form-label inline-block mb-2 text-gray-700">
@@ -108,8 +80,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="First Name"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
@@ -122,8 +93,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Last name"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -136,8 +106,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="Number"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Patient Age"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
@@ -147,8 +116,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Patient Name"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
@@ -161,8 +129,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="email"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Phone Number"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -174,8 +141,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="email"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Email"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
@@ -185,8 +151,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Address"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -198,8 +163,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Qualification"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   />
                 </div>
 
@@ -209,8 +173,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Specialization"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -222,8 +185,7 @@ const DocDashboard = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    placeholder="Schedule"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
