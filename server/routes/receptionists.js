@@ -16,15 +16,15 @@ router.post('/register', async(req, res) => {
 
 
     // hash password
-    // const salt = await bcrypt.genSalt(10);
-    // const hashPwd = await bcrypt.hash(req.body.password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashPwd = await bcrypt.hash(req.body.password, salt);
 
     const postRecep = new Receptionist({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         age: req.body.age,
         email: req.body.email,
-        password: req.body.password,
+        password: hashPwd,
     })
     try {
         const savedRecep = await postRecep.save();
@@ -94,21 +94,21 @@ router.delete('/deleteReceptionist/:ReceptionistId', async(req, res) => {
 
 
 //Login
-router.post('/login', async(req, res) => {
+// router.post('/login', async(req, res) => {
 
-    const { error } = loginValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+//     const { error } = loginValidation(req.body);
+//     if (error) return res.status(400).send(error.details[0].message);
 
-    //checking if email exists
-    const user = await Receptionist.findOne({ email: req.body.email });
-    if (!user) return res.send("Email or Password is wrong");
+//     //checking if email exists
+//     const user = await Receptionist.findOne({ email: req.body.email });
+//     if (!user) return res.send("Email or Password is wrong");
 
-    const validPwd = await bcrypt.compare(req.body.password, user.password);
-    if (!validPwd) return res.send("Email or Password is wrong");
+//     const validPwd = await bcrypt.compare(req.body.password, user.password);
+//     if (!validPwd) return res.send("Email or Password is wrong");
 
-    //Create and assing token 
-    const token = jwt.sign({ _id: user.id }, process.env.TOKEN);
-    res.header('auth-token', token).send(token);
-    res.send('login')
-})
+//     //Create and assing token 
+//     const token = jwt.sign({ _id: user.id }, process.env.TOKEN);
+//     res.header('auth-token', token).send(token);
+//     res.send('login')
+// })
 module.exports = router;
