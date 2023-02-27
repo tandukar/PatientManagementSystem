@@ -17,6 +17,7 @@ const corsOptions = {
     origin: true, //included origin as true
     credentials: true, //included credentials as true
 };
+const recepRoute = require('./routes/receptionists');
 
 //middlewares
 app.use(express.json());
@@ -29,6 +30,7 @@ app.get("/", (req, res) => {
 
 //routes middlewares
 app.use("/api/doctors", docRoute);
+app.use('/api/receptionists', recepRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/auth", authRoute);
 

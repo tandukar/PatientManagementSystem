@@ -6,6 +6,7 @@ const router = express.Router();
 
 const Admin = require("../model/Admin");
 const Doctor = require("../model/Doctor");
+const Receptionist = require("../model/Receptionist");
 
 const { loginValidation } = require("../validation");
 
@@ -36,7 +37,7 @@ router.post("/login", async(req, res) => {
     } else if (email.endsWith("@doctor.com")) {
         model = Doctor;
     } else if (email.endsWith("@receptionist.com")) {
-        model = "Receptionist";
+        model = Receptionist;
     } else {
         res.send("Invalid Email");
     }
