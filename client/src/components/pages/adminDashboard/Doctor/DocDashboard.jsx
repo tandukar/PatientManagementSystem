@@ -146,7 +146,7 @@ const DocDashboard = () => {
                 </div>
 
                 <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-gray-700">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
                     Address
                   </label>
                   <input
