@@ -25,22 +25,22 @@ const DocDashboard = () => {
   };
   return (
     <>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap md:flex-row md:mt-10 ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-        <div className="w-1/2 p-4   ">
-          <div className="flex flex-wrap  mt-5">
+        <div className="md:w-1/2 p-4     ">
+          <div className="flex md:flex-wrap flex-col   mt-2">
             {/* ```````````````````````````````````````` */}
-            <div className="flex flex-row mt-9 h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white text-2xl font-bold mb-5">
+            <div className="flex flex-row md:mt-9 h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white text-2xl font-bold mb-5">
               <div className=" flex w-1/2">Registered Doctors</div>
               <div className="flex  w-1/2 justify-center items-center">
                 <div className="text-8xl font-bold text-white">12</div>
               </div>
             </div>
             {/* ```````````````````````````````````````` */}
-            <div className="w-1/2 p-4 mt-7font-bold text-custom-blue text-xl font-bold">
+            <div className="md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Registered Doctors
             </div>
-            <div className="w-1/2 p-4 ">
+            <div className="md:w-1/2 p-4 ">
               <div className="relative   border border-custom-blue p-2 rounded-3xl">
                 <input
                   type="text"
@@ -67,9 +67,10 @@ const DocDashboard = () => {
         </div>
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
-        <div className="w-1/2 p-4 md:mx-auto">
-          <div className="flex flex-col p-4 gap-8  mt-5  ml-10">
-            <div className=" font-bold text-custom-blue text-xl">
+        <div className="md:w-1/2 md:p-4 md:mx-auto">
+          <div className="flex flex-col p-4 gap-8  mt-5  md:ml-10">
+            <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
+              
               Register Doctors
             </div>
             <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
