@@ -14,8 +14,8 @@ module.exports = {
                 // Configure your color palette here
                 'custom-green': '#66bb6a',
                 'custom-blue': '#2265CA',
-                // 'custom-blue1': '#628CEA',
-                'custom-blue1': '#4876db',
+                'custom-blue1': '#628CEA',
+                // 'custom-blue1': '#4876db',
             },
         },
 

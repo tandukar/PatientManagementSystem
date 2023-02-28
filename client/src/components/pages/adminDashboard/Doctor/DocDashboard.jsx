@@ -25,7 +25,7 @@ const DocDashboard = () => {
   };
   return (
     <>
-      <div className="flex flex-col md:flex-row md:mt-10 ">
+      <div className="flex flex-col md:flex-row  w-full ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
         <div className="md:w-1/2 p-4     ">
           <div className="flex md:flex-wrap flex-row   mt-2">
