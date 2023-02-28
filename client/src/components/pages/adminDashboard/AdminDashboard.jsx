@@ -10,7 +10,7 @@ const AdminDashboard = () => {
 
   return (
     <>
-      <div className="flex flex-wrap ">
+      <div className="flex flex-col md:flex-row ">
         {!sidebarOpen ? (
           <div className="pt-4 pl-2 ">
              <HiOutlineMenuAlt1

@@ -25,19 +25,22 @@ const DocDashboard = () => {
   };
   return (
     <>
-      <div className="flex flex-wrap md:flex-row md:mt-10 ">
+      <div className="flex flex-col md:flex-row md:mt-10 ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
         <div className="md:w-1/2 p-4     ">
-          <div className="flex md:flex-wrap flex-col   mt-2">
+          <div className="flex md:flex-wrap flex-row   mt-2">
             {/* ```````````````````````````````````````` */}
-            <div className="flex flex-row md:mt-9 h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white text-2xl font-bold mb-5">
+            <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white md:text-2xl text-xl font-bold mb-5">
               <div className=" flex w-1/2">Registered Doctors</div>
               <div className="flex  w-1/2 justify-center items-center">
-                <div className="text-8xl font-bold text-white">12</div>
+                <div className="md:text-8xl text-6xl font-bold text-white">12</div>
               </div>
             </div>
             {/* ```````````````````````````````````````` */}
-            <div className="md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
+          </div>
+
+          <div className="flex flex-col md:flex-row">
+            <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Registered Doctors
             </div>
             <div className="md:w-1/2 p-4 ">
@@ -70,11 +73,10 @@ const DocDashboard = () => {
         <div className="md:w-1/2 md:p-4 md:mx-auto">
           <div className="flex flex-col p-4 gap-8  mt-5  md:ml-10">
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
-              
               Register Doctors
             </div>
             <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
-              <div className="flex flex-row gap-2">
+              <div className="flex md:flex-row gap-2 flex-col">
                 <div className=" md:container md:mx-auto ">
                   <label className="form-label inline-block mb-2 text-custom-blue">
                     First name
@@ -87,7 +89,7 @@ const DocDashboard = () => {
                 </div>
                 <div className="  md:container md:mx-auto ">
                   <label
-                    htmlFor ="exampleEmail0"
+                    htmlFor="exampleEmail0"
                     className="form-label inline-block mb-2 text-custom-blue"
                   >
                     Last name
@@ -100,42 +102,49 @@ const DocDashboard = () => {
               </div>
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
-              <div className="flex flex-row gap-2">
-                <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Age
-                  </label>
-                  <input
-                    type="Number"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
+              <div className="flex flex-col md:flex-row gap-2">
+                <div className="md:w-1/2">
+                  <div className="md:container md:mx-auto">
+                    <label className="form-label inline-block mb-2 text-custom-blue">
+                      Age
+                    </label>
+                    <input
+                      type="Number"
+                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </div>
                 </div>
-                <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Sex
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
+                <div className="md:w-1/2">
+                  <div className="md:container md:mx-auto">
+                    <label className="form-label inline-block mb-2 text-custom-blue">
+                      Sex
+                    </label>
+                    <input
+                      type="Text"
+                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      onChange={(event) => setEmail(event.target.value)}
+                    />
+                  </div>
                 </div>
-                <div className="  md:container md:mx-auto ">
-                  <label
-                    htmlFor ="exampleEmail0"
-                    className="form-label inline-block mb-2 text-custom-blue"
-                  >
-                    Phone Number
-                  </label>
-                  <input
-                    type="email"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
+                <div className="md:w-full">
+                  <div className="md:container md:mx-auto">
+                    <label
+                      htmlFor="exampleEmail0"
+                      className="form-label inline-block mb-2 text-custom-blue"
+                    >
+                      Phone Number
+                    </label>
+                    <input
+                      type="email"
+                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
                 </div>
               </div>
+
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex flex-row gap-2">
+              <div className="flex md:flex-row flex-col gap-2">
                 <div className="  md:container md:mx-auto ">
                   <label className="form-label inline-block mb-2 text-custom-blue">
                     Email
@@ -157,7 +166,7 @@ const DocDashboard = () => {
                 </div>
               </div>
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex flex-row gap-2">
+              <div className="flex  md:flex-row flex-col gap-2">
                 <div className="  md:container md:mx-auto ">
                   <label className="form-label inline-block mb-2 text-custom-blue">
                     Qualification
@@ -179,7 +188,7 @@ const DocDashboard = () => {
                 </div>
               </div>
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex flex-row gap-2 w-1/2">
+              <div className="flex  md:flex-row flex-col gap-2 md:w-1/2">
                 <div className="  md:container md:mx-auto ">
                   <label className="form-label inline-block mb-2 text-custom-blue">
                     Schedule
