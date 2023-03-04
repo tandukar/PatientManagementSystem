@@ -10,6 +10,10 @@ module.exports = {
     ],
     theme: {
         extend: {
+            width: {
+                '128': '33rem',
+                '150': '48rem',
+            },
             colors: {
                 // Configure your color palette here
                 'custom-green': '#66bb6a',
@@ -17,6 +21,7 @@ module.exports = {
                 'custom-blue1': '#628CEA',
                 // 'custom-blue1': '#4876db',
             },
+
         },
 
     },
