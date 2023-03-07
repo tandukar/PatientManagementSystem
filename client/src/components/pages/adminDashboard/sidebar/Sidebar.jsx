@@ -10,6 +10,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   const logoutHandler =()=>{
     sessionStorage.removeItem("token");
+    window.location.href = "/login";
   }
 
   return (
