@@ -30,11 +30,23 @@ const Login = () => {
       })
 
       .then((res) => {
-        console.log(email, password);
-        console.log(res.data.msg);
-        if (res.data.msg) {
-          sessionStorage.setItem("token", res.data.msg);
+        // console.log(email, password);
+        // console.log(res.data.token);
+        // console.log(res.data.role);
+        if (res.data.token && res.data.role==="Admin") {
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("role", res.data.role);
           navigate("/admin");
+        } 
+        else if (res.data.token && res.data.role==="Doctor") {
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("role", res.data.role);
+          // navigate("/doctor");
+        } 
+        else if (res.data.token && res.data.role==="Receptionist") {
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("role", res.data.role);
+          // navigate("/doctor");
         } else {
           toast.error("Invalid credentials");
 

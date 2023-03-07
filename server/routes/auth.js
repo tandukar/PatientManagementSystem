@@ -9,7 +9,7 @@ const Doctor = require("../model/Doctor");
 const Receptionist = require("../model/Receptionist");
 
 const { loginValidation } = require("../validation");
-
+const { Model } = require("mongoose");
 
 //YO EKAI XIN MA HERNU PARXA SESSION ID VALIDATE GARNA LAI YO CHAINXA
 
@@ -28,16 +28,20 @@ const { loginValidation } = require("../validation");
 
 router.post("/login", async(req, res) => {
     let model;
+    let role;
 
     // const email = req.body.email;
     const { email } = req.body; // destructuring the email from req.body
 
     if (email.endsWith("@admin.com")) {
         model = Admin;
+        role = "Admin";
     } else if (email.endsWith("@doctor.com")) {
         model = Doctor;
+        role = "Doctor";
     } else if (email.endsWith("@receptionist.com")) {
         model = Receptionist;
+        role = "Receptionist";
     } else {
         res.send("Invalid Email");
     }
@@ -51,7 +55,7 @@ router.post("/login", async(req, res) => {
     if (!user) return res.status(401).send("Email or Password is wrong");
 
     const validPwd = await bcrypt.compare(req.body.password, user.password);
-    if (!validPwd) return res.status(401).send("Password is wrong");
+    if (!validPwd) return res.status(401).send("Email or Password is wrong");
 
     // Create and assign token
     const token = jwt.sign({ _id: user.id }, process.env.TOKEN, {
@@ -63,7 +67,7 @@ router.post("/login", async(req, res) => {
     //     httpOnly: true,
     //     maxAge: 60 * 60 * 1000, // 1 hour
     // })
-    res.status(200).json({ msg: token });
+    res.status(200).json({ token: token, role: role });
 
     // res.status(200).json({ msg: "Login Successfull" });
 
