@@ -56,7 +56,7 @@ const Login = () => {
       <ToastContainer />
 
       <div className="flex md:flex-row flex-col ">
-        <div className="md:w-128 ">
+        <div className="md:w-138 ">
           <img
             className=" hidden md:flex   md:h-screen w-120  bg-cover bg-center"
             src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
