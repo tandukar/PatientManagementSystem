@@ -8,6 +8,10 @@ import { RxCross2 } from "react-icons/rx";
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [visibleIcon, setvisibleIcon] = React.useState(false);
 
+  const logoutHandler =()=>{
+    sessionStorage.removeItem("token");
+  }
+
   return (
     <>
       <div className="flex">
@@ -74,7 +78,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           <div className="mt-auto">
             <a
               className=" flex items-center text-white md:text-gray-300 hover:text-white"
-              href="#"
+              onClick={logoutHandler}
             >
               <span className="inline-block  pr-3">
                 <IoIosSettings className="w-7 h-7" />

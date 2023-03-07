@@ -17,7 +17,7 @@ const AdminDashboard = () => {
       setAuthenticated(true);
       console.log("token");
     } else {
-      console.log("notoken");
+      console.log("no token");
       setAuthenticated(false);
     }
   }, []);
