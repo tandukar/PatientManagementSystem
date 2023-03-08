@@ -14,12 +14,9 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-
   const printHandler = (event) => {
     console.log(email, password);
   };
-
-
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -31,40 +28,40 @@ const Login = () => {
 
       .then((res) => {
         // console.log(email, password);
-        // console.log(res.data.token);
-        // console.log(res.data.role);
-        if (res.data.token && res.data.role==="Admin") {
+        console.log(res.data.token);
+        console.log(res.data.role);
+
+        if (res.data.token && res.data.role) {
           sessionStorage.setItem("token", res.data.token);
           sessionStorage.setItem("role", res.data.role);
-          navigate("/admin");
-        } 
-        else if (res.data.token && res.data.role==="Doctor") {
-          sessionStorage.setItem("token", res.data.token);
-          sessionStorage.setItem("role", res.data.role);
-          // navigate("/doctor");
-        } 
-        else if (res.data.token && res.data.role==="Receptionist") {
-          sessionStorage.setItem("token", res.data.token);
-          sessionStorage.setItem("role", res.data.role);
-          // navigate("/doctor");
+        
+          if (res.data.role === "Admin") {
+            navigate("/admin");
+          } else if (res.data.role === "Doctor") {
+            if (window.location.pathname !== "/doctor") {
+              navigate("/doctor");
+            }
+          } else if (res.data.role === "Receptionist") {
+            if (window.location.pathname !== "/receptionist") {
+              navigate("/receptionist");
+            }
+          } else {
+            toast.error("Invalid role");
+          }
         } else {
           toast.error("Invalid credentials");
-
         }
       })
       .catch((err) => {
         console.log(err);
         if (err.response.status === 401) {
-     
           toast.error("Invalid credentials");
           // setShowAlert(true)
-          
         }
       });
   };
   return (
     <>
-    
       <ToastContainer />
 
       <div className="flex md:flex-row flex-col ">

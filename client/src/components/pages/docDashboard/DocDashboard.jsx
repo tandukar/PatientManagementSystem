@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import Sidebar from "./sidebar/Sidebar";
-import DocDashboard from "./Doctor/DocDashboard";
-import Dashboard from "./dashboard/Dashboard";
 
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
+import Appointment from "./appointment/Appointment";
 
 import { Navigate } from "react-router-dom";
 
-const AdminDashboard = () => {
+const DoctorDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [authenticated, setAuthenticated] = React.useState(null);
 
@@ -47,8 +46,7 @@ const AdminDashboard = () => {
           )}
           <div className="flex-1  ">
             <div className="min-height: 100vh ">
-              {/* <DocDashboard /> */}
-              <Dashboard />
+              <Appointment />
             </div>
           </div>
         </div>
@@ -57,4 +55,4 @@ const AdminDashboard = () => {
   } 
 };
 
-export default AdminDashboard;
+export default DoctorDashboard;

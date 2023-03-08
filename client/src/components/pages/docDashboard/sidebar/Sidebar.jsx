@@ -9,8 +9,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [visibleIcon, setvisibleIcon] = React.useState(false);
 
   const logoutHandler =()=>{
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("role");
+    sessionStorage.removeItem("token"); 
+    sessionStorage.removeItem("role"); 
     window.location.href = "/login";
   }
 
@@ -25,7 +25,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           <div className="space-y-3">
             <div className="flex flex-row ">
               <div className="flex w-2/3 items-center">
-                <h2 className="text-2xl text-white font-bold "> Remedial</h2>
+                <h2 className="text-2xl text-white font-bold "> ReMedial</h2>
               </div>
 
               <div className="flex w-1/3 items-center justify-end ">
@@ -48,7 +48,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       <span className="inline-block  pr-3">
                         <RiHomeLine className="w-7 h-7" />
                       </span>
-                      Dashboard
+                      Appointments
                     </a>
                   </li>
                   <li className="py-2">
@@ -59,31 +59,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       <span className="inline-block  pr-3">
                         <MdPeopleOutline className="w-7 h-7" />
                       </span>
-                      Doctors
+                      Calendar
                     </a>
                   </li>
-                  <li className="py-2">
-                    <a
-                      className=" flex items-center text-white md:text-gray-300 hover:text-white"
-                      href="#"
-                    >
-                      <span className="inline-block  pr-3">
-                        <MdPeopleOutline className="w-7 h-7" />
-                      </span>
-                      Receptionist
-                    </a>
-                  </li>
-                  <li className="py-2 ">
-                    <a
-                      className=" flex items-center text-white md:text-gray-300 hover:text-white"
-                      href="#"
-                    >
-                      <span className="inline-block  pr-3">
-                        <MdPeopleOutline className="w-7 h-7" />
-                      </span>
-                      Rooms/Beds
-                    </a>
-                  </li>
+                 
                 </ul>
               </nav>
             </div>
