@@ -1,6 +1,9 @@
 import React from "react";
 
 // import Sidebar from "./sidebar/Sidebar";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { CiSearch } from "react-icons/ci";
 
@@ -11,7 +14,7 @@ const Appointment = () => {
   const loop = Array.from({ length: 5 }, (_, i) => (
     <div className="bg-white rounded-xl h-10 p-2 flex flex-row" key={i}>
       <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
-       Mr. John Doe
+        Mr. John Doe
       </div>
       <div className="w-1/4 font-bold text-gray-500 text-md text-end">Edit</div>
       <div className="w-1/4 font-bold text-red-700 text-md text-end mr-5">
@@ -33,7 +36,9 @@ const Appointment = () => {
             <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white md:text-2xl text-xl font-bold mb-5">
               <div className=" flex w-1/2">Appointments</div>
               <div className="flex  w-1/2 justify-center items-center">
-                <div className="md:text-8xl text-6xl font-bold text-white">12</div>
+                <div className="md:text-8xl text-6xl font-bold text-white">
+                  12
+                </div>
               </div>
             </div>
             {/* ```````````````````````````````````````` */}
@@ -103,37 +108,22 @@ const Appointment = () => {
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
               <div className="flex flex-col md:flex-row gap-2">
-                <div className="md:w-1/2">
                   <div className="md:container md:mx-auto">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      Age
+                  <label className="form-label inline-block mb-2 text-custom-blue">
+                      Appointment Date
                     </label>
-                    <input
-                      type="Number"
-                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      onChange={(event) => setEmail(event.target.value)}
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DatePicker  className="outline-blue-500"/>
+                    </LocalizationProvider>
                   </div>
-                </div>
-                <div className="md:w-1/2">
-                  <div className="md:container md:mx-auto">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      Sex
-                    </label>
-                    <input
-                      type="Text"
-                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      onChange={(event) => setEmail(event.target.value)}
-                    />
-                  </div>
-                </div>
+                
                 <div className="md:w-full">
                   <div className="md:container md:mx-auto">
                     <label
                       htmlFor="exampleEmail0"
                       className="form-label inline-block mb-2 text-custom-blue"
                     >
-                      Phone Number
+                      Appointment time
                     </label>
                     <input
                       type="email"

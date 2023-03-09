@@ -5,8 +5,10 @@ import { MdPeopleOutline } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
   const [visibleIcon, setvisibleIcon] = React.useState(false);
+
+
 
   const logoutHandler =()=>{
     sessionStorage.removeItem("token");
@@ -14,6 +16,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     window.location.href = "/login";
   }
 
+  const itemClickHandler =(item)=>{
+    onItemClick(item);
+
+    
+  }
   return (
     <>
       <div className="flex">
@@ -44,6 +51,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"
                       href="#"
+                      onClick={()=>onItemClick("Dashboard")}
                     >
                       <span className="inline-block  pr-3">
                         <RiHomeLine className="w-7 h-7" />
@@ -55,6 +63,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"
                       href="#"
+
+                      
+                      onClick={()=>onItemClick("Doctors")}
+                      
+
                     >
                       <span className="inline-block  pr-3">
                         <MdPeopleOutline className="w-7 h-7" />
@@ -66,6 +79,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"
                       href="#"
+                      onClick={()=>onItemClick("Receptionist")}
+
                     >
                       <span className="inline-block  pr-3">
                         <MdPeopleOutline className="w-7 h-7" />
@@ -77,9 +92,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"
                       href="#"
+                      onClick={()=>onItemClick("Rooms/Beds")}
+
                     >
                       <span className="inline-block  pr-3">
-                        <MdPeopleOutline className="w-7 h-7" />
+                        {/* <MdPeopleOutline className="w-7 h-7" /> */}
+                        <img src="https://img.icons8.com/ios/30/null/hospital-bed.png" style={{ filter: "invert(1)" }}/>  
                       </span>
                       Rooms/Beds
                     </a>

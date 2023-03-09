@@ -9,8 +9,13 @@ import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { Navigate } from "react-router-dom";
 
 const AdminDashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
+  const [sidebarOpen, setSidebarOpen] = React.useState(true);
   const [authenticated, setAuthenticated] = React.useState(null);
+  const [selectedItem, setSelectedItem] = React.useState("Dashboard");
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+  };
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
@@ -42,19 +47,27 @@ const AdminDashboard = () => {
               <Sidebar
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
+                onItemClick={handleItemClick}
               />
             </div>
           )}
           <div className="flex-1  ">
             <div className="min-height: 100vh ">
               {/* <DocDashboard /> */}
-              <Dashboard />
+              {/* <Dashboard /> */}
+              {selectedItem === "Dashboard" ? (
+                <Dashboard />
+              ) : selectedItem === "Doctors" ? (
+                <DocDashboard />
+              ) : selectedItem === "Receptionist" ? (
+                <DocDashboard />
+              ) : null}
             </div>
           </div>
         </div>
       </>
     );
-  } 
+  }
 };
 
 export default AdminDashboard;
