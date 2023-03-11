@@ -74,7 +74,7 @@ const Login = () => {
         <div className="md:w-3/4  ">
           <div className="flex justify-center items-center h-screen ">
             <div className="flex flex-col gap-4 max-w-screen-md mx-auto ">
-              <div className="text-left font-bold text-3xl text-gray-800 ">
+              <div className="text-left font-bold text-3xl text-blue-800 ">
                 Welcome Back
               </div>
               <div className=" md:container md:mx-auto ">

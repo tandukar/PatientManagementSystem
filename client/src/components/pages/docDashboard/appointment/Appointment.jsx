@@ -4,8 +4,11 @@ import React from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import TextField from "@mui/material/TextField";
 
 import { CiSearch } from "react-icons/ci";
+
+
 
 const Appointment = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);
@@ -80,7 +83,8 @@ const Appointment = () => {
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Create Revisits
             </div>
-            <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
+            {/* <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200  font-semibold"> */}
+            <div className="flex flex-col gap-4 p-6 rounded-lg   font-semibold">
               <div className="flex md:flex-row gap-2 flex-col">
                 <div className=" md:container md:mx-auto ">
                   <label className="form-label inline-block mb-2 text-custom-blue">
@@ -88,7 +92,7 @@ const Appointment = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    className="bg-whtie appearance-none border-2 border-custom-blue rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
@@ -101,22 +105,22 @@ const Appointment = () => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    className="bg-whtie appearance-none border-2 border-custom-blue rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
               <div className="flex flex-col md:flex-row gap-2">
-                  <div className="md:container md:mx-auto">
+                <div className="md:container md:mx-auto">
                   <label className="form-label inline-block mb-2 text-custom-blue">
-                      Appointment Date
-                    </label>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker  className="outline-blue-500"/>
-                    </LocalizationProvider>
-                  </div>
-                
+                    Appointment Date
+                  </label>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker className="outline-blue-500"  />
+                  </LocalizationProvider>
+                </div>
+
                 <div className="md:w-full">
                   <div className="md:container md:mx-auto">
                     <label
@@ -127,73 +131,43 @@ const Appointment = () => {
                     </label>
                     <input
                       type="email"
-                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      className="bg-white appearance-none border-2 border-custom-blue rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
               </div>
 
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex md:flex-row flex-col gap-2">
-                <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
+              <div className="flex  flex-col gap-2">
+                <label className="form-label inline-block mb-2 text-custom-blue">
+                  Notes
+                </label>
 
-                <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Address
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              </div>
-              {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex  md:flex-row flex-col gap-2">
-                <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Qualification
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
+                <TextField
+                  id="outlined-multiline-static"
+                  // label="Multiline"
+                  
+                  multiline
+                  rows={4}
+                />
 
-                <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Specialization
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              </div>
-              {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex  md:flex-row flex-col gap-2 md:w-1/2">
-                <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Schedule
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
+                <label className="form-label inline-block mb-2 text-custom-blue">
+                  Reason
+                </label>
+
+                <TextField
+                  id="outlined-multiline-static"
+                  // label="Multiline"
+                  className="bg-white"
+                  multiline
+                  rows={4}
+                />
               </div>
 
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className=" mt-10 mb-10  text-center">
                 <button className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
-                  Submit
+                  Create Revisit
                 </button>
               </div>
             </div>
