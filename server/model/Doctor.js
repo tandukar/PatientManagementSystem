@@ -18,6 +18,11 @@ const doctorSchema = mongoose.Schema({
         required: [true, 'age required'],
 
     },
+    sex: {
+        type: String,
+        required: [true, 'age required'],
+
+    },
     email: {
         type: String,
         required: [true, 'email required'],
@@ -30,5 +35,22 @@ const doctorSchema = mongoose.Schema({
         min: 9,
         max: 255,
     },
+    address: {
+        type: String,
+        required: [true, "Last Name required"],
+    },
+    number: {
+        type: String,
+        required: true,
+        match: /^\d{10}$/
+    },
+    qualification: {
+        type: String,
+        required: [true, "qualification required"],
+    },
+    specialization: {
+        type: String,
+        required: [true, "specialization required"],
+    }
 });
 module.exports = mongoose.model("Doctor", doctorSchema);

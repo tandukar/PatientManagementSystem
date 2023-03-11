@@ -13,15 +13,21 @@ router.post('/register', async(req, res) => {
     if (emailExists) return res.send("Email Already Exists");
 
     //hash password
+    let defPwd = "doctor123"
     const salt = await bcrypt.genSalt(10);
-    const hashPwd = await bcrypt.hash(req.body.password, salt);
+    const hashPwd = await bcrypt.hash(defPwd, salt);
 
     const postDoc = new Doctor({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         age: req.body.age,
+        sex: req.body.sex,
         email: req.body.email,
         password: hashPwd,
+        address: req.body.address,
+        number: req.body.number,
+        qualification: req.body.qualification,
+        specialization: req.body.specialization,
     })
     try {
         const savedDoc = await postDoc.save();

@@ -1,12 +1,13 @@
 import React from "react";
 
 // import Sidebar from "./sidebar/Sidebar";
+import axios from "axios";
+import Box from "@mui/material/Box";
 
 import { CiSearch } from "react-icons/ci";
 
 const DocDashboard = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);
-  const [email, setEmail] = React.useState([]);
 
   const loop = Array.from({ length: 5 }, (_, i) => (
     <div className="bg-white rounded-xl h-10 p-2 flex flex-row" key={i}>
@@ -23,6 +24,46 @@ const DocDashboard = () => {
   const printHandler = (event) => {
     console.log(searchTerm);
   };
+
+  const submitHandler = (event) => {
+    const data = new FormData(event.currentTarget);
+    event.preventDefault();
+    axios.post("http://localhost:5000/api/doctors/register", {
+      firstname: data.get("fname"),
+      lastname: data.get("lname"),
+      age: data.get("age"),
+      sex: data.get("sex"),
+      email: data.get("email"),
+      number: data.get("number"),
+      qualification: data.get("qualification"),
+      address: data.get("address"),
+      specialization: data.get("specialization")
+
+      // firstname: "apple",
+      // lastname: "apple",
+      // age:34,
+      // sex: "apple",
+      // email: "apple@doctor.com",
+      // number: "1234567890",
+      // qualification:"apple",
+      // address: "apple",
+      // specialization: "apple"
+   
+    });
+    
+    console.log({
+      firstname: data.get("fname"),
+      lastname: data.get("lname"),
+      age: data.get("age"),
+      sex: data.get("sex"),
+      email: data.get("email"),
+      number: data.get("number"),
+      qualification: data.get("qualification"),
+      address: data.get("address"),
+      specialization: data.get("specialization")
+
+    });
+  };
   return (
     <>
       <div className="flex flex-col md:flex-row  w-full ">
@@ -33,7 +74,9 @@ const DocDashboard = () => {
             <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white md:text-2xl text-xl font-bold mb-5">
               <div className=" flex w-1/2">Registered Doctors</div>
               <div className="flex  w-1/2 justify-center items-center">
-                <div className="md:text-8xl text-6xl font-bold text-white">12</div>
+                <div className="md:text-8xl text-6xl font-bold text-white">
+                  12
+                </div>
               </div>
             </div>
             {/* ```````````````````````````````````````` */}
@@ -76,136 +119,145 @@ const DocDashboard = () => {
               Register Doctors
             </div>
             <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
-              <div className="flex md:flex-row gap-2 flex-col">
-                <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    First name
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-                </div>
-                <div className="  md:container md:mx-auto ">
-                  <label
-                    htmlFor="exampleEmail0"
-                    className="form-label inline-block mb-2 text-custom-blue"
-                  >
-                    Last name
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              </div>
-              {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-
-              <div className="flex flex-col md:flex-row gap-2">
-                <div className="md:w-1/2">
-                  <div className="md:container md:mx-auto">
+              <Box component="form" onSubmit={submitHandler}>
+                <div className="flex md:flex-row gap-2 flex-col">
+                  <div className=" md:container md:mx-auto ">
                     <label className="form-label inline-block mb-2 text-custom-blue">
-                      Age
+                      First name
                     </label>
                     <input
-                      type="Number"
-                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      onChange={(event) => setEmail(event.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="md:w-1/2">
-                  <div className="md:container md:mx-auto">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      Sex
-                    </label>
-                    <input
+                      id="fname"
+                      name="fname"
                       type="Text"
-                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      onChange={(event) => setEmail(event.target.value)}
+                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     />
                   </div>
-                </div>
-                <div className="md:w-full">
-                  <div className="md:container md:mx-auto">
+                  <div className="  md:container md:mx-auto ">
                     <label
                       htmlFor="exampleEmail0"
                       className="form-label inline-block mb-2 text-custom-blue"
                     >
-                      Phone Number
+                      Last name
                     </label>
                     <input
-                      type="email"
-                      className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    id="lname"
+                    name="lname"
+                      type="Text"
+                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     />
                   </div>
                 </div>
-              </div>
+                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
-              {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex md:flex-row flex-col gap-2">
-                <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
+                <div className="flex flex-col md:flex-row gap-2">
+                  <div className="md:w-1/2">
+                    <div className="md:container md:mx-auto">
+                      <label className="form-label inline-block mb-2 text-custom-blue">
+                        Age
+                      </label>
+                      <input
+                        id="age"
+                        name="age"
+                        type="Number"
+                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="md:w-1/2">
+                    <div className="md:container md:mx-auto">
+                      <label className="form-label inline-block mb-2 text-custom-blue">
+                        Sex
+                      </label>
+                      <input
+                        id="sex"
+                        name="sex"
+                        type="Text"
+                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="md:w-full">
+                    <div className="md:container md:mx-auto">
+                      <label
+                        htmlFor="exampleEmail0"
+                        className="form-label inline-block mb-2 text-custom-blue"
+                      >
+                        Phone Number
+                      </label>
+                      <input
+                        id="number"
+                        name="number"
+                        type="Text"
+                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Address
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              </div>
-              {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex  md:flex-row flex-col gap-2">
-                <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Qualification
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
+                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+                <div className="flex md:flex-row flex-col gap-2">
+                  <div className="  md:container md:mx-auto ">
+                    <label className="form-label inline-block mb-2 text-custom-blue">
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
 
-                <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Specialization
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
+                  <div className=" md:container md:mx-auto ">
+                    <label className="form-label inline-block mb-2 text-custom-blue">
+                      Address
+                    </label>
+                    <input
+                      id="address"
+                      name="address"
+                      type="Text"
+                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
                 </div>
-              </div>
-              {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex  md:flex-row flex-col gap-2 md:w-1/2">
-                <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                    Schedule
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              </div>
+                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+                <div className="flex  md:flex-row flex-col gap-2">
+                  <div className="  md:container md:mx-auto ">
+                    <label className="form-label inline-block mb-2 text-custom-blue">
+                      Qualification
+                    </label>
+                    <input
+                      id="qualification"
+                      name="qualification"
+                      type="Text"
+                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
 
-              {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className=" mt-10 mb-10  text-center">
-                <button className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
-                  Submit
-                </button>
-              </div>
+                  <div className=" md:container md:mx-auto ">
+                    <label className="form-label inline-block mb-2 text-custom-blue">
+                      Specialization
+                    </label>
+                    <input
+                      id="specialization"
+                      name="specialization"
+                      type="Text"
+                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+                 
+
+                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+                <div className=" mt-10 mb-10  text-center">
+                  <button
+                    type="submit"
+                    className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </Box>
             </div>
           </div>
           {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
