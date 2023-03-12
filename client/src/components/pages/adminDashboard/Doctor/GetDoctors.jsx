@@ -21,7 +21,7 @@ export default class PersonList extends React.Component {
             <li key={person.id}>
               <div className="bg-white rounded-xl h-10 p-2 flex flex-row">
                 <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
-                  Mr. {person.firstname} {person.lastname}
+                  Dr. {person.firstname} {person.lastname}
                 </div>
                 <div className="w-1/4 font-bold text-gray-500 text-md text-end">
                   Edit
