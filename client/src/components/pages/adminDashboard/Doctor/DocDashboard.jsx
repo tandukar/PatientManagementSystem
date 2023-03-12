@@ -16,6 +16,8 @@ const DocDashboard = () => {
     console.log(searchTerm);
   };
 
+ 
+
   const registerHandler = (event) => {
     const data = new FormData(event.currentTarget);
 

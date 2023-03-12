@@ -60,9 +60,9 @@ router.get('/find/:doctorId', async(req, res) => {
 })
 
 // update doctor 
-router.patch('/updateDoc/:doctorId', async(req, res) => {
+router.patch('/updateDoc/:id', async(req, res) => {
     try {
-        const updateDoc = await Doctor.updateMany({ _id: req.params.doctorId }, {
+        const updateDoc = await Doctor.updateMany({ _id: req.params.id }, {
             $set: {
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
@@ -80,9 +80,9 @@ router.patch('/updateDoc/:doctorId', async(req, res) => {
 
 
 //delete a doctor
-router.delete('/deleteDoc/:doctorId', async(req, res) => {
+router.delete('/deleteDoc/:id', async(req, res) => {
     try {
-        const delDoc = await Doctor.deleteOne({ _id: req.params.doctorId });
+        const delDoc = await Doctor.deleteOne({ _id: req.params.id });
         res.json(delDoc);
     } catch (err) {
         res.json(err.message)

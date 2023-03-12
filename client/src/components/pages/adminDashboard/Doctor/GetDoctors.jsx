@@ -4,6 +4,7 @@ import axios from "axios";
 export default class PersonList extends React.Component {
   state = {
     persons: [],
+    id: "",
   };
 
   componentDidMount() {
@@ -14,6 +15,16 @@ export default class PersonList extends React.Component {
   }
 
   render() {
+    const deleteDoctor = (id) => {
+      console.log('Delete doctor id:', id); // Check id value
+      axios.delete(`http://localhost:5000/api/doctors/deleteDoc/${id}`)
+        .then(res => {
+          console.log('Doctor deleted:', res.data);
+          // Update state or do other actions
+        })
+        .catch(err => console.log('Error deleting doctor:', err));
+    };
+    
     return (
       <ul>
         {this.state.persons.map((person) => (
@@ -27,7 +38,9 @@ export default class PersonList extends React.Component {
                   Edit
                 </div>
                 <div className="w-1/4 font-bold text-red-700 text-md text-end mr-5">
-                  Delete
+                  <button type="submit" onClick={() => deleteDoctor(person._id)}>
+                    Delete
+                  </button>
                 </div>
               </div>
             </li>
