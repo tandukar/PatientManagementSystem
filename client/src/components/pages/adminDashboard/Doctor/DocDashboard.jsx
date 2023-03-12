@@ -6,63 +6,43 @@ import Box from "@mui/material/Box";
 
 import { CiSearch } from "react-icons/ci";
 
+import Profile from "./GetDoctors";
+
+
 const DocDashboard = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);
-
-  const loop = Array.from({ length: 5 }, (_, i) => (
-    <div className="bg-white rounded-xl h-10 p-2 flex flex-row" key={i}>
-      <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
-        Dr.Milan Maharjan
-      </div>
-      <div className="w-1/4 font-bold text-gray-500 text-md text-end">Edit</div>
-      <div className="w-1/4 font-bold text-red-700 text-md text-end mr-5">
-        Delete
-      </div>
-    </div>
-  ));
 
   const printHandler = (event) => {
     console.log(searchTerm);
   };
 
-  const submitHandler = (event) => {
+  const registerHandler = (event) => {
     const data = new FormData(event.currentTarget);
+
+    const payload = {
+      firstname: data.get("fname"),
+      lastname: data.get("lname"),
+      age: data.get("age"),
+      sex: data.get("sex"),
+      email: data.get("email"),
+      number: data.get("number"),
+      qualification: data.get("qualification"),
+      address: data.get("address"),
+      specialization: data.get("specialization"),
+    };
+
     event.preventDefault();
-    axios.post("http://localhost:5000/api/doctors/register", {
-      firstname: data.get("fname"),
-      lastname: data.get("lname"),
-      age: data.get("age"),
-      sex: data.get("sex"),
-      email: data.get("email"),
-      number: data.get("number"),
-      qualification: data.get("qualification"),
-      address: data.get("address"),
-      specialization: data.get("specialization")
 
-      // firstname: "apple",
-      // lastname: "apple",
-      // age:34,
-      // sex: "apple",
-      // email: "apple@doctor.com",
-      // number: "1234567890",
-      // qualification:"apple",
-      // address: "apple",
-      // specialization: "apple"
-   
-    });
-    
-    console.log({
-      firstname: data.get("fname"),
-      lastname: data.get("lname"),
-      age: data.get("age"),
-      sex: data.get("sex"),
-      email: data.get("email"),
-      number: data.get("number"),
-      qualification: data.get("qualification"),
-      address: data.get("address"),
-      specialization: data.get("specialization")
+    axios
+      .post("http://localhost:5000/api/doctors/register", payload)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
 
-    });
+    console.log(payload);
   };
   return (
     <>
@@ -107,7 +87,9 @@ const DocDashboard = () => {
 
           <div className="flex flex-col gap-4 p-3 bg-slate-200 rounded-lg">
             {/* ```````````````````````````````````````` */}
-            {loop}
+            {/* {loop} */}
+            <Profile />
+
             {/* ```````````````````````````````````````` */}
           </div>
         </div>
@@ -119,7 +101,7 @@ const DocDashboard = () => {
               Register Doctors
             </div>
             <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
-              <Box component="form" onSubmit={submitHandler}>
+              <Box component="form" onSubmit={registerHandler}>
                 <div className="flex md:flex-row gap-2 flex-col">
                   <div className=" md:container md:mx-auto ">
                     <label className="form-label inline-block mb-2 text-custom-blue">
@@ -140,8 +122,8 @@ const DocDashboard = () => {
                       Last name
                     </label>
                     <input
-                    id="lname"
-                    name="lname"
+                      id="lname"
+                      name="lname"
                       type="Text"
                       className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     />
@@ -246,7 +228,6 @@ const DocDashboard = () => {
                     />
                   </div>
                 </div>
-                 
 
                 {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
                 <div className=" mt-10 mb-10  text-center">
