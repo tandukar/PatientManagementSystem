@@ -16,8 +16,9 @@ router.post('/register', async(req, res) => {
 
 
     // hash password
+    let defPwd = "receptionist123"
     const salt = await bcrypt.genSalt(10);
-    const hashPwd = await bcrypt.hash(req.body.password, salt);
+    const hashPwd = await bcrypt.hash(defPwd, salt);
 
     const postRecep = new Receptionist({
         firstname: req.body.firstname,

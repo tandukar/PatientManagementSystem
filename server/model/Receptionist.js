@@ -18,17 +18,33 @@ const receptionistSchema = mongoose.Schema({
         required: [true, 'age required'],
 
     },
+    sex: {
+        type: String,
+        required: [true, 'age required'],
+
+    },
     email: {
         type: String,
         required: [true, 'email required'],
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: [true, 'Please enter  password'],
         min: 9,
         max: 255,
     },
+    password: {
+        type: String,
+        required: [true, 'Please enter your password'],
+        min: 9,
+        max: 255,
+    },
+    address: {
+        type: String,
+        required: [true, "Last Name required"],
+    },
+    number: {
+        type: String,
+        required: true,
+        match: /^\d{10}$/
+    }
+
 
 
 }, {
