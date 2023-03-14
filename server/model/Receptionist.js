@@ -44,9 +44,6 @@ const receptionistSchema = mongoose.Schema({
         required: true,
         match: /^\d{10}$/
     }
-
-
-
 }, {
     timestamps: true
 }, );

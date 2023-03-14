@@ -2,11 +2,11 @@ const router = require("express").Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Receptionist = require("../model/Receptionist");
-const { registerValidation, loginValidation } = require('../validation');
+const { recepRegisterValidation, loginValidation } = require('../validation');
 
 router.post('/register', async(req, res) => {
 
-    const { error } = registerValidation(req.body);
+    const { error } = recepRegisterValidation(req.body);
 
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -24,8 +24,11 @@ router.post('/register', async(req, res) => {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         age: req.body.age,
+        sex: req.body.sex,
         email: req.body.email,
         password: hashPwd,
+        address: req.body.address,
+        number: req.body.number,
     })
     try {
         const savedRecep = await postRecep.save();
