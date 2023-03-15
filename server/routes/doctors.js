@@ -6,7 +6,7 @@ const { docRegisterValidation, loginValidation } = require('../validation');
 
 router.post('/register', async(req, res) => {
 
-    const { error } = registerValidation(req.body);
+    const { error } = docRegisterValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message)
 
     const emailExists = await Doctor.findOne({ email: req.body.email });

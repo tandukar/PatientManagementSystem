@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import Sidebar from "./sidebar/Sidebar";
 import DocDashboard from "./Doctor/DocDashboard";
+import RecepDashboard from "./receptionist/RecepDashboard";
 import Dashboard from "./dashboard/Dashboard";
 
-import { HiOutlineMenuAlt1 } from "react-icons/hi";
+import { HiOutlineMenuAlt1 } from "react-icons/hi"; 
 
 import { Navigate } from "react-router-dom";
 
@@ -60,7 +61,7 @@ const AdminDashboard = () => {
               ) : selectedItem === "Doctors" ? (
                 <DocDashboard />
               ) : selectedItem === "Receptionist" ? (
-                <DocDashboard />
+                <RecepDashboard />
               ) : null}
             </div>
           </div>

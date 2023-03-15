@@ -51,9 +51,9 @@ router.get('/', async(req, res) => {
 
 
 //get one Receptionist
-router.get('/find/:ReceptionistId', async(req, res) => {
+router.get('/find/:id', async(req, res) => {
     try {
-        const findRecep = await Receptionist.findById(req.params.ReceptionistId);
+        const findRecep = await Receptionist.findById(req.params.id);
         res.json(findRecep);
     } catch (err) {
         res.status(400).send(err.message);
@@ -61,12 +61,12 @@ router.get('/find/:ReceptionistId', async(req, res) => {
 })
 
 // update Receptionist 
-router.patch('/updateRecep/:ReceptionistId', async(req, res) => {
+router.patch('/updateRecep/:id', async(req, res) => {
     try {
-        const { error } = registerValidation(req.body);
+        const { error } = recepRegisterValidation(req.body);
         if (error) return res.status(400).send(error.details[0].message)
 
-        const updateRecep = await Receptionist.updateMany({ _id: req.params.ReceptionistId }, {
+        const updateRecep = await Receptionist.updateMany({ _id: req.params.id }, {
 
             $set: {
                 firstname: req.body.firstname,
@@ -87,9 +87,9 @@ router.patch('/updateRecep/:ReceptionistId', async(req, res) => {
 
 
 //delete a Receptionist
-router.delete('/deleteReceptionist/:ReceptionistId', async(req, res) => {
+router.delete('/deleteReceptionist/:id', async(req, res) => {
     try {
-        const delRecep = await Receptionist.deleteOne({ _id: req.params.ReceptionistId });
+        const delRecep = await Receptionist.deleteOne({ _id: req.params.id });
         res.json(delRecep);
     } catch (err) {
         res.json(err.message)

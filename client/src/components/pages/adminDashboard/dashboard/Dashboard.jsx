@@ -35,7 +35,7 @@ const Dashboard = () => {
               </div>
               <div className="flex justify-center items-center ">
                 <div className="md:text-8xl w-1/3 text-6xl font-bold text text-white">
-                  12
+                  13
                 </div>
               </div>
             </div>
