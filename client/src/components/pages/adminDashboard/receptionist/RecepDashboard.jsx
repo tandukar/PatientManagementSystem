@@ -45,10 +45,10 @@ const RecepDashboard = () => {
     <>
       <div className="flex flex-col md:flex-row  w-full ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-        <div className="md:w-1/2 p-4     ">
-          <div className="flex md:flex-wrap flex-row   mt-2">
+        <div className="md:w-2/3 p-4     ">
+          <div className="flex md:flex-wrap flex-row ">
             {/* ```````````````````````````````````````` */}
-            <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white md:text-2xl text-xl font-bold mb-5">
+            <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-xl text-white md:text-2xl text-xl font-bold mb-5">
               <div className=" flex w-1/2">Registered Receptionists</div>
               <div className="flex  w-1/2 justify-center items-center">
                 <div className="md:text-8xl text-6xl font-bold text-white">
@@ -90,8 +90,8 @@ const RecepDashboard = () => {
         </div>
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
-        <div className="md:w-1/2 md:p-4 md:mx-auto">
-          <div className="flex flex-col p-4 gap-8  mt-5  md:ml-10">
+        <div className="md:w-1/2  md:mx-auto">
+          <div className="flex flex-col p-4 gap-8  mt-5 ">
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Register Receptionists
             </div>

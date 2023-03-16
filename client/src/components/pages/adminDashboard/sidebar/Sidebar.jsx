@@ -4,6 +4,7 @@ import { RiHomeLine } from "react-icons/ri";
 import { MdPeopleOutline } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
+import { TbBuildingHospital } from "react-icons/tb";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
   const [visibleIcon, setvisibleIcon] = React.useState(false);
@@ -85,12 +86,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
                       href="#"
                       onClick={() => onItemClick("Rooms/Beds")}
                     >
-                      <span className="inline-block  pr-3">
+                      <span className="inline-block  pr-3 ">
                         {/* <MdPeopleOutline className="w-7 h-7" /> */}
-                        <img
-                          src="https://img.icons8.com/ios/30/null/hospital-bed.png"
-                          style={{ filter: "invert(1)" }}
-                        />
+                        <TbBuildingHospital className="w-7 h-6"/>
                       </span>
                       Rooms/Beds
                     </a>

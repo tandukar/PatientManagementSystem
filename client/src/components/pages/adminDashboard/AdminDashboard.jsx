@@ -35,7 +35,7 @@ const AdminDashboard = () => {
     console.log("authenticated");
     return (
       <>
-        <div className="flex flex-col md:flex-row ">
+        <div className="flex flex-col md:flex-row bg-gray-100 ">
           {!sidebarOpen ? (
             <div className="pt-4 pl-2 ">
               <HiOutlineMenuAlt1
@@ -52,8 +52,8 @@ const AdminDashboard = () => {
               />
             </div>
           )}
-          <div className="flex-1  ">
-            <div className="min-height: 100vh ">
+          <div className="flex-1 md:mx-10 md:mt-2 h-screen">
+            <div className="h-full bg-gray-100">
               {/* <DocDashboard /> */}
               {/* <Dashboard /> */}
               {selectedItem === "Dashboard" ? (
