@@ -15,8 +15,8 @@ const initializeAdmin = require("./initializeAdmin");
 
 
 const corsOptions = {
-    origin: true, //included origin as true
-    credentials: true, //included credentials as true
+    origin: true,
+    credentials: true,
 };
 const recepRoute = require('./routes/receptionists');
 

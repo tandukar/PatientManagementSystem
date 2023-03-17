@@ -35,10 +35,41 @@ const patientSchema = mongoose.Schema({
     number: {
         type: String,
         required: true,
-        match: /^\d{10}$/
+        match: /^\d{10}$/,
+    },
+    ipd: {
+        type: Boolean,
+        default: false,
+    },
+    opd: {
+        type: Boolean,
+        default: false,
+
+    },
+    ipdDetails: {
+        doctor: {
+            type: String
+        },
+        roomNo: {
+            type: String
+        },
+        admittedDate: {
+            type: Date
+        },
+        dischargedDate: {
+            type: Date
+        }
+    },
+    opdDetails: {
+        doctor: {
+            type: String
+        },
+        appointmentDate: {
+            type: Date
+        }
     }
 }, {
     timestamps: true,
-    get: time => time.toDateString()
+    get: (time) => time.toDateString(),
 });
 module.exports = mongoose.model("Patient", patientSchema);

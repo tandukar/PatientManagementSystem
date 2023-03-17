@@ -1,12 +1,30 @@
 const router = require("express").Router();
-// const { findOne } = require("../model/Patient");
 const Patient = require("../model/Patient");
+const { patientRegisterValidation } = require("../validation");
 
 router.post("/register", async(req, res) => {
+    const { error } = patientRegisterValidation(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
 
     //searching for existing number
     const numberExists = await Patient.findOne({ number: req.body.number });
     if (numberExists) return res.send("Number already exists");
+    // const { firstname, lastname, age, sex, address, email, number, ipd, opd, ipdDetails, opdDetails } = req.body;
+
+    // // Create a new patient object with the received data
+    // const regPatient = new Patient({
+    //     firstname,
+    //     lastname,
+    //     age,
+    //     sex,
+    //     address,
+    //     email,
+    //     number,
+    //     ipd,
+    //     opd,
+    //     ipdDetails,
+    //     opdDetails
+    // })
 
     const regPatient = new Patient({
         firstname: req.body.firstname,
@@ -16,7 +34,16 @@ router.post("/register", async(req, res) => {
         address: req.body.address,
         email: req.body.email,
         number: req.body.number,
+        ipd: req.body.ipd,
+        opd: req.body.opd,
+        ipdDetails: req.body.ipdDetails,
+        opdDetails: req.body.opdDetails,
     });
+
+    console.log(regPatient.ipdDetails);
+    console.log(regPatient.opdDetails);
+    console.log(regPatient.opd);
+    console.log(regPatient.ipd);
     try {
         const savedPatient = await regPatient.save();
         res.json(savedPatient);
