@@ -9,7 +9,7 @@ const appointmentSchema = mongoose.Schema({
         required: [true, "Patient Id required"],
     },
 
-    doctor: {
+    doctorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Doctor",
         required: [true, "Doctor required"],
@@ -30,7 +30,6 @@ const appointmentSchema = mongoose.Schema({
     diagnosis: {
         type: String,
         required: [true, "diagnosis required"],
-
     },
     ipd: {
         type: Boolean,

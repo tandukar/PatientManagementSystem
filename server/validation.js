@@ -44,27 +44,27 @@ const patientRegisterValidation = (data) => {
         sex: Joi.string().regex(/^[a-zA-Z0-9 ]{1,100}$/).required(),
         address: Joi.string().regex(/^[a-zA-Z0-9 ]{1,100}$/).min(1).max(100).required(),
         number: Joi.string().regex(/^[a-zA-Z0-9 ]{1,100}$/).min(1).max(100).required(),
-        ipd: Joi.boolean().required(),
-        opd: Joi.boolean().required(),
+        // ipd: Joi.boolean().required(),
+        // opd: Joi.boolean().required(),
 
-        ipdDetails: Joi.when('ipd', {
-            is: true,
-            then: Joi.object({
-                doctor: Joi.string().required(),
-                admittedDate: Joi.date(),
-                roomNo: Joi.string().required(),
-                dischargedDate: Joi.date()
-            }),
-            otherwise: Joi.forbidden()
-        }),
-        opdDetails: Joi.when('opd', {
-            is: true,
-            then: Joi.object({
-                appointmentDate: Joi.date().required(),
-                doctor: Joi.string().required()
-            }),
-            otherwise: Joi.forbidden()
-        })
+        // ipdDetails: Joi.when('ipd', {
+        //     is: true,
+        //     then: Joi.object({
+        //         doctor: Joi.string().required(),
+        //         admittedDate: Joi.date(),
+        //         roomNo: Joi.string().required(),
+        //         dischargedDate: Joi.date()
+        //     }),
+        //     otherwise: Joi.forbidden()
+        // }),
+        // opdDetails: Joi.when('opd', {
+        //     is: true,
+        //     then: Joi.object({
+        //         appointmentDate: Joi.date().required(),
+        //         doctor: Joi.string().required()
+        //     }),
+        //     otherwise: Joi.forbidden()
+        // })
     });
 
     return schema.validate(data);

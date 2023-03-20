@@ -9,7 +9,7 @@ router.post("/register", async(req, res) => {
     //searching for existing number
     const numberExists = await Patient.findOne({ number: req.body.number });
     if (numberExists) return res.send("Number already exists");
-    z
+
     const regPatient = new Patient({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -18,10 +18,10 @@ router.post("/register", async(req, res) => {
         address: req.body.address,
         email: req.body.email,
         number: req.body.number,
-        ipd: req.body.ipd,
-        opd: req.body.opd,
-        ipdDetails: req.body.ipdDetails,
-        opdDetails: req.body.opdDetails,
+        // ipd: req.body.ipd,
+        // opd: req.body.opd,
+        // ipdDetails: req.body.ipdDetails,
+        // opdDetails: req.body.opdDetails,
     });
 
     console.log(regPatient.ipdDetails);
