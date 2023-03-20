@@ -9,23 +9,7 @@ router.post("/register", async(req, res) => {
     //searching for existing number
     const numberExists = await Patient.findOne({ number: req.body.number });
     if (numberExists) return res.send("Number already exists");
-    // const { firstname, lastname, age, sex, address, email, number, ipd, opd, ipdDetails, opdDetails } = req.body;
-
-    // // Create a new patient object with the received data
-    // const regPatient = new Patient({
-    //     firstname,
-    //     lastname,
-    //     age,
-    //     sex,
-    //     address,
-    //     email,
-    //     number,
-    //     ipd,
-    //     opd,
-    //     ipdDetails,
-    //     opdDetails
-    // })
-
+    z
     const regPatient = new Patient({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
