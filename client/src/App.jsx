@@ -4,6 +4,7 @@ import Login from "./components/pages/Login/Login";
 // import DocDashboard from "./components/pages/adminDashboard/Doctor/DocDashboard";
 import DoctorDashboard from "./components/pages/docDashboard/DocDashboard"
 import Dashboard from "./components/pages/adminDashboard/dashboard/Dashboard";
+import RecepDashboard from "./components/pages/recepDashboard/RecepDashboard";
 
 import Profile from "./components/pages/adminDashboard/Doctor/GetDoctors";
 //import app.css
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/doctor" element={<DoctorDashboard />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/receptionist" element={<RecepDashboard />} />
           <Route path="/admin/get-doctor" element={<Profile />} />
         </Routes>
       </BrowserRouter>

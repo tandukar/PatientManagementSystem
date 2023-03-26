@@ -2,14 +2,21 @@ const router = require("express").Router();
 const Doctor = require("../model/Doctor");
 const Patient = require("../model/Patient");
 const Appointment = require("../model/Appointment");
-const { docRegisterValidation, loginValidation } = require("../validation");
 
-router.post("/create", async(req, res) => {
+router.post("/create", async(req, res, next) => {
 
+
+    const doctor = await Doctor.findById(req.body.doctorId);
+    const patient = await Patient.findById(req.body.patientId);
+    if (!doctor || !patient) {
+        return res.status(404).json({ message: "Doctor or Patient not found" });
+    }
 
     const createApp = new Appointment({
         patientId: req.body.patientId,
+        patientName: patient.firstname + " " + patient.lastname,
         doctorId: req.body.doctorId,
+        docName: doctor.firstname + " " + doctor.lastname,
         reason: req.body.reason,
         notes: req.body.notes,
         procedures: req.body.procedures,
@@ -23,6 +30,7 @@ router.post("/create", async(req, res) => {
     try {
         const savedDoc = await createApp.save();
         res.json(savedDoc);
+
     } catch (err) {
         res.status(400).send(err.message);
     }
