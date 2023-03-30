@@ -1,21 +1,22 @@
 import React from "react";
 
-// import Sidebar from "./sidebar/Sidebar";
-import axios from "axios";
 import Box from "@mui/material/Box";
 
 import { CiSearch } from "react-icons/ci";
 
 import ReceptionistList from "./GetReceptionists";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { useRegisterReceptionistsMutation } from "./ReceptionistApiSlice";
 const RecepDashboard = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);
 
-  const printHandler = (event) => {
-    console.log(searchTerm);
-  };
+  const [registerReceptionist, { data, error, isLoading }] =
+    useRegisterReceptionistsMutation();
 
-  const registerHandler = (event) => {
+  const registerHandler = async (event) => {
     const data = new FormData(event.currentTarget);
 
     const payload = {
@@ -30,19 +31,26 @@ const RecepDashboard = () => {
 
     event.preventDefault();
 
-    axios
-      .post("http://localhost:5000/api/receptionists/register", payload)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-
+    try {
+      const register = await registerReceptionist(payload).unwrap();
+      console.log(register);
+      // clear input fields
+      event.target.fname.value = "";
+      event.target.lname.value = "";
+      event.target.age.value = "";
+      event.target.sex.value = "";
+      event.target.email.value = "";
+      event.target.number.value = "";
+      event.target.address.value = "";
+      toast.success("Receptionist registered successfully");
+    } catch (err) {
+      console.log(err);
+    }
     console.log(payload);
   };
   return (
     <>
+    <ToastContainer/>
       <div className="flex flex-col md:flex-row  w-full ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
         <div className="md:w-2/3 p-4     ">
@@ -72,10 +80,7 @@ const RecepDashboard = () => {
                   value={searchTerm}
                   onChange={(event) => setsearchTerm(event.target.value)}
                 />
-                <button
-                  className="absolute right-0 top-0 p-2 "
-                  onClick={printHandler}
-                >
+                <button className="absolute right-0 top-0 p-2 ">
                   <CiSearch className="w-6 h-6  text-custom-blue" />
                 </button>
               </div>

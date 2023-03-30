@@ -1,14 +1,15 @@
 import React from "react";
 
-// import Sidebar from "./sidebar/Sidebar";
-import axios from "axios";
 import Box from "@mui/material/Box";
 
 import { CiSearch } from "react-icons/ci";
 
 import Profile from "./GetDoctors";
 
-import  {useRegisterDoctorsMutation} from "./DoctorApiSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { useRegisterDoctorsMutation } from "./DoctorApiSlice";
 
 const DocDashboard = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);
@@ -17,10 +18,7 @@ const DocDashboard = () => {
     console.log(searchTerm);
   };
 
- 
   const [registerDoctor, { isLoading, error }] = useRegisterDoctorsMutation();
-
-  
 
   const registerHandler = async (event) => {
     const data = new FormData(event.currentTarget);
@@ -39,11 +37,21 @@ const DocDashboard = () => {
 
     event.preventDefault();
 
-    try{
+    try {
       const register = await registerDoctor(payload).unwrap();
       console.log(register);
-    }
-    catch(err){
+      // clear input fields
+      event.target.fname.value = "";
+      event.target.lname.value = "";
+      event.target.age.value = "";
+      event.target.sex.value = "";
+      event.target.email.value = "";
+      event.target.number.value = "";
+      event.target.address.value = "";
+      event.target.qualification.value = "";
+      event.target.specialization.value = "";
+      toast.success("Doctor registered successfully");
+    } catch (err) {
       console.log(err);
     }
 
@@ -51,6 +59,7 @@ const DocDashboard = () => {
   };
   return (
     <>
+    <ToastContainer/>
       <div className="flex flex-col md:flex-row  w-full ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
         <div className="md:w-2/3 p-4     ">

@@ -61,7 +61,7 @@ const DoctorList = () => {
     .then((result) => {
       console.log(`Doctor deleted: ${deleteDoctorId}`);
     setShowDeleteConfirmation(false);
-    toast.success("Doctor deleted successfully");
+    toast.error("Doctor deleted successfully");
 
 
 
