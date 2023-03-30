@@ -11,20 +11,6 @@ const Receptionist = require("../model/Receptionist");
 const { loginValidation } = require("../validation");
 const { Model } = require("mongoose");
 
-//YO EKAI XIN MA HERNU PARXA SESSION ID VALIDATE GARNA LAI YO CHAINXA
-
-// function validateCookie(req, res, next) {
-//     const { cookies } = req;
-
-//     if ("session_id" in cookies) {
-//         console.log("cookie found");
-//         if (cookies.session_id === token) {
-//             next();
-//         } else res.status(400).send({ msg: "Authentication Failed" });
-//     } else res.status(400).send({ msg: "Authentication Failed" });
-//     console.log(cookies);
-//     next();
-// }
 
 router.post("/login", async(req, res) => {
     let model;
@@ -61,19 +47,14 @@ router.post("/login", async(req, res) => {
     const token = jwt.sign({ _id: user.id }, process.env.TOKEN, {
         expiresIn: "1h",
     });
+    res.setHeader("Authorization", `Bearer ${token}`);
 
-    //store cookie in browser
-    // res.cookie("session_id", token, {
-    //     httpOnly: true,
-    //     maxAge: 60 * 60 * 1000, // 1 hour
-    // })
+    console.log(`Authorization header value: Bearer ${token}`);
+
+
     res.status(200).json({ token: token, role: role });
 
-    // res.status(200).json({ msg: "Login Successfull" });
 
-    // res.header("auth-token", token).send(token);
-    // console.log(token)
-    // res.send('login')
 });
 
 module.exports = router;

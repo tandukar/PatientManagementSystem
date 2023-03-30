@@ -1,8 +1,11 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateField } from '@mui/x-date-pickers/DateField';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function CreateAppointment() {
   return (
@@ -30,56 +33,26 @@ export default function CreateAppointment() {
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="reason"
-            name="reason"
-            label="Reason"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="notes"
-            name="notes"
-            label="Notes"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-          />
-        </Grid>
+ 
         <Grid item xs={12}>
           <TextField
             required
-            id="procedures"
-            name="procedures"
-            label="Procedures"
+            id="Reason"
+            name="Reason"
+            label="Reason"
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            id="diagnosis"
-            name="diagnosis"
-            label="Diagnosis"
-            fullWidth
-            autoComplete="shipping address-line2"
-            variant="standard"
-          />
-        </Grid>
+       
         <Grid item xs={12} sm={6}>
           <TextField
             required
             id="ipd"
             name="ipd"
             label="ipd"
-            fullWidth 
+            fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
           />
@@ -105,23 +78,12 @@ export default function CreateAppointment() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="country"
-            name="country"
-            label="Country"
-            fullWidth
-            autoComplete="shipping country"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox color="secondary" name="saveAddress" value="yes" />
-            }
-            label="Use this address for payment details"
-          />
+          <label className="form-label inline-block mb-2">
+            Appointment Date
+          </label>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker className="outline-blue-500" />
+          </LocalizationProvider>
         </Grid>
       </Grid>
     </>

@@ -8,6 +8,7 @@ import { CiSearch } from "react-icons/ci";
 
 import Profile from "./GetDoctors";
 
+import  {useRegisterDoctorsMutation} from "./DoctorApiSlice";
 
 const DocDashboard = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);
@@ -17,8 +18,11 @@ const DocDashboard = () => {
   };
 
  
+  const [registerDoctor, { isLoading, error }] = useRegisterDoctorsMutation();
 
-  const registerHandler = (event) => {
+  
+
+  const registerHandler = async (event) => {
     const data = new FormData(event.currentTarget);
 
     const payload = {
@@ -35,14 +39,13 @@ const DocDashboard = () => {
 
     event.preventDefault();
 
-    axios
-      .post("http://localhost:5000/api/doctors/register", payload)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+    try{
+      const register = await registerDoctor(payload).unwrap();
+      console.log(register);
+    }
+    catch(err){
+      console.log(err);
+    }
 
     console.log(payload);
   };

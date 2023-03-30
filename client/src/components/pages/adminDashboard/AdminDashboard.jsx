@@ -4,12 +4,14 @@ import Sidebar from "./sidebar/Sidebar";
 import DocDashboard from "./Doctor/DocDashboard";
 import RecepDashboard from "./receptionist/RecepDashboard";
 import Dashboard from "./dashboard/Dashboard";
+import BedsRoomsDashboard from "./bedsAndRooms/Dashboard";
 
 import { HiOutlineMenuAlt1 } from "react-icons/hi"; 
 
 import { Navigate } from "react-router-dom";
 
 const AdminDashboard = () => {
+
   const [sidebarOpen, setSidebarOpen] = React.useState(true);
   const [authenticated, setAuthenticated] = React.useState(null);
   const [selectedItem, setSelectedItem] = React.useState("Dashboard");
@@ -23,6 +25,9 @@ const AdminDashboard = () => {
     if (token) {
       setAuthenticated(true);
       console.log("token");
+      const headers = {
+        'Authorization': `Bearer ${token}`
+      };
     } else {
       console.log("no token");
       setAuthenticated(false);
@@ -62,6 +67,8 @@ const AdminDashboard = () => {
                 <DocDashboard />
               ) : selectedItem === "Receptionist" ? (
                 <RecepDashboard />
+              ) : selectedItem === "Rooms/Beds" ? (
+                <BedsRoomsDashboard />
               ) : null}
             </div>
           </div>
