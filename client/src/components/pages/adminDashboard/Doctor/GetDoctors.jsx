@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useGetDoctorsQuery, useDeleteDoctorsMutation } from "./DoctorApiSlice";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const token = sessionStorage?.getItem("token");
 
@@ -60,6 +61,8 @@ const DoctorList = () => {
     .then((result) => {
       console.log(`Doctor deleted: ${deleteDoctorId}`);
     setShowDeleteConfirmation(false);
+    toast.success("Doctor deleted successfully");
+
 
 
     })
@@ -68,6 +71,7 @@ const DoctorList = () => {
 
   return (
     <div>
+      <ToastContainer />
       <ul>
         {doctors && doctors.map((doctor) => (
 

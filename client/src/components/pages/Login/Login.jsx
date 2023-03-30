@@ -14,10 +14,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const printHandler = (event) => {
-    console.log(email, password);
-  };
-
   const submitHandler = (event) => {
     event.preventDefault();
     axios
@@ -34,7 +30,7 @@ const Login = () => {
         if (res.data.token && res.data.role) {
           sessionStorage.setItem("token", res.data.token);
           sessionStorage.setItem("role", res.data.role);
-        
+
           if (res.data.role === "Admin") {
             navigate("/admin");
           } else if (res.data.role === "Doctor") {
@@ -74,34 +70,42 @@ const Login = () => {
         <div className="md:w-3/4  ">
           <div className="flex justify-center items-center h-screen ">
             <div className="flex flex-col gap-4 max-w-screen-md mx-auto ">
-              <div className="text-left font-bold text-3xl text-blue-800 ">
-                Welcome Back
+              <div className="text-left  text-3xl  ">Welcome Back</div>
+              <div className="text-left text-gray-500 text-1xl mb-7 ">
+                Let's get started! Please enter your details.
               </div>
               <div className=" md:container md:mx-auto ">
-                <label className="form-label inline-block font-bold mb-2 text-gray-700">
+                <label className="form-label inline-block font-bold mb-2 text-gray-600">
                   Email
                 </label>
                 <input
                   type="Email"
-                  className="bg-slate-100 appearance-none border-2  rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  className=" appearance-none border-2  rounded-lg w-full py-2 px-4 text-gray-500 leading-tight focus:outline-none focus:border-blue-500"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
+                  placeholder="Enter your email"
                 />
               </div>
               <div className="  md:container md:mx-auto ">
-                <label className="form-label font-bold inline-block mb-2 text-gray-700">
+                <label className="form-label font-bold inline-block mb-2 text-gray-600">
                   Password
                 </label>
                 <input
-                  type="Text"
-                  className="bg-gray-100 appearance-none border-2  rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:"
+                  type="password"
+                  className=" appearance-none border-2  rounded-lg w-full py-2 px-4 text-gray-500 leading-tight focus:outline-none focus:border-blue-500 focus:"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
+                  placeholder="•••••••••••"
                 />
               </div>
-              <div className="text-left pt-2">
+
+              <div className="text-right font-bold text-blue-600">
+                Forgot password?
+              </div>
+
+              <div className="text-left pt-1">
                 <button
-                  className="w-1/2  text-white bg-custom-blue hover:bg-blue-700  font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+                  className="w-full  text-white bg-blue-600 hover:bg-blue-700  font-bold py-2 px-4 rounded-lg focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
                   onClick={submitHandler}
                 >
                   Submit
