@@ -59,8 +59,7 @@ const AdminDashboard = () => {
           )}
           <div className="flex-1 md:mx-10 md:mt-2 h-screen">
             <div className="h-full bg-gray-100">
-              {/* <DocDashboard /> */}
-              {/* <Dashboard /> */}
+        
               {selectedItem === "Dashboard" ? (
                 <Dashboard />
               ) : selectedItem === "Doctors" ? (

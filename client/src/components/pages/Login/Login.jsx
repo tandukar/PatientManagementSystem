@@ -28,7 +28,7 @@ const Login = () => {
         console.log(res.data.role);
 
         if (res.data.token && res.data.role) {
-          sessionStorage.setItem("token", res.data.token);
+          localStorage.setItem("token", res.data.token);
           sessionStorage.setItem("role", res.data.role);
 
           if (res.data.role === "Admin") {

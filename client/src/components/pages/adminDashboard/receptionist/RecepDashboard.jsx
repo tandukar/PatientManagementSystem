@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 
 import { CiSearch } from "react-icons/ci";
 
+import Select from "react-select";
+
 import ReceptionistList from "./GetReceptionists";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -16,8 +18,17 @@ const RecepDashboard = () => {
   const [registerReceptionist, { data, error, isLoading }] =
     useRegisterReceptionistsMutation();
 
+    
+    const genderOptions  = [
+      { value: 'male', label: 'Male' },
+      { value: 'female', label: 'Female' },
+      { value: 'other', label: 'Other' }
+    ]
+    
   const registerHandler = async (event) => {
     const data = new FormData(event.currentTarget);
+
+  
 
     const payload = {
       firstname: data.get("fname"),
@@ -150,12 +161,14 @@ const RecepDashboard = () => {
                       <label className="form-label inline-block mb-2 text-custom-blue">
                         Sex
                       </label>
-                      <input
+                      {/* <input
                         id="sex"
                         name="sex"
                         type="Text"
                         className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      />
+                      /> */}
+                    <Select options={genderOptions } />
+                    
                     </div>
                   </div>
                   <div className="md:w-full">
