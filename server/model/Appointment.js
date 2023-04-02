@@ -28,41 +28,48 @@ const appointmentSchema = mongoose.Schema({
     },
     notes: {
         type: [String],
-        required: [true, "Reason required"],
     },
     procedures: {
         type: [String],
-        required: [true, "procedures required"],
     },
     diagnosis: {
         type: String,
-        required: [true, "diagnosis required"],
     },
-    ipd: {
-        type: Boolean,
-        default: false,
+    // ipd: {
+    //     type: Boolean,
+    //     default: false,
+    // },
+    // opd: {
+    //     type: Boolean,
+    //     default: false,
+    // },
+    patientType: {
+        type: String,
+        enum: ["ipd", "opd"],
+        required: [true, "Patient Type required"],
     },
-    opd: {
-        type: Boolean,
-        default: false,
+    appointmentDate: {
+        type: Date,
     },
-    ipdDetails: {
-        roomNo: {
-            type: String,
-        },
-        admittedDate: {
-            type: Date,
-        },
-        dischargedDate: {
-            type: Date,
-        },
+    roomNo: {
+        type: String,
     },
-    opdDetails: {
-        appointmentDate: {
-            type: Date,
-            required: [true, "Appointment Date required"],
-        },
-    },
+    // ipdDetails: {
+    //     roomNo: {
+    //         type: String,
+    //     },
+    //     admittedDate: {
+    //         type: Date,
+    //     },
+    //     dischargedDate: {
+    //         type: Date,
+    //     },
+    // },
+    // opdDetails: {
+    //     appointmentDate: {
+    //         type: Date,
+    //     },
+    // },
     status: {
         type: String,
         enum: ["pending", "completed", "cancelled"],

@@ -1,8 +1,10 @@
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-// import { LocalizationProvider } from "@mui/x-date-pickers";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
+import { useRegisterAppointmentsMutation } from "./AppointmentApiSlice";
 
 import DatePicker from "react-datepicker";
 
@@ -15,72 +17,107 @@ import { useState } from "react";
 
 const CreateAppointment = () => {
   const patientType = [
-    { value: "Inpatient", label: "Inpatient" },
-    { value: "Outpatient", label: "Outpatient" },
+    { value: "ipd", label: "Inpatient" },
+    { value: "opd", label: "Outpatient" },
   ];
 
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  const [registerAppointments, { isLoading, error }] =
+    useRegisterAppointmentsMutation();
+
   const onSubmit = (data) => {
-    console.log({ ...data, selectedDate });
+
+
+
+    console.log("data", data);
+    console.log("selectedOption", selectedOption);
+    console.log("selectedDate", selectedDate);
+    const appointmentData = { ...data, patientType: selectedOption.value, appointmentDate: selectedDate };
+    registerAppointments(appointmentData);
+    toast.success("Appointment created successfully");     
+    console.log(appointmentData)
+    
   };
 
   const handleSelectChange = (selectedOption) => {
     setSelectedOption(selectedOption);
     setValue("patientType", selectedOption.value);
+  
+
+
   };
-  selectedDate;
   const handleDateChange = (selectedDate) => {
     setSelectedDate(selectedDate);
+
   };
 
   return (
     <>
+    <ToastContainer/>
       <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <label>Patient Id</label>
+
             <TextField
-              required
               id="patientId"
-              name="patientId"
               // label="Patient Id"
               fullWidth
               autoComplete="given-name"
               variant="outlined"
-              {...register("patientId")}
+              error={errors.patientId ? true : false}
+              {...register("patientId", { required: "This is required" })}
             />
+            {errors.patientId && (
+              <p className={errors.patientId ? "text-red-500" : ""}>
+                {errors.patientId.message}
+              </p>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
-          <label>Doctor Id</label>
+            <label>Doctor Id</label>
 
             <TextField
-              required
               id="doctorId"
-              name="doctorId"
               // label="Doctor Id"
               fullWidth
               autoComplete="family-name"
               variant="outlined"
-              {...register("doctorId")}
+              error={errors.doctorId ? true : false}
+              {...register("doctorId", { required: "This is required" })}
             />
+            {errors.doctorId && (
+              <p className={errors.doctorId ? "text-red-500" : ""}>
+                {errors.doctorId.message}
+              </p>
+            )}
           </Grid>
 
           <Grid item xs={12}>
-          <label>Reason</label>
+            <label>Reason</label>
 
             <TextField
-              required
-              id="Reason"
-              name="Reason"
+              id="reason"
               // label="Reason"
               fullWidth
               autoComplete="shipping address-line1"
               variant="outlined"
-              {...register("Reason")}
+              error={errors.reason ? true : false}
+              {...register("reason", {required: "This is required" })} 
             />
+            {errors.reason && (
+              <p className={errors.reason ? "text-red-500" : ""}>
+                {errors.reason.message}
+              </p>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             <label>Select patient type</label>
@@ -94,15 +131,19 @@ const CreateAppointment = () => {
           <Grid item xs={12} sm={6}>
             <label>Room No</label>
             <TextField
-              required
               id="roomNo"
-              name="roomNo"
               // label="Room No"
               fullWidth
               autoComplete="shipping postal-code"
               variant="outlined"
-              {...register("roomNo")}
+              error={errors.roomNo ? true : false}
+              {...register("roomNo", { required: "This is required" })}
             />
+            {errors.roomNo && (
+              <p className={errors.roomNo ? "text-red-500" : ""}>
+                {errors.roomNo.message}
+              </p>
+            )}
           </Grid>
           <Grid item xs={12} sm={6}>
             <label className="form-label inline-block mb-2">

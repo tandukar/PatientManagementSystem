@@ -13,6 +13,7 @@ const adminRoute = require("./routes/admin");
 const authRoute = require("./routes/auth");
 const patientRoute = require("./routes/patients");
 const appointmentRoute = require("./routes/appointment");
+const roomBedRoute = require("./routes/roomBed")
 
 const initializeAdmin = require("./initializeAdmin");
 
@@ -66,6 +67,7 @@ app.use('/api/receptionists', recepRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/patients", patientRoute);
 app.use("/api/appointments", appointmentRoute);
+app.use("/api/roomBed", roomBedRoute);
 
 app.listen(5000, () => {
     console.log("port running in 5000");

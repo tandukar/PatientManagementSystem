@@ -21,7 +21,7 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
     if (token) {
       setAuthenticated(true);
       console.log("token");

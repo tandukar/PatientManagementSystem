@@ -20,7 +20,7 @@ const receptionistSchema = mongoose.Schema({
     },
     sex: {
         type: String,
-        required: [true, 'age required'],
+        required: [true, 'sex required'],
 
     },
     email: {
