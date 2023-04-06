@@ -1,67 +1,89 @@
 import React from "react";
 
 import Box from "@mui/material/Box";
-
 import { CiSearch } from "react-icons/ci";
 
 import Select from "react-select";
-
 import ReceptionistList from "./GetReceptionists";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { useRegisterReceptionistsMutation } from "./ReceptionistApiSlice";
-const RecepDashboard = () => {
-  const [searchTerm, setsearchTerm] = React.useState([]);
 
-  const [registerReceptionist, { data, error, isLoading }] =
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+
+const RecepDashboard = () => {
+  const sex = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
+  ];
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  const [searchTerm, setsearchTerm] = React.useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const [registerReceptionist, {error, isLoading }] =
     useRegisterReceptionistsMutation();
 
-    
-    const genderOptions  = [
-      { value: 'male', label: 'Male' },
-      { value: 'female', label: 'Female' },
-      { value: 'other', label: 'Other' }
-    ]
-    
-  const registerHandler = async (event) => {
-    const data = new FormData(event.currentTarget);
+  const onSubmit = (data) => {
+    console.log("data", data);
+    // console.log("selectedOption", selectedOption);
 
-  
-
-    const payload = {
-      firstname: data.get("fname"),
-      lastname: data.get("lname"),
-      age: data.get("age"),
-      sex: data.get("sex"),
-      email: data.get("email"),
-      number: data.get("number"),
-      address: data.get("address"),
-    };
-
-    event.preventDefault();
-
-    try {
-      const register = await registerReceptionist(payload).unwrap();
-      console.log(register);
-      // clear input fields
-      event.target.fname.value = "";
-      event.target.lname.value = "";
-      event.target.age.value = "";
-      event.target.sex.value = "";
-      event.target.email.value = "";
-      event.target.number.value = "";
-      event.target.address.value = "";
-      toast.success("Receptionist registered successfully");
-    } catch (err) {
-      console.log(err);
-    }
+    const payload = { ...data, sex: selectedOption.value };
+    registerReceptionist(payload);
+    toast.success("Receptionist registered successfully");
     console.log(payload);
   };
+
+  const handleSelectChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    setValue("sex", selectedOption.value);
+  };
+
+  // const registerHandler = async (event) => {
+  //   const data = new FormData(event.currentTarget);
+
+  //   const payload = {
+  //     firstname: data.get("firstname"),
+  //     lastname: data.get("lastname"),
+  //     age: data.get("age"),
+  //     sex: data.get("sex"),
+  //     email: data.get("email"),
+  //     number: data.get("number"),
+  //     address: data.get("address"),
+  //   };
+
+  //   event.preventDefault();
+
+  //   try {
+  //     const register = await registerReceptionist(payload).unwrap();
+  //     console.log(register);
+
+  //     // clear input fields
+  //     event.target.firstname.value = "";
+  //     event.target.lastname.value = "";
+  //     event.target.age.value = "";
+  //     event.target.sex.value = "";
+  //     event.target.email.value = "";
+  //     event.target.number.value = "";
+  //     event.target.address.value = "";
+  //     toast.success("Receptionist registered successfully");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   console.log(payload);
+  // };
+
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="flex flex-col md:flex-row  w-full ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
         <div className="md:w-2/3 p-4     ">
@@ -111,18 +133,19 @@ const RecepDashboard = () => {
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Register Receptionists
             </div>
-            <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
-              <Box component="form" onSubmit={registerHandler}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 font-semibold">
                 <div className="flex md:flex-row gap-2 flex-col">
                   <div className=" md:container md:mx-auto ">
                     <label className="form-label inline-block mb-2 text-custom-blue">
                       First name
                     </label>
                     <input
-                      id="fname"
-                      name="fname"
+                      id="firstname"
                       type="Text"
                       className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      error={errors.firstname ? true : false}
+                      {...register("firstname", { required: "This is required" })}
                     />
                   </div>
                   <div className="  md:container md:mx-auto ">
@@ -133,10 +156,11 @@ const RecepDashboard = () => {
                       Last name
                     </label>
                     <input
-                      id="lname"
-                      name="lname"
+                      id="lastname"
                       type="Text"
                       className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      error={errors.lastname ? true : false}
+                      {...register("lastname", { required: "This is required" })}
                     />
                   </div>
                 </div>
@@ -150,9 +174,10 @@ const RecepDashboard = () => {
                       </label>
                       <input
                         id="age"
-                        name="age"
                         type="Number"
                         className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                        error={errors.age ? true : false}
+                        {...register("age", { required: "This is required" })}
                       />
                     </div>
                   </div>
@@ -161,14 +186,12 @@ const RecepDashboard = () => {
                       <label className="form-label inline-block mb-2 text-custom-blue">
                         Sex
                       </label>
-                      {/* <input
-                        id="sex"
+                      <Select
+                        options={sex}
                         name="sex"
-                        type="Text"
-                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      /> */}
-                    <Select options={genderOptions } />
-                    
+                        onChange={handleSelectChange}
+                        value={selectedOption}
+                      />
                     </div>
                   </div>
                   <div className="md:w-full">
@@ -181,9 +204,12 @@ const RecepDashboard = () => {
                       </label>
                       <input
                         id="number"
-                        name="number"
                         type="Text"
                         className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                        error={errors.number ? true : false}
+                        {...register("number", {
+                          required: "This is required",
+                        })}
                       />
                     </div>
                   </div>
@@ -197,9 +223,10 @@ const RecepDashboard = () => {
                     </label>
                     <input
                       id="email"
-                      name="email"
                       type="email"
                       className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      error={errors.email ? true : false}
+                      {...register("email", { required: "This is required" })}
                     />
                   </div>
 
@@ -209,9 +236,10 @@ const RecepDashboard = () => {
                     </label>
                     <input
                       id="address"
-                      name="address"
                       type="Text"
                       className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      error={errors.address ? true : false}
+                      {...register("address", { required: "This is required" })}
                     />
                   </div>
                 </div>
@@ -225,9 +253,10 @@ const RecepDashboard = () => {
                     Submit
                   </button>
                 </div>
-              </Box>
-            </div>
+              </div>
+            </form>
           </div>
+
           {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
         </div>
       </div>

@@ -34,9 +34,6 @@ const CreateAppointment = () => {
     useRegisterAppointmentsMutation();
 
   const onSubmit = (data) => {
-
-
-
     console.log("data", data);
     console.log("selectedOption", selectedOption);
     console.log("selectedDate", selectedDate);
@@ -44,15 +41,11 @@ const CreateAppointment = () => {
     registerAppointments(appointmentData);
     toast.success("Appointment created successfully");     
     console.log(appointmentData)
-    
   };
 
   const handleSelectChange = (selectedOption) => {
     setSelectedOption(selectedOption);
     setValue("patientType", selectedOption.value);
-  
-
-
   };
   const handleDateChange = (selectedDate) => {
     setSelectedDate(selectedDate);
