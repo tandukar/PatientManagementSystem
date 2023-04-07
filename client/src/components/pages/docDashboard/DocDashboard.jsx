@@ -6,14 +6,20 @@ import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import Appointment from "./appointment/Appointment";
 
 import { Navigate } from "react-router-dom";
+import jwtDecode from 'jwt-decode';
+
+
 
 const DoctorDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [authenticated, setAuthenticated] = React.useState(null);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
+    const token = localStorage.getItem("token");
+
     if (token) {
+      const decodedToken = jwtDecode(token);
+      console.log(decodedToken);
       setAuthenticated(true);
       console.log("token");
     } else {
