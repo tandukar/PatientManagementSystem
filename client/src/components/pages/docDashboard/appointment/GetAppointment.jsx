@@ -1,43 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from "@mui/material";
 import { useDoctorDetailQuery, useAppointmentsQuery } from "../DoctorApiSlice";
 import { getIdFromLocalStorage } from "../../../pages/utlis";
-// Delete confirmation pop-up component
-const DeleteConfirmation = ({ onCancel, onConfirm }) => {
-  return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white rounded-xl p-8">
-        <p className="text-lg font-bold mb-4">
-          Are you sure you want to delete this doctor?
-        </p>
-        <div className="flex justify-end">
-          <button className="mr-4" onClick={onCancel}>
-            Cancel
-          </button>
-          <button
-            className="bg-custom-blue text-white px-4 py-2 rounded-md"
-            onClick={onConfirm}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
-  );
+
+const createData = (name, appointmentDate, reason, type) => {
+  return { name, appointmentDate, reason, type };
 };
 
 const AppointmentList = () => {
-  const [deleteDoctorId, setDeleteDoctorId] = useState(null);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [userId, setUserId] = useState(null);
-  const {
-    data: appointments = [],
-    error,
-    isLoading,
-  } = useAppointmentsQuery("6412a1d534c014547230ae68");
-
-  console.log("from get==", appointments);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -48,40 +28,110 @@ const AppointmentList = () => {
     console.log("ID =", userId);
   }, []);
 
-  return (
-    <div>
-      <ToastContainer />
-      <ul>
-        {appointments &&
-          appointments.map((appointment) => {
-            const appointmentDate = new Date(
-              appointment.appointmentDate
-            ).toLocaleDateString();
+  const {
+    data: appointments = [],
+    error,
+    isLoading,
+  } = useAppointmentsQuery(userId);
+  console.log("from get==", appointments);
 
-            return (
-              <div className="p-1 " key={appointment.id}>
-                <li>
-                  <div className="bg-white rounded-xl h-10 p-2 flex flex-row">
-                    <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
-                      {appointment.patientName}
-                    </div>
-                    <div className="w-1/4 font-bold text-green-800 text-md text-end">
-                      {appointmentDate }
-                    </div>
-                    {/* <div className="w-1/4 font-bold text-red-700 text-md text-end mr-5">
-                  <button
-                    type="submit"
+  const columns = [
+    { id: "name", label: "Name", minWidth: 170 },
+    { id: "appointmentDate", label: "Appointment Date", minWidth: 100 },
+    {
+      id: "reason",
+      label: "Reason",
+      minWidth: 170,
+      align: "right",
+    },
+    {
+      id: "type",
+      label: "Type",
+      minWidth: 170,
+      align: "right",
+    },
+  ];
+
+  const rows = appointments
+    ? appointments.map((appointment) => {
+        const appointmentDate = new Date(
+          appointment.appointmentDate
+        ).toLocaleDateString();
+        return createData(
+          appointment.patientName,
+          appointmentDate,
+          appointment.reason,
+          appointment.patientType
+        );
+      })
+    : [];
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  return (
+    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => {
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={row.appointmentDate}
                   >
-                    Delete
-                  </button>
-                </div> */}
-                  </div>
-                </li>
-              </div>
-            );
-          })}
-      </ul>
-    </div>
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === "number"
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
   );
 };
 

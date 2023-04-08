@@ -27,7 +27,7 @@ const DoctorDashboard = () => {
 
 
     // Fetch the user details using the user ID from the state variable
-    const { data: doctorDetail = [] } = useDoctorDetailQuery(userId);
+    const { data: doctorDetail = [] } = useDoctorDetailQuery(userId,{skip: userId===null});
     const { data: appointments = [] } = useAppointmentsQuery(userId);
 
     console.log("details====", doctorDetail.firstname);
