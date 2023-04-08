@@ -47,46 +47,14 @@ const RecepDashboard = () => {
     setValue("sex", selectedOption.value);
   };
 
-  // const registerHandler = async (event) => {
-  //   const data = new FormData(event.currentTarget);
 
-  //   const payload = {
-  //     firstname: data.get("firstname"),
-  //     lastname: data.get("lastname"),
-  //     age: data.get("age"),
-  //     sex: data.get("sex"),
-  //     email: data.get("email"),
-  //     number: data.get("number"),
-  //     address: data.get("address"),
-  //   };
-
-  //   event.preventDefault();
-
-  //   try {
-  //     const register = await registerReceptionist(payload).unwrap();
-  //     console.log(register);
-
-  //     // clear input fields
-  //     event.target.firstname.value = "";
-  //     event.target.lastname.value = "";
-  //     event.target.age.value = "";
-  //     event.target.sex.value = "";
-  //     event.target.email.value = "";
-  //     event.target.number.value = "";
-  //     event.target.address.value = "";
-  //     toast.success("Receptionist registered successfully");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   console.log(payload);
-  // };
 
   return (
     <>
       <ToastContainer />
       <div className="flex flex-col md:flex-row  w-full ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-        <div className="md:w-2/3 p-4     ">
+        <div className="md:w-2/3 p-4">
           <div className="flex md:flex-wrap flex-row ">
             {/* ```````````````````````````````````````` */}
             <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-xl text-white md:text-2xl text-xl font-bold mb-5">

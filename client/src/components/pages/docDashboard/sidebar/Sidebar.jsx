@@ -9,7 +9,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [visibleIcon, setvisibleIcon] = React.useState(false);
 
   const logoutHandler =()=>{
-    sessionStorage.removeItem("token"); 
+    localStorage.removeItem("token"); 
     sessionStorage.removeItem("role"); 
     window.location.href = "/login";
   }

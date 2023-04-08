@@ -5,8 +5,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
-
 import { CiSearch } from "react-icons/ci";
+
+
+import AppointmentList from "./GetAppointment";
 
 
 
@@ -71,9 +73,8 @@ const Appointment = () => {
           </div>
 
           <div className="flex flex-col gap-4 p-3 bg-slate-200 rounded-lg">
-            {/* ```````````````````````````````````````` */}
-            {loop}
-            {/* ```````````````````````````````````````` */}
+            {/* {loop} */}
+            <AppointmentList/>
           </div>
         </div>
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}

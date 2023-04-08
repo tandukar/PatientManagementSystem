@@ -1,33 +1,38 @@
 import React, { useEffect, useState } from "react";
-
 import Sidebar from "./sidebar/Sidebar";
-
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import Appointment from "./appointment/Appointment";
-
 import { Navigate } from "react-router-dom";
-import jwtDecode from 'jwt-decode';
-
-
+import { getIdFromLocalStorage } from "../utlis";
+import { useDoctorDetailQuery, useAppointmentsQuery } from "./DoctorApiSlice";
 
 const DoctorDashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = React.useState(false);
-  const [authenticated, setAuthenticated] = React.useState(null);
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(null);
+  const [userId, setUserId] = useState(null);
   useEffect(() => {
     const token = localStorage.getItem("token");
-
+    const id = getIdFromLocalStorage(token);
     if (token) {
-      const decodedToken = jwtDecode(token);
-      console.log(decodedToken);
+      setUserId(id);
       setAuthenticated(true);
       console.log("token");
+      console.log("ID =", userId);
+
     } else {
       console.log("no token");
       setAuthenticated(false);
     }
   }, []);
 
+
+    // Fetch the user details using the user ID from the state variable
+    const { data: doctorDetail = [] } = useDoctorDetailQuery(userId);
+    const { data: appointments = [] } = useAppointmentsQuery(userId);
+
+    console.log("details====", doctorDetail.firstname);
+    // console.log("details====", appointments);
+    
   if (authenticated === false) {
     return <Navigate replace to="/login" />;
   } else if (authenticated === true) {
@@ -58,7 +63,7 @@ const DoctorDashboard = () => {
         </div>
       </>
     );
-  } 
+  }
 };
 
 export default DoctorDashboard;

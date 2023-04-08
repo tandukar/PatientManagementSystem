@@ -4,7 +4,6 @@ import { useGetDoctorsQuery, useDeleteDoctorsMutation } from "./DoctorApiSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const token = localStorage?.getItem("token");
 
 // Delete confirmation pop-up component
 const DeleteConfirmation = ({ onCancel, onConfirm }) => {

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Doctor = require('../model/Doctor');
+const Appointment = require('../model/Appointment');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { docRegisterValidation, loginValidation } = require('../validation');
@@ -50,9 +51,9 @@ router.get('/', async(req, res) => {
 
 
 //get one doctor
-router.get('/find/:doctorId', async(req, res) => {
+router.get('/find/:id', async(req, res) => {
     try {
-        const findDoc = await Doctor.findById(req.params.doctorId);
+        const findDoc = await Doctor.findById(req.params.id);
         res.json(findDoc);
     } catch (err) {
         res.status(400).send(err.message);
@@ -88,6 +89,17 @@ router.delete('/deleteDoc/:id', async(req, res) => {
         res.json(err.message)
     }
 })
+
+//get appointments
+router.get('/appointments/:id', async(req, res) => {
+    try {
+        const getAppointment = await Appointment.find({ doctorId: req.params.id });
+        res.json(getAppointment);
+    } catch (err) {
+        res.json(err.message);
+    }
+})
+
 
 
 //Login

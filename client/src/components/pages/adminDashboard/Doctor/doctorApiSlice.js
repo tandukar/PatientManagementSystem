@@ -26,7 +26,14 @@ export const doctorApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["DOCTORS"],
         }),
+
+
     }),
 });
 
-export const { useGetDoctorsQuery, useRegisterDoctorsMutation, useDeleteDoctorsMutation } = doctorApiSlice;
+export const {
+    useGetDoctorsQuery,
+    useRegisterDoctorsMutation,
+    useDeleteDoctorsMutation,
+
+} = doctorApiSlice;

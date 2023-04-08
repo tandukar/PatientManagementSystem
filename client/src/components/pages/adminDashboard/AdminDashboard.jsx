@@ -1,39 +1,51 @@
 import React, { useEffect, useState } from "react";
-
+import { Navigate } from "react-router-dom";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
+import jwtDecode from "jwt-decode";
 import Sidebar from "./sidebar/Sidebar";
 import DocDashboard from "./Doctor/DocDashboard";
 import RecepDashboard from "./receptionist/RecepDashboard";
 import Dashboard from "./dashboard/Dashboard";
 import BedsRoomsDashboard from "./bedsAndRooms/Dashboard";
+import { useUserDetailQuery } from "./AdminApiSlice";
 
-import { HiOutlineMenuAlt1 } from "react-icons/hi"; 
-
-import { Navigate } from "react-router-dom";
+import { getIdFromLocalStorage } from "../utlis";
 
 const AdminDashboard = () => {
+  const [sidebarOpen, setSidebarOpen] = useState(true); // State variable to track whether the sidebar is open or closed
+  const [authenticated, setAuthenticated] = useState(null); // State variable to track whether the user is authenticated or not
+  const [selectedItem, setSelectedItem] = useState("Dashboard"); // State variable to track which item is currently selected in the sidebar
+  const [userId, setUserId] = useState(null); // State variable to track the ID of the currently logged in user
 
-  const [sidebarOpen, setSidebarOpen] = React.useState(true);
-  const [authenticated, setAuthenticated] = React.useState(null);
-  const [selectedItem, setSelectedItem] = React.useState("Dashboard");
-
+  // Callback function to handle clicks on items in the sidebar
   const handleItemClick = (item) => {
     setSelectedItem(item);
   };
 
   useEffect(() => {
+    // Get the JWT token from local storage
     const token = localStorage.getItem("token");
+    const id = getIdFromLocalStorage(token);
     if (token) {
-      setAuthenticated(true);
+      setUserId(id); // Set the user ID state variable
+      setAuthenticated(true); // Set the authenticated state variable to true
       console.log("token");
+      console.log(userId);
       const headers = {
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       };
     } else {
       console.log("no token");
-      setAuthenticated(false);
+      setAuthenticated(false); // Set the authenticated state variable to false
     }
   }, []);
 
+  // Fetch the user details using the user ID from the state variable
+  const { data: userDetail = [] } = useUserDetailQuery(userId);
+
+  console.log("details====", userDetail.firstname);
+
+  // If the user is not authenticated, redirect them to the login page
   if (authenticated === false) {
     return <Navigate replace to="/login" />;
   } else if (authenticated === true) {
@@ -59,7 +71,6 @@ const AdminDashboard = () => {
           )}
           <div className="flex-1 md:mx-10 md:mt-2 h-screen">
             <div className="h-full bg-gray-100">
-        
               {selectedItem === "Dashboard" ? (
                 <Dashboard />
               ) : selectedItem === "Doctors" ? (
