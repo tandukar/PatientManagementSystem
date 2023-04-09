@@ -5,7 +5,7 @@ import Login from "./components/pages/Login/Login";
 import DoctorDashboard from "./components/pages/docDashboard/DocDashboard";
 import Dashboard from "./components/pages/adminDashboard/dashboard/Dashboard";
 import RecepDashboard from "./components/pages/recepDashboard/RecepDashboard";
-
+import Patient from "./components/pages/recepDashboard/patient/Patient";
 import Profile from "./components/pages/adminDashboard/Doctor/GetDoctors";
 //import app.css
 import "./App.css";
@@ -21,6 +21,7 @@ function App() {
           <Route path="/doctor" element={<DoctorDashboard />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/receptionist" element={<RecepDashboard />} />
+          <Route path="/patient" element={<Patient />} />
           <Route path="/admin/get-doctor" element={<Profile />} />
         </Routes>
       </BrowserRouter>

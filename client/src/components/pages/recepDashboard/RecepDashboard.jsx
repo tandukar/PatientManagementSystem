@@ -6,7 +6,7 @@ import Sidebar from "../docDashboard/sidebar/Sidebar";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 
 import CreateAppointment from "./appointment/Appointment";
-
+import Patient from "./patient/Patient";
 import { Navigate } from "react-router-dom";
 
 import Container from "@mui/material/Container";
@@ -51,8 +51,8 @@ const RecepDashboard = () => {
               />
             </div>
           )}
-          <div className="flex-1  ">
-            <div className="min-height: 100vh ">
+          <div className="flex md:flex-row flex-col justtify-content-center">
+            <div className="md:w-1/2 min-height: 100vh ">
               <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
                 <Paper sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                   <Typography component="h1" variant="h5" align="center">
@@ -60,6 +60,17 @@ const RecepDashboard = () => {
                   </Typography>
 
                   <CreateAppointment />
+                </Paper>
+              </Container>
+            </div>
+            <div className="md:w-1/2 min-height: 100vh ">
+              <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+                <Paper sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+                  <Typography component="h1" variant="h5" align="center">
+                    Create Patient
+                  </Typography>
+
+                  <Patient />
                 </Paper>
               </Container>
             </div>
