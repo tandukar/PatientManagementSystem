@@ -7,7 +7,7 @@ import { HiOutlineMenuAlt1 } from "react-icons/hi";
 
 import CreateAppointment from "./appointment/Appointment";
 import Patient from "./patient/Patient";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 const RecepDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [authenticated, setAuthenticated] = React.useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,9 +29,13 @@ const RecepDashboard = () => {
       setAuthenticated(false);
     }
   }, []);
-
+  {
+    replace: true;
+  }
   if (authenticated === false) {
-    return <Navigate replace to="/login" />;
+    // return <Navigate replace to="/login" />;
+    navigate("/login", { replace: true });
+    return null;
   } else if (authenticated === true) {
     console.log("authenticated");
     return (

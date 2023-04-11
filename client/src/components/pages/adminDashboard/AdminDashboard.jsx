@@ -25,8 +25,9 @@ const AdminDashboard = () => {
   useEffect(() => {
     // Get the JWT token from local storage
     const token = localStorage.getItem("token");
-    const id = getIdFromLocalStorage(token);
     if (token) {
+      const id = getIdFromLocalStorage(token);
+
       setUserId(id); // Set the user ID state variable
       setAuthenticated(true); // Set the authenticated state variable to true
       console.log("token");
@@ -43,13 +44,14 @@ const AdminDashboard = () => {
   // Fetch the user details using the user ID from the state variable
   const { data: userDetail = [] } = useUserDetailQuery(userId);
 
-  console.log("details====", userDetail.firstname);
 
   // If the user is not authenticated, redirect them to the login page
   if (authenticated === false) {
     return <Navigate replace to="/login" />;
   } else if (authenticated === true) {
     console.log("authenticated");
+  console.log("details====", userDetail.firstname);
+
     return (
       <>
         <div className="flex flex-col md:flex-row bg-gray-100 ">

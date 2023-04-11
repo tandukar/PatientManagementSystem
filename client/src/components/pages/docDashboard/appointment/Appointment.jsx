@@ -6,13 +6,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import { CiSearch } from "react-icons/ci";
-
-
 import AppointmentList from "./GetAppointment";
 
-
-
-const Appointment = () => {
+const Appointment = (props) => {
   const [searchTerm, setsearchTerm] = React.useState([]);
   const [email, setEmail] = React.useState([]);
 
@@ -33,22 +29,21 @@ const Appointment = () => {
   };
   return (
     <>
-      <div className="flex flex-col md:flex-row  w-full ">
-        {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-        <div className="md:w-1/2 p-4     ">
-          <div className="flex md:flex-wrap flex-row   mt-2">
-            {/* ```````````````````````````````````````` */}
+      <div className="flex flex-col md:flex-row  w-full p-3 ">
+        <div className="md:w-1/2 ">
+          <div className="flex md:flex-wrap flex-row mt-2">
             <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white md:text-2xl text-xl font-bold mb-5">
-              <div className=" flex w-1/2">Appointments</div>
-              <div className="flex  w-1/2 justify-center items-center">
-                <div className="md:text-8xl text-6xl font-bold text-white">
-                  12
+              <div className="flex w-1/2">Hello, Dr. {props.docNameProp}</div>
+              <div className="flex w-1/2 justify-center items-center">
+                <div>
+                  <img
+                    className="object-cover w-full md:max-h-64 h-full"
+                    src="http://127.0.0.1:5173/doctor.png"
+                  />
                 </div>
               </div>
             </div>
-            {/* ```````````````````````````````````````` */}
           </div>
-
           <div className="flex flex-col md:flex-row">
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Appointments
@@ -73,13 +68,13 @@ const Appointment = () => {
           </div>
 
           <div className="flex flex-col gap-4 p-3 bg-slate-200 rounded-lg">
-            {/* {loop} */}
-            <AppointmentList/>
+            <AppointmentList />
           </div>
         </div>
+
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
-        <div className="md:w-1/2 md:p-4 md:mx-auto">
+        <div className="md:w-1/2  md:mx-auto">
           <div className="flex flex-col p-4 gap-8  mt-5  md:ml-10">
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Create Revisits
@@ -118,7 +113,7 @@ const Appointment = () => {
                     Appointment Date
                   </label>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker className="outline-blue-500"  />
+                    <DatePicker className="outline-blue-500" />
                   </LocalizationProvider>
                 </div>
 
@@ -147,7 +142,7 @@ const Appointment = () => {
                 <TextField
                   id="outlined-multiline-static"
                   // label="Multiline"
-                  
+
                   multiline
                   rows={4}
                 />

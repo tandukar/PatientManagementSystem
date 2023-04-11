@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar/Sidebar";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import Appointment from "./appointment/Appointment";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { getIdFromLocalStorage } from "../utlis";
 import { useDoctorDetailQuery, useAppointmentsQuery } from "./DoctorApiSlice";
 
@@ -10,33 +10,39 @@ const DoctorDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [authenticated, setAuthenticated] = useState(null);
   const [userId, setUserId] = useState(null);
+
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const id = getIdFromLocalStorage(token);
     if (token) {
+      const id = getIdFromLocalStorage(token);
+
       setUserId(id);
       setAuthenticated(true);
       console.log("token");
       console.log("ID =", userId);
-
     } else {
       console.log("no token");
       setAuthenticated(false);
     }
   }, []);
 
+  // Fetch the user details using the user ID from the state variable
+  const { data: doctorDetail = [] } = useDoctorDetailQuery(userId, {
+    skip: userId === null,
+  });
+  const { data: appointments = [] } = useAppointmentsQuery(userId);
 
-    // Fetch the user details using the user ID from the state variable
-    const { data: doctorDetail = [] } = useDoctorDetailQuery(userId,{skip: userId===null});
-    const { data: appointments = [] } = useAppointmentsQuery(userId);
+  // console.log("details====", appointments);
 
-    console.log("details====", doctorDetail.firstname);
-    // console.log("details====", appointments);
-    
   if (authenticated === false) {
-    return <Navigate replace to="/login" />;
+    // return <Navigate replace to="/login" />;
+    navigate("/login", { replace: true });
+    return null;
   } else if (authenticated === true) {
     console.log("authenticated");
+    var docName = doctorDetail.firstname + " " + doctorDetail.lastname;
+    console.log("details====", docName);
     return (
       <>
         <div className="flex flex-col md:flex-row ">
@@ -57,7 +63,7 @@ const DoctorDashboard = () => {
           )}
           <div className="flex-1  ">
             <div className="min-height: 100vh ">
-              <Appointment />
+              <Appointment docNameProp={docName} />
             </div>
           </div>
         </div>

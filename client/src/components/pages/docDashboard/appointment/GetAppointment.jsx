@@ -104,7 +104,7 @@ const AppointmentList = () => {
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.appointmentDate}
+                    key={row._id}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
