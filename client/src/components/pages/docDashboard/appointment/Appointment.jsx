@@ -7,22 +7,14 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import { CiSearch } from "react-icons/ci";
 import AppointmentList from "./GetAppointment";
+import { useSelector } from "react-redux";
 
 const Appointment = (props) => {
   const [searchTerm, setsearchTerm] = React.useState([]);
   const [email, setEmail] = React.useState([]);
-
-  const loop = Array.from({ length: 5 }, (_, i) => (
-    <div className="bg-white rounded-xl h-10 p-2 flex flex-row" key={i}>
-      <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
-        Mr. John Doe
-      </div>
-      <div className="w-1/4 font-bold text-gray-500 text-md text-end">Edit</div>
-      <div className="w-1/4 font-bold text-red-700 text-md text-end mr-5">
-        Delete
-      </div>
-    </div>
-  ));
+  const appointmentCount = useSelector(
+    (state) => state.appointmentCount.appointmentCount
+  );
 
   const printHandler = (event) => {
     console.log(searchTerm);
@@ -33,7 +25,12 @@ const Appointment = (props) => {
         <div className="md:w-1/2 ">
           <div className="flex md:flex-wrap flex-row mt-2">
             <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-3xl text-white md:text-2xl text-xl font-bold mb-5">
-              <div className="flex w-1/2">Hello, Dr. {props.docNameProp}</div>
+              <div className="flex  w-1/2 flex-col md:gap-24 gap-5">
+                <div className="flex ">Hello, Dr. {props.docNameProp} </div>
+                <div className="flex text-lg ">
+                  You have {appointmentCount} Appointments
+                </div>
+              </div>
               <div className="flex w-1/2 justify-center items-center">
                 <div>
                   <img
