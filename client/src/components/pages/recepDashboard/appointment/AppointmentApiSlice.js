@@ -19,6 +19,8 @@ export const AppointmentApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["APPOINTMENTS"],
         }),
+
+
     }),
 });
 

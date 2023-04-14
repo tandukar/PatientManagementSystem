@@ -85,7 +85,7 @@ const Appointment = (props) => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-custom-blue rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    className="bg-whtie appearance-none border-2  border-gray-300  rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                     onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
@@ -98,7 +98,7 @@ const Appointment = (props) => {
                   </label>
                   <input
                     type="Text"
-                    className="bg-whtie appearance-none border-2 border-custom-blue rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    className="bg-whtie appearance-none border-2  border-gray-300  rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-custom-blue"
                   />
                 </div>
               </div>
@@ -110,7 +110,7 @@ const Appointment = (props) => {
                     Appointment Date
                   </label>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker className="outline-blue-500" />
+                    <DatePicker className="outline-custom-blue" />
                   </LocalizationProvider>
                 </div>
 
@@ -124,7 +124,7 @@ const Appointment = (props) => {
                     </label>
                     <input
                       type="email"
-                      className="bg-white appearance-none border-2 border-custom-blue rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                      className="bg-white appearance-none border-2 border-gray-300 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-custom-blue"
                     />
                   </div>
                 </div>

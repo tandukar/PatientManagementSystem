@@ -14,6 +14,7 @@ import { getIdFromLocalStorage } from "../../../pages/utlis";
 import Appointment from "./Appointment";
 import { useSelector, useDispatch } from "react-redux";
 import { setAppointmentCount } from "../appointment/AppointmentSlice";
+import { useUpdateAppointmentStatusMutation } from "../DoctorApiSlice";
 
 // Delete confirmation pop-up component
 const StatusConfirmation = ({ onCancel, onConfirm }) => {
@@ -41,13 +42,14 @@ const StatusConfirmation = ({ onCancel, onConfirm }) => {
 };
 
 const createData = (name, appointmentDate, reason, type, action) => {
-  return { name, appointmentDate, reason, type, action };
+  return {  name, appointmentDate, reason, type, action };
 };
 
 const AppointmentList = () => {
   const [userId, setUserId] = useState(null);
   const [appointmentId, setAppointmentId] = useState(null);
   const [showStatusConfirmation, setShowStatusConfirmation] = useState(false);
+  const [updateAppointmentStatus] = useUpdateAppointmentStatusMutation();
 
   const dispatch = useDispatch();
   const appointmentCount = useSelector(
@@ -66,9 +68,6 @@ const AppointmentList = () => {
     error,
     isLoading,
   } = useAppointmentsQuery(userId);
-
-  // var appointmentCount = appointments.length;
-  // console.log("appointments==", appointmentCount);
 
   useEffect(() => {
     let totalCount = appointments.length;
@@ -105,14 +104,17 @@ const AppointmentList = () => {
         const appointmentDate = new Date(
           appointment.appointmentDate
         ).toLocaleDateString();
-        return createData(
+
+        return createData( 
           appointment.patientName,
           appointmentDate,
           appointment.reason,
           appointment.patientType,
+
           <button
             type="submit"
             onClick={() => showStatusConfirmationHandler(appointment._id)}
+            className={appointment.status === "pending" ? "text-blue-600 font-bold" : appointment.status === "Approved" ? "text-green-600 font-bold" : "text-red-600 font-bold"}
           >
             {appointment.status}
           </button>
@@ -141,21 +143,24 @@ const AppointmentList = () => {
   };
 
   // Hide the delete confirmation pop-up
-  const hideStatusConfirmationHandler = () => {
-    setShowStatusConfirmation(false);
+  const cancelStatusHandler = () => {
+    console.log("from cancel", appointmentId);
+    updateAppointmentStatus({ id: appointmentId, newStatus: "Cancelled" })
+      .unwrap()
+      .then((result) => {
+        setShowStatusConfirmation(false);
+      })
+      .catch((error) => console.error(error));
   };
 
-  
-  const updateStatusHandler = () => {
-    console.log(appointmentId);
-    // deleteDoctor(deleteDoctorId)
-    //   .unwrap()
-    //   .then((result) => {
-    //     console.log(`Doctor deleted: ${deleteDoctorId}`);
-    //     setShowDeleteConfirmation(false);
-    //     toast.error("Doctor deleted successfully");
-    //   })
-    //   .catch((error) => console.error(error));
+  const approveStatusHandler = () => {
+    console.log("from approve", appointmentId);
+    updateAppointmentStatus({ id: appointmentId, newStatus: "Approved" })
+      .unwrap()
+      .then((result) => {
+        setShowStatusConfirmation(false);
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -212,8 +217,8 @@ const AppointmentList = () => {
       {/* Render the delete confirmation pop-up if it is shown */}
       {showStatusConfirmation && (
         <StatusConfirmation
-          onCancel={hideStatusConfirmationHandler}
-          onConfirm={updateStatusHandler}
+          onCancel={cancelStatusHandler}
+          onConfirm={approveStatusHandler}
         />
       )}
     </>

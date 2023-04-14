@@ -100,27 +100,4 @@ router.get('/appointments/:id', async(req, res) => {
     }
 })
 
-
-
-//Login
-
-//password is doctor123
-// router.post('/login', async(req, res) => {
-
-//     const { error } = loginValidation(req.body);
-//     if (error) return res.status(400).send(error.details[0].message);
-
-//     //checking if email exists
-//     const user = await Doctor.findOne({ email: req.body.email });
-//     if (!user) return res.send("Email or Password is wrong");
-//     //res.send(user.password)
-
-//     const validPwd = await bcrypt.compare(req.body.password, user.password);
-//     if (!validPwd) return res.send("Email or Password is wrong");
-
-//     //Create and assing token 
-//     const token = jwt.sign({ _id: user.id }, process.env.TOKEN);
-//     res.header('auth-token', token).send(token);
-//     res.send('login')
-// })
 module.exports = router;

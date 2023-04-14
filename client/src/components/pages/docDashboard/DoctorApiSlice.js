@@ -5,18 +5,25 @@ export const DoctorApiSlice = apiSlice.injectEndpoints({
         doctorDetail: builder.query({
             query: (id) => ({
                 url: `doctors/find/${id}`,
-                methos: "GET",
+                method: "GET",
             }),
         }),
         appointments: builder.query({
             query: (id) => ({
                 url: `doctors/appointments/${id}`,
-                methos: "GET",
+                method: "GET",
             }),
         }),
 
-
+        updateAppointmentStatus: builder.mutation({
+            query: ({ id, newStatus }) => ({
+                url: `appointments/updateAppointmentStatus/${id}`,
+                method: "PATCH",
+                body: { status: newStatus }
+            }),
+            invalidatesTags: ["Appointments"]
+        })
 
     }),
 });
-export const { useDoctorDetailQuery, useAppointmentsQuery } = DoctorApiSlice;
+export const { useDoctorDetailQuery, useAppointmentsQuery, useUpdateAppointmentStatusMutation } = DoctorApiSlice;
