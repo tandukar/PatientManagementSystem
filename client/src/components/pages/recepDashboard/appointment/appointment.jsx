@@ -54,11 +54,11 @@ const CreateAppointment = () => {
     <>
       <ToastContainer />
       <div className="text-center my-8">
-        <Typography variant="h4">Create Appointment</Typography>
+        <div className="text-4xl">Create Appointment</div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
-        <Grid container spacing={4} >
+        <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">
               Patient Id

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useGetDoctorsQuery, useDeleteDoctorsMutation } from "./DoctorApiSlice";
+import { useGetDoctorsQuery, useDeleteDoctorsMutation } from "./doctorApiSlice";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

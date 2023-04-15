@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import GetPatients from "./patient/GetPatients";
+import GetDoctorList from "./doctor/GetDoctorList";
 
 const RecepDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
@@ -55,21 +56,15 @@ const RecepDashboard = () => {
               />
             </div>
           )}
-          <div className="flex flex-col md:flex-row justify-center items-center h-screen w-full ">
-            <div className="w-full md:w-auto ">
-              {/* <Container  component="main" maxWidth="sm" sx={{ mb: 4 }}>
-                <Paper  sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}> */}
+            <div className="w-full md:pr-10 overflow-x-hidden p-10">
               {selectedItem === "Appointments" ? (
                 <GetPatients />
-              ) : // <CreateAppointment />
-
-              selectedItem === "Patients" ? (
+              ) : selectedItem === "Patients" ? (
                 <Patient />
+              ) : selectedItem === "Doctors" ? (
+                <GetDoctorList />
               ) : null}
-              {/* </Paper>
-              </Container> */}
             </div>
-          </div>
         </div>
       </>
     );
