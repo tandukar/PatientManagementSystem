@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-
 import Select from "react-select";
 import { useForm } from "react-hook-form";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Typography from "@mui/material/Typography";
 import { useRegisterPatientMutation } from "./PatientApiSlice";
 
 const Patient = () => {
@@ -45,6 +42,9 @@ const Patient = () => {
   return (
     <>
       <ToastContainer />
+      <div className="text-center my-8">
+        <Typography variant="h4">Register Patient</Typography>
+      </div>
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6}>

@@ -44,15 +44,14 @@ const AdminDashboard = () => {
   // Fetch the user details using the user ID from the state variable
   const { data: userDetail = [] } = useUserDetailQuery(userId);
 
-
   // If the user is not authenticated, redirect them to the login page
   if (authenticated === false) {
     return <Navigate replace to="/login" />;
   } else if (authenticated === true) {
     console.log("authenticated");
-  console.log("details====", userDetail.firstname);
- 
-     return (
+    console.log("details====", userDetail.firstname);
+
+    return (
       <>
         <div className="flex flex-col md:flex-row bg-gray-100 ">
           {!sidebarOpen ? (

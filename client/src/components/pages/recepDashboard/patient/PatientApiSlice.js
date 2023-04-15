@@ -10,7 +10,14 @@ export const patientApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["PATIENTS"],
         }),
+        getPatient: builder.query({
+            query: () => "patients",
+            provideTags: (result) => [
+                ...result.map(({ id }) => ({ type: "PATIENTS", id })),
+                { type: "PATIENTS", id: "LIST" },
+            ],
+        }),
     }),
 });
 
-export const { useRegisterPatientMutation } = patientApiSlice;
+export const { useRegisterPatientMutation, useGetPatientQuery } = patientApiSlice;

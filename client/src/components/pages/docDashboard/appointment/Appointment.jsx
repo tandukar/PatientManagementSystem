@@ -77,10 +77,10 @@ const Appointment = (props) => {
               Create Revisits
             </div>
             {/* <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200  font-semibold"> */}
-            <div className="flex flex-col gap-4 p-6 rounded-lg   font-semibold">
+            <div className="flex flex-col gap-4 p-6 rounded-lg   ">
               <div className="flex md:flex-row gap-2 flex-col">
                 <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
+                  <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
                     Patient Name
                   </label>
                   <input
@@ -92,7 +92,7 @@ const Appointment = (props) => {
                 <div className="  md:container md:mx-auto ">
                   <label
                     htmlFor="exampleEmail0"
-                    className="form-label inline-block mb-2 text-custom-blue"
+                    className="form-label inline-block mb-2 text-custom-blue font-semibold"
                   >
                     Doctor Name
                   </label>
@@ -106,7 +106,7 @@ const Appointment = (props) => {
 
               <div className="flex flex-col md:flex-row gap-2">
                 <div className="md:container md:mx-auto">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
+                  <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
                     Appointment Date
                   </label>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -118,7 +118,7 @@ const Appointment = (props) => {
                   <div className="md:container md:mx-auto">
                     <label
                       htmlFor="exampleEmail0"
-                      className="form-label inline-block mb-2 text-custom-blue"
+                      className="form-label inline-block mb-2 text-custom-blue font-semibold"
                     >
                       Appointment time
                     </label>
@@ -132,7 +132,7 @@ const Appointment = (props) => {
 
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
               <div className="flex  flex-col gap-2">
-                <label className="form-label inline-block mb-2 text-custom-blue">
+                <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
                   Notes
                 </label>
 
@@ -144,7 +144,7 @@ const Appointment = (props) => {
                   rows={4}
                 />
 
-                <label className="form-label inline-block mb-2 text-custom-blue">
+                <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
                   Reason
                 </label>
 
@@ -158,7 +158,7 @@ const Appointment = (props) => {
               </div>
 
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className=" mt-10 mb-10  text-center">
+              <div className=" mt-10 mb-10  text-center ">
                 <button className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
                   Create Revisit
                 </button>

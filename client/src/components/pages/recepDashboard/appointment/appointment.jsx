@@ -2,16 +2,11 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
 import { useRegisterAppointmentsMutation } from "./AppointmentApiSlice";
-
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
-
+import Typography from "@mui/material/Typography";
 import Select from "react-select";
-
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
@@ -37,10 +32,14 @@ const CreateAppointment = () => {
     console.log("data", data);
     console.log("selectedOption", selectedOption);
     console.log("selectedDate", selectedDate);
-    const appointmentData = { ...data, patientType: selectedOption.value, appointmentDate: selectedDate };
+    const appointmentData = {
+      ...data,
+      patientType: selectedOption.value,
+      appointmentDate: selectedDate,
+    };
     registerAppointments(appointmentData);
-    toast.success("Appointment created successfully");     
-    console.log(appointmentData)
+    toast.success("Appointment created successfully");
+    console.log(appointmentData);
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -49,71 +48,77 @@ const CreateAppointment = () => {
   };
   const handleDateChange = (selectedDate) => {
     setSelectedDate(selectedDate);
-
   };
 
   return (
     <>
-    <ToastContainer/>
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-5">
-        <Grid container spacing={4}>
+      <ToastContainer />
+      <div className="text-center my-8">
+        <Typography variant="h4">Create Appointment</Typography>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
+        <Grid container spacing={4} >
           <Grid item xs={12} sm={6}>
-            <label>Patient Id</label>
+            <label className="block mb-2 font-bold text-gray-700">
+              Patient Id
+            </label>
 
             <TextField
               id="patientId"
-              // label="Patient Id"
               fullWidth
               autoComplete="given-name"
               variant="outlined"
               error={errors.patientId ? true : false}
               {...register("patientId", { required: "This is required" })}
             />
+
             {errors.patientId && (
-              <p className={errors.patientId ? "text-red-500" : ""}>
-                {errors.patientId.message}
-              </p>
+              <p className="text-red-500">{errors.patientId.message}</p>
             )}
           </Grid>
+
           <Grid item xs={12} sm={6}>
-            <label>Doctor Id</label>
+            <label className="block mb-2 font-bold text-gray-700">
+              Doctor Id
+            </label>
 
             <TextField
               id="doctorId"
-              // label="Doctor Id"
               fullWidth
               autoComplete="family-name"
               variant="outlined"
               error={errors.doctorId ? true : false}
               {...register("doctorId", { required: "This is required" })}
             />
+
             {errors.doctorId && (
-              <p className={errors.doctorId ? "text-red-500" : ""}>
-                {errors.doctorId.message}
-              </p>
+              <p className="text-red-500">{errors.doctorId.message}</p>
             )}
           </Grid>
 
           <Grid item xs={12}>
-            <label>Reason</label>
+            <label className="block mb-2 font-bold text-gray-700">Reason</label>
 
             <TextField
               id="reason"
-              // label="Reason"
               fullWidth
               autoComplete="shipping address-line1"
               variant="outlined"
               error={errors.reason ? true : false}
-              {...register("reason", {required: "This is required" })} 
+              {...register("reason", { required: "This is required" })}
             />
+
             {errors.reason && (
-              <p className={errors.reason ? "text-red-500" : ""}>
-                {errors.reason.message}
-              </p>
+              <p className="text-red-500">{errors.reason.message}</p>
             )}
           </Grid>
+
           <Grid item xs={12} sm={6}>
-            <label>Select patient type</label>
+            <label className="block mb-2 font-bold text-gray-700">
+              Select patient type
+            </label>
+
             <Select
               options={patientType}
               name="patientType"
@@ -121,25 +126,28 @@ const CreateAppointment = () => {
               value={selectedOption}
             />
           </Grid>
+
           <Grid item xs={12} sm={6}>
-            <label>Room No</label>
+            <label className="block mb-2 font-bold text-gray-700">
+              Room No
+            </label>
+
             <TextField
               id="roomNo"
-              // label="Room No"
               fullWidth
               autoComplete="shipping postal-code"
               variant="outlined"
               error={errors.roomNo ? true : false}
               {...register("roomNo", { required: "This is required" })}
             />
+
             {errors.roomNo && (
-              <p className={errors.roomNo ? "text-red-500" : ""}>
-                {errors.roomNo.message}
-              </p>
+              <p className="text-red-500">{errors.roomNo.message}</p>
             )}
           </Grid>
+
           <Grid item xs={12} sm={6}>
-            <label className="form-label inline-block mb-2">
+            <label className="block mb-2 font-bold text-gray-700">
               Appointment Date
             </label>
 
@@ -150,8 +158,9 @@ const CreateAppointment = () => {
               value={selectedDate}
             />
           </Grid>
+
           <Grid item xs={12} sm={6}>
-            <button className="mt-8 bg-custom-blue hover:bg-custom-blue text-white w-80  md:w-60 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
+            <button className="mt-8 bg-custom-blue hover:bg-blue-700 text-white w-80 md:w-60 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
               Submit
             </button>
           </Grid>
