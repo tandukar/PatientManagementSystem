@@ -5,33 +5,35 @@ const mongoose = require("mongoose");
 const receptionistSchema = mongoose.Schema({
     firstname: {
         type: String,
-        required: [true, 'First Name required'],
-
+        required: [true, "First Name required"],
     },
     lastname: {
         type: String,
-        required: [true, 'Last Name required'],
-
+        required: [true, "Last Name required"],
     },
     age: {
         type: Number,
-        required: [true, 'age required'],
-
+        required: [true, "age required"],
     },
     sex: {
         type: String,
-        required: [true, 'sex required'],
-
+        required: [true, "sex required"],
+    },
+    email1: {
+        type: String,
+        required: [true, "email required"],
+        min: 9,
+        max: 255,
     },
     email: {
         type: String,
-        required: [true, 'email required'],
+        required: [true, "email required"],
         min: 9,
         max: 255,
     },
     password: {
         type: String,
-        required: [true, 'Please enter your password'],
+        required: [true, "Please enter your password"],
         min: 9,
         max: 255,
     },
@@ -42,9 +44,9 @@ const receptionistSchema = mongoose.Schema({
     number: {
         type: String,
         required: true,
-        match: /^\d{10}$/
-    }
+        match: /^\d{10}$/,
+    },
 }, {
-    timestamps: true
-}, );
+    timestamps: true,
+});
 module.exports = mongoose.model("Receptionist", receptionistSchema);

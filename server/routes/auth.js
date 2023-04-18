@@ -4,12 +4,16 @@ const bcrypt = require("bcryptjs");
 const router = express.Router();
 // const cookieParser = require("cookie-parser");
 
+
+// db mai roles halne ani tyo return garni
+
+
 const Admin = require("../model/Admin");
 const Doctor = require("../model/Doctor");
 const Receptionist = require("../model/Receptionist");
 
 const { loginValidation } = require("../validation");
-const { Model } = require("mongoose");
+
 
 router.post("/login", async(req, res) => {
     try {
@@ -40,14 +44,16 @@ router.post("/login", async(req, res) => {
         if (error) return res.status(401).send(error.details[0].message);
 
         //checking if email exists
+        console.log(req.body.email)
         const user = await model.findOne({ email: req.body.email });
+        console.log(user)
         if (!user) return res.status(401).send("Email or Password is wrong");
 
         const validPwd = await bcrypt.compare(req.body.password, user.password);
         if (!validPwd) return res.status(401).send("Email or Password is wrong");
 
         // Create and assign token
-        const token = jwt.sign({ _id: user.id }, process.env.TOKEN, {
+        const token = jwt.sign({ _id: user._id }, process.env.TOKEN, {
             expiresIn: "24h",
         });
 

@@ -5,7 +5,7 @@ import { RxCross2 } from "react-icons/rx";
 import CreateAppointment from "../appointment/Appointment";
 
 
-const CreateAppointmentHandler = ({ onCancel, onConfirm, id }) => {
+const CreateAppointmentHandler = ({ onCancel, onConfirm, id, recepId}) => {
   return (
     <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-20 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg p-4  w-150">
@@ -16,18 +16,20 @@ const CreateAppointmentHandler = ({ onCancel, onConfirm, id }) => {
           />
         </div>
         <div className="px-8">
-          <CreateAppointment />
+          {id}  
+          <CreateAppointment recepId={recepId}  />
         </div>
       </div>
     </div>
   );
 };
 
-const GetPatients = () => {
+const GetPatients = ({recepId}) => {
   const { data: patients = [], error, isloading } = useGetPatientQuery();
   const [showCreateAppointment, setShowCreateAppointment] = useState(false);
   const [patientId, setPatientId] = useState(null);
-
+  
+  // console.log("retrieved",recepId)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
 
@@ -157,6 +159,7 @@ const GetPatients = () => {
           onCancel={hideCreateAppointmentHandler}
           onConfirm={approveStatusHandler}
           id={patientId}
+          recepId={recepId}
         />
       )}
     </>

@@ -23,6 +23,12 @@ const doctorSchema = mongoose.Schema({
         required: [true, 'age required'],
 
     },
+    email1: {
+        type: String,
+        required: [true, 'email required'],
+        min: 9,
+        max: 255,
+    },
     email: {
         type: String,
         required: [true, 'email required'],

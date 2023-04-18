@@ -10,11 +10,12 @@ import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
-const CreateAppointment = () => {
+const CreateAppointment = ({ recepId }) => {
   const patientType = [
     { value: "ipd", label: "Inpatient" },
     { value: "opd", label: "Outpatient" },
   ];
+
 
   const {
     register,
@@ -24,6 +25,9 @@ const CreateAppointment = () => {
   } = useForm();
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [receptionId, setReceptionId] = useState(recepId);
+  console.log("receptionId", receptionId);
+
 
   const [registerAppointments, { isLoading, error }] =
     useRegisterAppointmentsMutation();
@@ -36,6 +40,7 @@ const CreateAppointment = () => {
       ...data,
       patientType: selectedOption.value,
       appointmentDate: selectedDate,
+      recepId: receptionId,
     };
     registerAppointments(appointmentData);
     toast.success("Appointment created successfully");
@@ -159,6 +164,8 @@ const CreateAppointment = () => {
             />
           </Grid>
 
+
+   
           <Grid item xs={12} sm={6}>
             <button className="mt-8 bg-custom-blue hover:bg-blue-700 text-white w-80 md:w-60 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
               Submit

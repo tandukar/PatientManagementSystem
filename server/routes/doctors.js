@@ -10,7 +10,7 @@ router.post('/register', async(req, res) => {
     const { error } = docRegisterValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message)
 
-    const emailExists = await Doctor.findOne({ email: req.body.email });
+    const emailExists = await Doctor.findOne({ email: req.body.email1 });
     if (emailExists) return res.send("Email Already Exists");
 
     //hash password
@@ -23,6 +23,7 @@ router.post('/register', async(req, res) => {
         lastname: req.body.lastname,
         age: req.body.age,
         sex: req.body.sex,
+        email1: req.body.email1,
         email: req.body.email,
         password: hashPwd,
         address: req.body.address,

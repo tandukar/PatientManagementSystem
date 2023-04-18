@@ -48,6 +48,7 @@ const createData = (name, appointmentDate, reason, type, action) => {
 const AppointmentList = () => {
   const [userId, setUserId] = useState(null);
   const [appointmentId, setAppointmentId] = useState(null);
+  const [receptionstId, setReceptionistId] = useState(null);
   const [showStatusConfirmation, setShowStatusConfirmation] = useState(false);
   const [updateAppointmentStatus] = useUpdateAppointmentStatusMutation();
 
@@ -113,7 +114,8 @@ const AppointmentList = () => {
 
           <button
             type="submit"
-            onClick={() => showStatusConfirmationHandler(appointment._id)}
+            onClick={() => showStatusConfirmationHandler(appointment._id, appointment.recepId)}
+
             className={appointment.status === "pending" ? "text-blue-600 font-bold" : appointment.status === "Approved" ? "text-green-600 font-bold" : "text-red-600 font-bold"}
           >
             {appointment.status}
@@ -137,15 +139,17 @@ const AppointmentList = () => {
   };
 
   // Set the id of the doctor to delete and show the delete confirmation pop-up
-  const showStatusConfirmationHandler = (id) => {
+  const showStatusConfirmationHandler = (id, recepId) => {
     setAppointmentId(id);
+    setReceptionistId(recepId)
     setShowStatusConfirmation(true);
+
   };
 
   // Hide the delete confirmation pop-up
   const cancelStatusHandler = () => {
     console.log("from cancel", appointmentId);
-    updateAppointmentStatus({ id: appointmentId, newStatus: "Cancelled" })
+    updateAppointmentStatus({ id: appointmentId, newStatus: "Cancelled" , recepId: receptionstId})
       .unwrap()
       .then((result) => {
         setShowStatusConfirmation(false);
@@ -155,7 +159,7 @@ const AppointmentList = () => {
 
   const approveStatusHandler = () => {
     console.log("from approve", appointmentId);
-    updateAppointmentStatus({ id: appointmentId, newStatus: "Approved" })
+    updateAppointmentStatus({ id: appointmentId, newStatus: "Approved", recepId: receptionstId })
       .unwrap()
       .then((result) => {
         setShowStatusConfirmation(false);

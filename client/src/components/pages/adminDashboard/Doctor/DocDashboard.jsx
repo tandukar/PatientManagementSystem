@@ -9,7 +9,7 @@ import Profile from "./GetDoctors";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useRegisterDoctorsMutation } from "./DoctorApiSlice";
+import { useRegisterDoctorsMutation } from "./doctorApiSlice";
 
 const DocDashboard = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);

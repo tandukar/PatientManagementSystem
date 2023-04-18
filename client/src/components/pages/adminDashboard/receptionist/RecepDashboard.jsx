@@ -29,7 +29,7 @@ const RecepDashboard = () => {
   const [searchTerm, setsearchTerm] = React.useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const [registerReceptionist, {error, isLoading }] =
+  const [registerReceptionist, { error, isLoading }] =
     useRegisterReceptionistsMutation();
 
   const onSubmit = (data) => {
@@ -46,8 +46,6 @@ const RecepDashboard = () => {
     setSelectedOption(selectedOption);
     setValue("sex", selectedOption.value);
   };
-
-
 
   return (
     <>
@@ -111,14 +109,13 @@ const RecepDashboard = () => {
                       type="Text"
                       className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                       error={errors.firstname ? true : false}
-                      {...register("firstname", { required: "This is required" })}
+                      {...register("firstname", {
+                        required: "This is required",
+                      })}
                     />
                   </div>
                   <div className="  md:container md:mx-auto ">
-                    <label
-                      htmlFor="exampleEmail0"
-                      className="form-label inline-block mb-2 text-custom-blue"
-                    >
+                    <label className="form-label inline-block mb-2 text-custom-blue">
                       Last name
                     </label>
                     <input
@@ -126,7 +123,9 @@ const RecepDashboard = () => {
                       type="Text"
                       className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                       error={errors.lastname ? true : false}
-                      {...register("lastname", { required: "This is required" })}
+                      {...register("lastname", {
+                        required: "This is required",
+                      })}
                     />
                   </div>
                 </div>
@@ -162,10 +161,7 @@ const RecepDashboard = () => {
                   </div>
                   <div className="md:w-full">
                     <div className="md:container md:mx-auto">
-                      <label
-                        htmlFor="exampleEmail0"
-                        className="form-label inline-block mb-2 text-custom-blue"
-                      >
+                      <label className="form-label inline-block mb-2 text-custom-blue">
                         Phone Number
                       </label>
                       <input
@@ -185,7 +181,7 @@ const RecepDashboard = () => {
                 <div className="flex md:flex-row flex-col gap-2">
                   <div className="  md:container md:mx-auto ">
                     <label className="form-label inline-block mb-2 text-custom-blue">
-                      Email
+                      Primary Email
                     </label>
                     <input
                       id="email"
@@ -195,19 +191,31 @@ const RecepDashboard = () => {
                       {...register("email", { required: "This is required" })}
                     />
                   </div>
-
-                  <div className=" md:container md:mx-auto ">
+                  <div className="  md:container md:mx-auto ">
                     <label className="form-label inline-block mb-2 text-custom-blue">
-                      Address
+                      Secondary Email
                     </label>
                     <input
-                      id="address"
-                      type="Text"
+                      id="email1"
+                      type="email"
                       className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      error={errors.address ? true : false}
-                      {...register("address", { required: "This is required" })}
+                      error={errors.email1? true : false}
+                      {...register("email1", { required: "This is required" })}
                     />
                   </div>
+                </div>
+
+                <div className=" w-1/2 md:container md:mx-auto ">
+                  <label className="form-label inline-block mb-2 text-custom-blue">
+                    Address
+                  </label>
+                  <input
+                    id="address"
+                    type="Text"
+                    className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                    error={errors.address ? true : false}
+                    {...register("address", { required: "This is required" })}
+                  />
                 </div>
 
                 {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}

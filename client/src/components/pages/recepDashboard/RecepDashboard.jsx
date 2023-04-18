@@ -9,11 +9,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import GetPatients from "./patient/GetPatients";
 import GetDoctorList from "./doctor/GetDoctorList";
+import { getIdFromLocalStorage } from "../utlis";
 
 const RecepDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [authenticated, setAuthenticated] = React.useState(null);
   const [selectedItem, setSelectedItem] = useState("Patients");
+  const [recepId, setRecepId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -25,7 +27,10 @@ const RecepDashboard = () => {
     const token = localStorage.getItem("token");
     if (token) {
       setAuthenticated(true);
-      console.log("token");
+      const recepId = getIdFromLocalStorage(token);
+      setRecepId(recepId);
+
+      console.log("ID  =", recepId);
     } else {
       console.log("no token");
       setAuthenticated(false);
@@ -56,15 +61,15 @@ const RecepDashboard = () => {
               />
             </div>
           )}
-            <div className="w-full md:pr-10 overflow-x-hidden p-10">
-              {selectedItem === "Appointments" ? (
-                <GetPatients />
-              ) : selectedItem === "Patients" ? (
-                <Patient />
-              ) : selectedItem === "Doctors" ? (
-                <GetDoctorList />
-              ) : null}
-            </div>
+          <div className="w-full md:pr-10 overflow-x-hidden p-10">
+            {selectedItem === "Appointments" ? (
+              <GetPatients recepId={recepId}/>
+            ) : selectedItem === "Patients" ? (
+              <Patient />
+            ) : selectedItem === "Doctors" ? (
+              <GetDoctorList />
+            ) : null}
+          </div>
         </div>
       </>
     );

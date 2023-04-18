@@ -72,8 +72,12 @@ const appointmentSchema = mongoose.Schema({
     // },
     status: {
         type: String,
-        enum: ["pending", "completed", "cancelled"],
-        default: "pending",
+        enum: ["Pending", "Approved", "Cancelled", "Completed"],
+        default: "Pending",
+    },
+    recepId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Receptionist",
     },
 });
 

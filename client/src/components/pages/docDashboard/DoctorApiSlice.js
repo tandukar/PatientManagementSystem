@@ -16,14 +16,17 @@ export const DoctorApiSlice = apiSlice.injectEndpoints({
         }),
 
         updateAppointmentStatus: builder.mutation({
-            query: ({ id, newStatus }) => ({
+            query: ({ id, newStatus, recepId }) => ({
                 url: `appointments/updateAppointmentStatus/${id}`,
                 method: "PATCH",
-                body: { status: newStatus }
+                body: { status: newStatus, recepId: recepId },
             }),
-            invalidatesTags: ["Appointments"]
-        })
-
+            invalidatesTags: ["Appointments"],
+        }),
     }),
 });
-export const { useDoctorDetailQuery, useAppointmentsQuery, useUpdateAppointmentStatusMutation } = DoctorApiSlice;
+export const {
+    useDoctorDetailQuery,
+    useAppointmentsQuery,
+    useUpdateAppointmentStatusMutation,
+} = DoctorApiSlice;
