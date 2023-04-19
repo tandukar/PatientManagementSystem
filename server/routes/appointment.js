@@ -13,6 +13,7 @@ router.post("/create", async(req, res, next) => {
         return res.status(404).json({ message: "Doctor or Patient not found" });
     }
 
+    console.log(req.body.appointmentDate);
     const createApp = new Appointment({
         patientId: req.body.patientId,
         patientName: patient.firstname + " " + patient.lastname,
@@ -33,7 +34,10 @@ router.post("/create", async(req, res, next) => {
         recepId: req.body.recepId,
     });
     try {
-        const savedDoc = await createApp.save();
+        const savedDoc = await createApp.save({
+            date: now,
+            offset: now.getTimezoneOffset(),
+        });
         res.json(savedDoc);
     } catch (err) {
         res.status(400).send(err.message);
@@ -80,7 +84,7 @@ router.patch("/updateAppointmentStatus/:id", async(req, res) => {
         };
 
         await transporter.sendMail(message).then(() => {
-            return res.send({ message: 'Mail Sent' });
+            return res.send({ message: "Mail Sent" });
         });
     } catch (err) {
         res.json(err.message);

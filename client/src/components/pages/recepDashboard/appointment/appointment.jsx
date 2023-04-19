@@ -1,21 +1,45 @@
+// import Grid from "@mui/material/Grid";
+// import TextField from "@mui/material/TextField";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
+// import { useRegisterAppointmentsMutation } from "./AppointmentApiSlice";
+// import DatePicker from "react-datepicker";
+// import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+// import dayjs from "dayjs";
+// import localizedFormat from "dayjs/plugin/localizedFormat";
+// import "react-datepicker/dist/react-datepicker.css";
+// import Typography from "@mui/material/Typography";
+// import Select from "react-select";
+// import { useForm } from "react-hook-form";
+// import { useState } from "react";
+
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRegisterAppointmentsMutation } from "./AppointmentApiSlice";
 import DatePicker from "react-datepicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Typography from "@mui/material/Typography";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import dayjs from "dayjs";
+
+
+
 
 const CreateAppointment = ({ recepId }) => {
   const patientType = [
     { value: "ipd", label: "Inpatient" },
     { value: "opd", label: "Outpatient" },
   ];
-
 
   const {
     register,
@@ -24,10 +48,9 @@ const CreateAppointment = ({ recepId }) => {
     formState: { errors },
   } = useForm();
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(dayjs());
   const [receptionId, setReceptionId] = useState(recepId);
   console.log("receptionId", receptionId);
-
 
   const [registerAppointments, { isLoading, error }] =
     useRegisterAppointmentsMutation();
@@ -39,7 +62,7 @@ const CreateAppointment = ({ recepId }) => {
     const appointmentData = {
       ...data,
       patientType: selectedOption.value,
-      appointmentDate: selectedDate,
+      appointmentDate: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
       recepId: receptionId,
     };
     registerAppointments(appointmentData);
@@ -52,7 +75,7 @@ const CreateAppointment = ({ recepId }) => {
     setValue("patientType", selectedOption.value);
   };
   const handleDateChange = (selectedDate) => {
-    setSelectedDate(selectedDate);
+    setSelectedDate(dayjs(selectedDate));
   };
 
   return (
@@ -156,16 +179,19 @@ const CreateAppointment = ({ recepId }) => {
               Appointment Date
             </label>
 
-            <DatePicker
-              className="border rounded px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500"
+         
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DateTimePicker"]}>
+            <DateTimePicker
+              value={selectedDate}
               selected={selectedDate}
               onChange={handleDateChange}
-              value={selectedDate}
+              format="hh:mm A"
             />
+          </DemoContainer>
+        </LocalizationProvider>
           </Grid>
 
-
-   
           <Grid item xs={12} sm={6}>
             <button className="mt-8 bg-custom-blue hover:bg-blue-700 text-white w-80 md:w-60 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
               Submit

@@ -102,13 +102,16 @@ const AppointmentList = () => {
 
   const rows = appointments
     ? appointments.map((appointment) => {
-        const appointmentDate = new Date(
+        const appointmentDay = new Date(
           appointment.appointmentDate
         ).toLocaleDateString();
+        const appointmentTime = new Date(
+          appointment.appointmentDate
+        ).toLocaleTimeString();
 
         return createData( 
           appointment.patientName,
-          appointmentDate,
+          appointmentDay +" " + appointmentTime,
           appointment.reason,
           appointment.patientType,
 
@@ -116,7 +119,7 @@ const AppointmentList = () => {
             type="submit"
             onClick={() => showStatusConfirmationHandler(appointment._id, appointment.recepId)}
 
-            className={appointment.status === "pending" ? "text-blue-600 font-bold" : appointment.status === "Approved" ? "text-green-600 font-bold" : "text-red-600 font-bold"}
+            className={appointment.status === "Pending" ? "text-blue-600 font-bold" : appointment.status === "Approved" ? "text-green-600 font-bold" : "text-red-600 font-bold"}
           >
             {appointment.status}
           </button>
