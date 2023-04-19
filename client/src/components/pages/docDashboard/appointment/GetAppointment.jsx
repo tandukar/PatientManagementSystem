@@ -42,7 +42,7 @@ const StatusConfirmation = ({ onCancel, onConfirm }) => {
 };
 
 const createData = (name, appointmentDate, reason, type, action) => {
-  return {  name, appointmentDate, reason, type, action };
+  return { name, appointmentDate, reason, type, action };
 };
 
 const AppointmentList = () => {
@@ -107,19 +107,34 @@ const AppointmentList = () => {
         ).toLocaleDateString();
         const appointmentTime = new Date(
           appointment.appointmentDate
-        ).toLocaleTimeString();
+        ).toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
 
-        return createData( 
+        return createData(
           appointment.patientName,
-          appointmentDay +" " + appointmentTime,
+          <>
+            <span className="text-teal-500 font-semibold">
+              {appointmentDay}
+              <br />
+              {appointmentTime}
+            </span>
+          </>,
           appointment.reason,
           appointment.patientType,
-
           <button
             type="submit"
-            onClick={() => showStatusConfirmationHandler(appointment._id, appointment.recepId)}
-
-            className={appointment.status === "Pending" ? "text-blue-600 font-bold" : appointment.status === "Approved" ? "text-green-600 font-bold" : "text-red-600 font-bold"}
+            onClick={() =>
+              showStatusConfirmationHandler(
+                appointment._id,
+                appointment.recepId
+              )
+            }
+            className={
+              appointment.status === "Pending"
+                ? "text-blue-600 font-bold"
+                : appointment.status === "Approved"
+                ? "text-green-600 font-bold"
+                : "text-red-600 font-bold"
+            }
           >
             {appointment.status}
           </button>
@@ -144,15 +159,18 @@ const AppointmentList = () => {
   // Set the id of the doctor to delete and show the delete confirmation pop-up
   const showStatusConfirmationHandler = (id, recepId) => {
     setAppointmentId(id);
-    setReceptionistId(recepId)
+    setReceptionistId(recepId);
     setShowStatusConfirmation(true);
-
   };
 
   // Hide the delete confirmation pop-up
   const cancelStatusHandler = () => {
     console.log("from cancel", appointmentId);
-    updateAppointmentStatus({ id: appointmentId, newStatus: "Cancelled" , recepId: receptionstId})
+    updateAppointmentStatus({
+      id: appointmentId,
+      newStatus: "Cancelled",
+      recepId: receptionstId,
+    })
       .unwrap()
       .then((result) => {
         setShowStatusConfirmation(false);
@@ -162,7 +180,11 @@ const AppointmentList = () => {
 
   const approveStatusHandler = () => {
     console.log("from approve", appointmentId);
-    updateAppointmentStatus({ id: appointmentId, newStatus: "Approved", recepId: receptionstId })
+    updateAppointmentStatus({
+      id: appointmentId,
+      newStatus: "Approved",
+      recepId: receptionstId,
+    })
       .unwrap()
       .then((result) => {
         setShowStatusConfirmation(false);
@@ -181,7 +203,12 @@ const AppointmentList = () => {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{
+                      minWidth: column.minWidth,
+                      backgroundColor: "#f5f5f5",
+                      fontWeight: "bold",
+                      color: "#555555",
+                    }}
                   >
                     {column.label}
                   </TableCell>
@@ -191,9 +218,18 @@ const AppointmentList = () => {
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+                .map((row, index) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row._id}>
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row._id}
+                      style={{
+                        backgroundColor:
+                          index % 2 === 0 ? "#ffffff" : "#f5f5f5",
+                      }}
+                    >
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (

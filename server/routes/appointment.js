@@ -34,10 +34,7 @@ router.post("/create", async(req, res, next) => {
         recepId: req.body.recepId,
     });
     try {
-        const savedDoc = await createApp.save({
-            date: now,
-            offset: now.getTimezoneOffset(),
-        });
+        const savedDoc = await createApp.save();
         res.json(savedDoc);
     } catch (err) {
         res.status(400).send(err.message);

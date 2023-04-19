@@ -53,7 +53,7 @@ const AdminDashboard = () => {
 
     return (
       <>
-        <div className="flex flex-col md:flex-row bg-gray-100 ">
+        <div className="flex flex-col md:flex-row  ">
           {!sidebarOpen ? (
             <div className="pt-4 pl-2 ">
               <HiOutlineMenuAlt1
@@ -70,8 +70,8 @@ const AdminDashboard = () => {
               />
             </div>
           )}
-          <div className="flex-1 md:mx-10 md:mt-2 h-screen">
-            <div className="h-full bg-gray-100">
+          <div className="flex-1 h-screen">
+            <div className="h-full ">
               {selectedItem === "Dashboard" ? (
                 <Dashboard />
               ) : selectedItem === "Doctors" ? (

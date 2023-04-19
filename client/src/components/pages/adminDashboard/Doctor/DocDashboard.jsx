@@ -1,65 +1,91 @@
 import React from "react";
-
 import Box from "@mui/material/Box";
-
 import { CiSearch } from "react-icons/ci";
-
 import Profile from "./GetDoctors";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { useRegisterDoctorsMutation } from "./doctorApiSlice";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Select from "react-select";
 
 const DocDashboard = () => {
-  const [searchTerm, setsearchTerm] = React.useState([]);
+  const sex = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
+  ];
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
   const printHandler = (event) => {
     console.log(searchTerm);
   };
 
+  const [searchTerm, setsearchTerm] = React.useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
   const [registerDoctor, { isLoading, error }] = useRegisterDoctorsMutation();
 
-  const registerHandler = async (event) => {
-    const data = new FormData(event.currentTarget);
+  const onSubmit = (data) => {
+    console.log("data", data);
+    // console.log("selectedOption", selectedOption);
 
-    const payload = {
-      firstname: data.get("fname"),
-      lastname: data.get("lname"),
-      age: data.get("age"),
-      sex: data.get("sex"),
-      email: data.get("email"),
-      number: data.get("number"),
-      qualification: data.get("qualification"),
-      address: data.get("address"),
-      specialization: data.get("specialization"),
-    };
-
-    event.preventDefault();
-
-    try {
-      const register = await registerDoctor(payload).unwrap();
-      console.log(register);
-      // clear input fields
-      event.target.fname.value = "";
-      event.target.lname.value = "";
-      event.target.age.value = "";
-      event.target.sex.value = "";
-      event.target.email.value = "";
-      event.target.number.value = "";
-      event.target.address.value = "";
-      event.target.qualification.value = "";
-      event.target.specialization.value = "";
-      toast.success("Doctor registered successfully");
-    } catch (err) {
-      console.log(err);
-    }
-
+    const payload = { ...data, sex: selectedOption.value };
+    registerDoctor(payload);
+    toast.success("Doctor registered successfully");
     console.log(payload);
   };
+
+  const handleSelectChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    setValue("sex", selectedOption.value);
+  };
+
+  // const registerHandler = async (event) => {
+  //   const data = new FormData(event.currentTarget);
+
+  //   const payload = {
+  //     firstname: data.get("fname"),
+  //     lastname: data.get("lname"),
+  //     age: data.get("age"),
+  //     sex: data.get("sex"),
+  //     email: data.get("email"),
+  //     number: data.get("number"),
+  //     qualification: data.get("qualification"),
+  //     address: data.get("address"),
+  //     specialization: data.get("specialization"),
+  //   };
+
+  //   event.preventDefault();
+
+  //   try {
+  //     const register = await registerDoctor(payload).unwrap();
+  //     console.log(register);
+  //     // clear input fields
+  //     event.target.fname.value = "";
+  //     event.target.lname.value = "";
+  //     event.target.age.value = "";
+  //     event.target.sex.value = "";
+  //     event.target.email.value = "";
+  //     event.target.number.value = "";
+  //     event.target.address.value = "";
+  //     event.target.qualification.value = "";
+  //     event.target.specialization.value = "";
+  //     toast.success("Doctor registered successfully");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+
+  //   console.log(payload);
+  // };
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="flex flex-col md:flex-row  w-full ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
         <div className="md:w-2/3 p-4     ">
@@ -69,7 +95,12 @@ const DocDashboard = () => {
               <div className=" flex w-1/2">Registered Doctors</div>
               <div className="flex  w-1/2 justify-center items-center">
                 <div className="md:text-8xl text-6xl font-bold text-white">
-                  12
+                  <div>
+                    <img
+                      className="object-cover w-full md:max-h-64 h-full"
+                      src="http://127.0.0.1:5173/doctors.png"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -98,13 +129,8 @@ const DocDashboard = () => {
               </div>
             </div>
           </div>
-
           <div className="flex flex-col gap-4 p-3 bg-slate-200 shadow-md rounded-lg">
-            {/* ```````````````````````````````````````` */}
-            {/* {loop} */}
             <Profile />
-
-            {/* ```````````````````````````````````````` */}
           </div>
         </div>
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
@@ -114,145 +140,220 @@ const DocDashboard = () => {
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Register Doctors
             </div>
-            <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200 shadow-md font-semibold">
-              <Box component="form" onSubmit={registerHandler}>
-                <div className="flex md:flex-row gap-2 flex-col">
-                  <div className=" md:container md:mx-auto ">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      First name
-                    </label>
-                    <input
-                      id="fname"
-                      name="fname"
-                      type="Text"
-                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    />
+            <div className="flex flex-col gap-4  rounded-lg  font-normal">
+              {/* <Box component="form" onSubmit={registerHandler}> */}
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex flex-col gap-4 p-6 rounded-lg ">
+                  <div className="flex md:flex-row gap-2 flex-col">
+                    <div className=" md:container md:mx-auto ">
+                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                        First name
+                      </label>
+                      <input
+                        id="firstname"
+                        type="Text"
+                        className="bg-whtie appearance-none border-2  border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                        error={errors.firstname ? true : false}
+                        {...register("firstname", {
+                          required: "Frist Name is required",
+                        })}
+                      />
+                      {errors.firstname && (
+                        <p className="text-red-500">
+                          {errors.firstname.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="  md:container md:mx-auto ">
+                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                        Last name
+                      </label>
+                      <input
+                        id="lastname"
+                        type="Text"
+                        className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                        error={errors.lastname ? true : false}
+                        {...register("lastname", {
+                          required: "Last Name is required",
+                        })}
+                      />
+                      {errors.lastname && (
+                        <p className="text-red-500">
+                          {errors.lastname.message}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  <div className="  md:container md:mx-auto ">
-                    <label
-                      htmlFor="exampleEmail0"
-                      className="form-label inline-block mb-2 text-custom-blue"
+                  {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+
+                  <div className="flex flex-col md:flex-row gap-2">
+                    <div className="md:w-1/2">
+                      <div className="md:container md:mx-auto">
+                        <label className="form-label  font-semibold inline-block mb-2 text-custom-blue">
+                          Age
+                        </label>
+                        <input
+                          id="age"
+                          type="Number"
+                          variant="outlined"
+                          className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                          error={errors.age ? true : false}
+                          {...register("age", { required: "Age is required" })}
+                        />
+                        {errors.age && (
+                          <p className="text-red-500">{errors.age.message}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="md:w-1/2">
+                      <div className="md:container md:mx-auto">
+                        <label className="form-label font-semibold  inline-block mb-2 text-custom-blue">
+                          Sex
+                        </label>
+                        <Select
+                          options={sex}
+                          name="sex"
+                          onChange={handleSelectChange}
+                          value={selectedOption}
+                         
+                        />
+                     
+                      </div>
+                    </div>
+                    <div className="md:w-full">
+                      <div className="md:container md:mx-auto">
+                        <label className="form-label inline-block mb-2 font-semibold text-custom-blue">
+                          Phone Number
+                        </label>
+                        <input
+                          id="number"
+                          type="Text"
+                          className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                          error={errors.number ? true : false}
+                          {...register("number", {
+                            required: "This is required",
+                          })}
+                        />
+                        {errors.number && (
+                          <p className="text-red-500">
+                            {errors.number.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="md:w-full">
+                      <div className="md:container md:mx-auto">
+                        <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                          Address
+                        </label>
+                        <input
+                          id="address"
+                          type="Text"
+                          className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                          error={errors.address ? true : false}
+                          {...register("address", {
+                            required: "This is required",
+                          })}
+                        />
+                        {errors.address && (
+                          <p className="text-red-500 ">
+                            {errors.address.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+                  <div className="flex md:flex-row flex-col gap-2">
+                    <div className="  md:container md:mx-auto ">
+                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                        Primary Email
+                      </label>
+                      <input
+                        id="email"
+                        type="email"
+                        className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                        error={errors.email ? true : false}
+                        {...register("email", { required: "This is required" })}
+                      />
+                      {errors.email && (
+                        <p className="text-red-500">{errors.email.message}</p>
+                      )}
+                    </div>
+                    <div className="  md:container md:mx-auto ">
+                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                        Secondary Email
+                      </label>
+                      <input
+                        id="email1"
+                        type="email"
+                        className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                        error={errors.email1 ? true : false}
+                        {...register("email1", {
+                          required: "This is required",
+                        })}
+                      />
+                      {errors.email1 && (
+                        <p className="text-red-500">{errors.email1.message}</p>
+                      )}
+                    </div>
+                  </div>
+                  {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+                  <div className="flex  md:flex-row flex-col gap-2">
+                    <div className="  md:container md:mx-auto ">
+                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                        Qualification
+                      </label>
+
+                      <input
+                        id="qualification"
+                        type="Text"
+                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                        error={errors.qualification ? true : false}
+                        {...register("qualification", {
+                          required: "This is required",
+                        })}
+                      />
+                      {errors.qualification && (
+                        <p className="text-red-500">
+                          {errors.qualification.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className=" md:container md:mx-auto ">
+                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                        Specialization
+                      </label>
+                      <input
+                        id="specialization"
+                        type="Text"
+                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                        error={errors.specialization ? true : false}
+                        {...register("specialization", {
+                          required: "This is required",
+                        })}
+                      />
+                      {errors.specialization && (
+                        <p className="text-red-500">
+                          {errors.specialization.message}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+                  <div className=" mt-10 mb-10  text-center">
+                    <button
+                      type="submit"
+                      className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
                     >
-                      Last name
-                    </label>
-                    <input
-                      id="lname"
-                      name="lname"
-                      type="Text"
-                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    />
+                      Submit
+                    </button>
                   </div>
                 </div>
-                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-
-                <div className="flex flex-col md:flex-row gap-2">
-                  <div className="md:w-1/2">
-                    <div className="md:container md:mx-auto">
-                      <label className="form-label inline-block mb-2 text-custom-blue">
-                        Age
-                      </label>
-                      <input
-                        id="age"
-                        name="age"
-                        type="Number"
-                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      />
-                    </div>
-                  </div>
-                  <div className="md:w-1/2">
-                    <div className="md:container md:mx-auto">
-                      <label className="form-label inline-block mb-2 text-custom-blue">
-                        Sex
-                      </label>
-                      <input
-                        id="sex"
-                        name="sex"
-                        type="Text"
-                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      />
-                    </div>
-                  </div>
-                  <div className="md:w-full">
-                    <div className="md:container md:mx-auto">
-                      <label
-                        htmlFor="exampleEmail0"
-                        className="form-label inline-block mb-2 text-custom-blue"
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        id="number"
-                        name="number"
-                        type="Text"
-                        className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-                <div className="flex md:flex-row flex-col gap-2">
-                  <div className="  md:container md:mx-auto ">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      Email
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    />
-                  </div>
-
-                  <div className=" md:container md:mx-auto ">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      Address
-                    </label>
-                    <input
-                      id="address"
-                      name="address"
-                      type="Text"
-                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    />
-                  </div>
-                </div>
-                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-                <div className="flex  md:flex-row flex-col gap-2">
-                  <div className="  md:container md:mx-auto ">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      Qualification
-                    </label>
-                    <input
-                      id="qualification"
-                      name="qualification"
-                      type="Text"
-                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    />
-                  </div>
-
-                  <div className=" md:container md:mx-auto ">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      Specialization
-                    </label>
-                    <input
-                      id="specialization"
-                      name="specialization"
-                      type="Text"
-                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    />
-                  </div>
-                </div>
-
-                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-                <div className=" mt-10 mb-10  text-center">
-                  <button
-                    type="submit"
-                    className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </Box>
+              </form>
             </div>
           </div>
           {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}

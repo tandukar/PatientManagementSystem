@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useGetDoctorsQuery } from "../../adminDashboard/Doctor/doctorApiSlice";
-
+import { TablePagination } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -8,55 +8,107 @@ const GetDoctorList = () => {
   // const [doctors, setDoctors] = useState([]);
 
   const { data: doctors = [], error, isLoading } = useGetDoctorsQuery();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(7);
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
   console.log(doctors);
 
+  const createData = (id, name, email, specialization) => {
+    return { id, name, email, specialization };
+  };
+
+  const rows = doctors
+    ? doctors.map((doctor) => {
+        return createData(
+          doctor._id,
+          doctor.firstname + " " + doctor.lastname,
+          doctor.email,
+          doctor.specialization
+        );
+      })
+    : [];
+
   return (
-    <div>
+    <>
       <ToastContainer />
 
-      <ul>
-        <li>
-          <div className=" h-14 p-4 flex flex-row w-200">
-            <div className="w-2/4 ml-5 font-bold text-gray-600 text-md">ID</div>
-            <div className="w-2/4 ml-5 font-bold text-gray-600  text-md">
-              Doctor Name
-            </div>
-            <div className="w-1/4 font-bold text-gray-600 text-md text-end">
-              Specialization
-            </div>
-            <div className="w-1/4 font-bold text-gray-600  text-md text-end mr-5">
-              Qualification
+      <div className="flex flex-col mt-5 max-w-full ">
+        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 ">
+          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 w-80">
+                <thead className="bg-gray-50 w-80 text-center">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      ID
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Email
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Specialization
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200 text-center">
+                  {rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => (
+                      <tr key={row.id}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {row.id}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {row.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {row.email}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {row.specialization}
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        </li>
-      </ul>
-      <div className=" w-200">
-        <ul>
-          {doctors &&
-            doctors.map((doctor) => (
-              <div className="p-1 " key={doctor.id}>
-                <li>
-                  <div className="bg-white rounded-xl h-14 p-4 flex flex-row">
-                    <div className="w-2/4 ml-5 font-bold text-gray-600 text-md">
-                      {doctor._id}
-                    </div>
-                    <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
-                      Dr. {doctor.firstname} {doctor.lastname}
-                    </div>
-                    <div className="w-1/4 font-bold text-pink-600 text-md text-end">
-                      {doctor.specialization}
-                    </div>
-                    <div className="w-1/4 font-bold text-red-700 text-md text-end mr-5">
-                      {doctor.qualification}
-                    </div>
-                  </div>
-                </li>
-              </div>
-            ))}
-        </ul>
+        </div>
+        <TablePagination
+          rowsPerPageOptions={[7, 15, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </div>
-    </div>
+     
+    </>
   );
 };
 

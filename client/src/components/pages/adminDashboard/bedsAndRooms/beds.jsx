@@ -39,7 +39,7 @@ const BedDashboard = () => {
   
   return (
     <>
-      <div className="flex flex-col   mt-10 ">
+      <div className="flex flex-col   mt-5 ">
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Register Bed
             </div>

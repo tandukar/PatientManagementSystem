@@ -11,7 +11,7 @@ import {
 // Delete confirmation pop-up component
 const DeleteConfirmation = ({ onCancel, onConfirm }) => {
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center">
+    <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-xl p-8">
         <p className="text-lg font-bold mb-4">
           Are you sure you want to delete this doctor?
@@ -78,7 +78,7 @@ const ReceptionistList = () => {
             <li>
               <div className="bg-white rounded-xl h-10 p-2 flex flex-row">
                 <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
-                  Dr. {receptionist.firstname} {receptionist.lastname}
+                  {receptionist.firstname} {receptionist.lastname}
                 </div>
                 <div className="w-1/4 font-bold text-gray-500 text-md text-end">
                   Edit
