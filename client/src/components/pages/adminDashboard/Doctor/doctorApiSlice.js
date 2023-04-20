@@ -27,6 +27,14 @@ export const doctorApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: ["DOCTORS"],
         }),
 
+        updateDoctor: builder.mutation({
+            query: ({ id, newStatus, recepId, newTime }) => ({
+                url: `doctors/updateDoc/${id}`,
+                method: "PATCH",
+                body: { status: newStatus, recepId: recepId, appointmentDate: newTime },
+            }),
+            invalidatesTags: ["Appointments"],
+        }),
 
     }),
 });

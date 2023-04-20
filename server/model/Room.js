@@ -5,6 +5,13 @@ const roomSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String,
+    },
+    isAvailable: {
+        type: Boolean,
+        default: true
+    },
 
 });
 

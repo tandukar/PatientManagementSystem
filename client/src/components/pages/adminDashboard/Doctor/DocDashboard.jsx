@@ -46,43 +46,6 @@ const DocDashboard = () => {
     setValue("sex", selectedOption.value);
   };
 
-  // const registerHandler = async (event) => {
-  //   const data = new FormData(event.currentTarget);
-
-  //   const payload = {
-  //     firstname: data.get("fname"),
-  //     lastname: data.get("lname"),
-  //     age: data.get("age"),
-  //     sex: data.get("sex"),
-  //     email: data.get("email"),
-  //     number: data.get("number"),
-  //     qualification: data.get("qualification"),
-  //     address: data.get("address"),
-  //     specialization: data.get("specialization"),
-  //   };
-
-  //   event.preventDefault();
-
-  //   try {
-  //     const register = await registerDoctor(payload).unwrap();
-  //     console.log(register);
-  //     // clear input fields
-  //     event.target.fname.value = "";
-  //     event.target.lname.value = "";
-  //     event.target.age.value = "";
-  //     event.target.sex.value = "";
-  //     event.target.email.value = "";
-  //     event.target.number.value = "";
-  //     event.target.address.value = "";
-  //     event.target.qualification.value = "";
-  //     event.target.specialization.value = "";
-  //     toast.success("Doctor registered successfully");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-
-  //   console.log(payload);
-  // };
   return (
     <>
       <ToastContainer />

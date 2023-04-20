@@ -43,51 +43,58 @@ router.post("/create", async(req, res, next) => {
 
 // update doctor
 router.patch("/updateAppointmentStatus/:id", async(req, res) => {
-    const { status, recepId, appointmentDate } = req.body;
-    try {
-        const updateAppointment = await Appointment.updateMany({ _id: req.params.id }, {
-            $set: {
-                status: status,
-                appointmentDate: appointmentDate,
-            },
-        });
-        // res.send(updateAppointment);po
-        console.log(updateAppointment);
-        console.log("the reception id", recepId);
-        console.log("status", status);
-        console.log("new Time", appointmentDate);
+            const { status, recepId, appointmentDate } = req.body;
+            try {
+                const updateAppointment = await Appointment.updateMany({ _id: req.params.id }, {
+                    $set: {
+                        status: status,
+                        appointmentDate: appointmentDate,
+                    },
+                });
+                // res.send(updateAppointment);po
+                console.log(updateAppointment);
+                console.log("the reception id", recepId);
+                console.log("status", status);
+                console.log("new Time", appointmentDate);
 
-        const receptionistDetails = await Receptionist.findById(recepId);
+                const receptionistDetails = await Receptionist.findById(recepId);
 
-        if (!receptionistDetails) {
-            return res.status(404).send("Receptionist not found");
-        }
-        const receptionistEmail = receptionistDetails.email1;
-        console.log(receptionistEmail);
-        console.log(receptionistDetails);
+                if (!receptionistDetails) {
+                    return res.status(404).send("Receptionist not found");
+                }
+                const receptionistEmail = receptionistDetails.email1;
+                console.log(receptionistEmail);
+                console.log(receptionistDetails);
 
-        // create reusable transporter object using the default SMTP transport
-        let transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: " tandukarpragyo@gmail.com", // generated ethereal user
-                pass: "yxeirihafpscekxh", // generated ethereal password
-            },
-        });
+                // create reusable transporter object using the default SMTP transport
+                let transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        user: " tandukarpragyo@gmail.com", // generated ethereal user
+                        pass: "yxeirihafpscekxh", // generated ethereal password
+                    },
+                });
 
-        let message = {
-            from: '"Admin" <tandukarpragyo@gmail.com>', // sender address
-            to: receptionistEmail, // list of receivers
-            subject: "Appointment Status Updated", // Subject line
-            html: ` <h4>The appointment has been updated to: </h4><h3>${status}</h3>`,
-        };
+                let message = {
+                        from: '"Admin" <tandukarpragyo@gmail.com>', // sender address
+                        to: receptionistEmail, // list of receivers
+                        subject: "Appointment Status Updated", // Subject line
+                        html: `<h4>The appointment has been updated to: </h4>
+            <h3>${status}</h3>
+            ${
+              status !== "Cancelled"
+                ? `<span> for the date:</span> <h3>${appointmentDate}</h3>`
+                : ""
+            }
+            `,
+    };
 
-        await transporter.sendMail(message).then(() => {
-            return res.send({ message: "Mail Sent" });
-        });
-    } catch (err) {
-        res.json(err.message);
-    }
+    await transporter.sendMail(message).then(() => {
+      return res.send({ message: "Mail Sent" });
+    });
+  } catch (err) {
+    res.json(err.message);
+  }
 });
 
 module.exports = router;

@@ -53,8 +53,7 @@ router.post("/register", async(req, res) => {
                   savedDoc.firstname + " " + savedDoc.lastname
                 }</h2>
                 <p style="color: #333;">You have been registered to Remedial.<br>Please use the credentials provided below to login to the system:</p>
-        <div style="background-color: #fff; padding: 20px; margin-bottom: 20px;">
-               
+            <div style="background-color: #fff; padding: 20px; margin-bottom: 20px;">          
                 <ul style="list-style-type:none; padding-left:0">
                 <li style=" padding: 10px; margin-bottom: 5px;">
                   <span style="display: inline-block; width: 120px;">Email:</span>
@@ -65,8 +64,7 @@ router.post("/register", async(req, res) => {
                   <span>${defPwd}</span>
                 </li>
               </ul>
-    </div>
-
+            </div>
                 <p style="color: #777;">Thank you for using our service!</p>
             </div>
         `,
@@ -74,7 +72,8 @@ router.post("/register", async(req, res) => {
 
         (
             await transporter.sendMail(message).then(() => {
-                return res.send("Mail Sent");
+                res.send("Mail Sent");
+                return res.end();
             })
         ).catch((err) => {
             return res.send(err.message);
@@ -112,9 +111,14 @@ router.patch("/updateDoc/:id", async(req, res) => {
             $set: {
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
-                password: req.body.password,
                 age: req.body.age,
+                sex: req.body.sex,
+                email1: req.body.email1,
                 email: req.body.email,
+                address: req.body.address,
+                number: req.body.number,
+                qualification: req.body.qualification,
+                specialization: req.body.specialization,
             },
         });
         res.send(updateDoc);

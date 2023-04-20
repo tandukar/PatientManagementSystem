@@ -49,7 +49,7 @@ const RecepDashboard = () => {
       <ToastContainer />
       <div className="flex flex-col md:flex-row  w-full ">
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-        <div className="md:w-2/3 p-4">
+        <div className="md:w-1/2 p-4">
           <div className="flex md:flex-wrap flex-row ">
             <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-xl text-white md:text-2xl text-xl font-bold mb-5">
               <div className=" flex w-1/2">Registered Receptionists</div>
@@ -66,7 +66,7 @@ const RecepDashboard = () => {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col md:flex-row mt-5">
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Registered Receptionists
             </div>

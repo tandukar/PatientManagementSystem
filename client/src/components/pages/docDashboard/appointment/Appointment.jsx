@@ -106,11 +106,11 @@ const Appointment = (props) => {
 
               <div className="flex flex-col md:flex-row gap-2">
                 <div className="md:container md:mx-auto">
-                  <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                  <label className="form-label inline-block mb-2 text-custom-blue font-semibold ">
                     Appointment Date
                   </label>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker className="outline-custom-blue" />
+                    <DatePicker className="outline-custom-blue w-full   " />
                   </LocalizationProvider>
                 </div>
 

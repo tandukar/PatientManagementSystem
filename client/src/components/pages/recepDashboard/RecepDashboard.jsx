@@ -44,7 +44,7 @@ const RecepDashboard = () => {
     console.log("authenticated");
     return (
       <>
-        <div className="flex flex-col md:flex-row bg-slate-100 ">
+        <div className="flex flex-col md:flex-row  ">
           {!sidebarOpen ? (
             <div className="pt-4 pl-2 ">
               <HiOutlineMenuAlt1

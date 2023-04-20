@@ -5,15 +5,20 @@ const bedSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    room: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Room'
+    roomName: {
+        type: String,
+        required: true,
     },
     patient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient'
     },
+    isAvailable: {
+        type: Boolean,
+        default: true
+    }
 });
+
 
 
 module.exports = mongoose.model("Bed", bedSchema);
