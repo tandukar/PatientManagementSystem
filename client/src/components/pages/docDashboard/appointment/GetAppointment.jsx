@@ -1,3 +1,4 @@
+// Import required dependencies
 import React, { useState, useEffect } from "react";
 import {
   Paper,
@@ -15,22 +16,48 @@ import Appointment from "./Appointment";
 import { useSelector, useDispatch } from "react-redux";
 import { setAppointmentCount } from "../appointment/AppointmentSlice";
 import { useUpdateAppointmentStatusMutation } from "../DoctorApiSlice";
+import dayjs from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
-// Delete confirmation pop-up component
-const StatusConfirmation = ({ onCancel, onConfirm }) => {
+// Component for the confirmation pop-up used to update appointment status
+const StatusConfirmation = ({
+  onCancel,
+  onConfirm,
+  selectedDate,
+  handleDateChange,
+}) => {
   return (
     <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-xl p-8">
-        <p className="text-lg font-bold mb-4">Update Status</p>
-        <div className="flex justify-end">
+      <div className="bg-white rounded-xl p-8 border border-gray-300">
+        <h2 className="text-xl font-bold mb-4 text-gray-800">
+          Update Appointment Status
+        </h2>
+
+        <label className="block mb-2 font-semibold text-gray-700">
+          Appointment Date and Time:
+        </label>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={["DateTimePicker"]}>
+            <DateTimePicker
+              value={selectedDate}
+              selected={selectedDate}
+              onChange={handleDateChange}
+              format="hh:mm A"
+            />
+          </DemoContainer>
+        </LocalizationProvider>
+        <div className="flex justify-end mt-3">
           <button
-            className="mr-4 bg-custom-blue text-white px-4 py-2 rounded-md"
+           className="mr-4 bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
             onClick={onConfirm}
           >
             Approve
           </button>
           <button
-            className="bg-red-600 text-white px-4 py-2 rounded-md"
+            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
             onClick={onCancel}
           >
             Cancel
@@ -41,17 +68,27 @@ const StatusConfirmation = ({ onCancel, onConfirm }) => {
   );
 };
 
+// Function to create a data object for each appointment
 const createData = (name, appointmentDate, reason, type, action) => {
   return { name, appointmentDate, reason, type, action };
 };
 
+// Main component for the appointment list
 const AppointmentList = () => {
+  // Set up state variables
   const [userId, setUserId] = useState(null);
   const [appointmentId, setAppointmentId] = useState(null);
   const [receptionstId, setReceptionistId] = useState(null);
   const [showStatusConfirmation, setShowStatusConfirmation] = useState(false);
   const [updateAppointmentStatus] = useUpdateAppointmentStatusMutation();
+  const [selectedDate, setSelectedDate] = useState(dayjs());
 
+  // Function to handle changes to the date picker
+  const handleDateChange = (selectedDate) => {
+    setSelectedDate(dayjs(selectedDate));
+  };
+
+  // Set up state variables and functions from Redux
   const dispatch = useDispatch();
   const appointmentCount = useSelector(
     (state) => state.appointmentCount.appointmentCount
@@ -74,8 +111,6 @@ const AppointmentList = () => {
     let totalCount = appointments.length;
     dispatch(setAppointmentCount(totalCount));
   }, [appointments, dispatch]);
-
-  // console.log("this is from redux====",appointmentCount);
 
   const columns = [
     { id: "name", label: "Name", minWidth: 170 },
@@ -179,11 +214,13 @@ const AppointmentList = () => {
   };
 
   const approveStatusHandler = () => {
+    console.log(selectedDate);
     console.log("from approve", appointmentId);
     updateAppointmentStatus({
       id: appointmentId,
       newStatus: "Approved",
       recepId: receptionstId,
+      newTime: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
     })
       .unwrap()
       .then((result) => {
@@ -262,6 +299,7 @@ const AppointmentList = () => {
         <StatusConfirmation
           onCancel={cancelStatusHandler}
           onConfirm={approveStatusHandler}
+          handleDateChange={handleDateChange}
         />
       )}
     </>

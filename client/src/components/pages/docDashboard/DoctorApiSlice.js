@@ -16,10 +16,10 @@ export const DoctorApiSlice = apiSlice.injectEndpoints({
         }),
 
         updateAppointmentStatus: builder.mutation({
-            query: ({ id, newStatus, recepId }) => ({
+            query: ({ id, newStatus, recepId, newTime }) => ({
                 url: `appointments/updateAppointmentStatus/${id}`,
                 method: "PATCH",
-                body: { status: newStatus, recepId: recepId },
+                body: { status: newStatus, recepId: recepId, appointmentDate: newTime },
             }),
             invalidatesTags: ["Appointments"],
         }),

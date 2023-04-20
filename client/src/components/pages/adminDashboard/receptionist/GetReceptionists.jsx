@@ -14,7 +14,7 @@ const DeleteConfirmation = ({ onCancel, onConfirm }) => {
     <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-xl p-8">
         <p className="text-lg font-bold mb-4">
-          Are you sure you want to delete this doctor?
+          Are you sure you want to delete this Receptionist?
         </p>
         <div className="flex justify-end">
           <button className="mr-4" onClick={onCancel}>

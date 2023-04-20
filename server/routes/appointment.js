@@ -43,17 +43,19 @@ router.post("/create", async(req, res, next) => {
 
 // update doctor
 router.patch("/updateAppointmentStatus/:id", async(req, res) => {
-    const { status, recepId } = req.body;
+    const { status, recepId, appointmentDate } = req.body;
     try {
-        const updateAppointment = await Appointment.updateOne({ _id: req.params.id }, {
+        const updateAppointment = await Appointment.updateMany({ _id: req.params.id }, {
             $set: {
                 status: status,
+                appointmentDate: appointmentDate,
             },
         });
         // res.send(updateAppointment);po
         console.log(updateAppointment);
         console.log("the reception id", recepId);
         console.log("status", status);
+        console.log("new Time", appointmentDate);
 
         const receptionistDetails = await Receptionist.findById(recepId);
 
