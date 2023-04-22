@@ -1,90 +1,97 @@
 import React from "react";
-
-// import Sidebar from "./sidebar/Sidebar";
-import axios from "axios";
-import Box from "@mui/material/Box";
-
-import { CiSearch } from "react-icons/ci";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useRegisterBedsMutation } from "./BedsAndRoomsApiSlice";
+import Select from "react-select";
 
 const BedDashboard = () => {
-  const [searchTerm, setsearchTerm] = React.useState([]);
-  const registerHandler = (event) => {
-    const data = new FormData(event.currentTarget);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [registerBeds, { isLoading, error }] = useRegisterBedsMutation();
+  const isAvailable = [
+    { value: "true", label: "Available" },
+    { value: "false", label: "Not Available" },
+  ];
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
-    // const payload = {
-    //   firstname: data.get("fname"),
-    //   lastname: data.get("lname"),
-    //   age: data.get("age"),
-    //   sex: data.get("sex"),
-    //   email: data.get("email"),
-    //   number: data.get("number"),
-    //   qualification: data.get("qualification"),
-    //   address: data.get("address"),
-    //   specialization: data.get("specialization"),
-    // };
-
-    // event.preventDefault();
-
-    // axios
-    //   .post("http://localhost:5000/api/doctors/register", payload)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response.data);
-    //   });
-
-    // console.log(payload);
+  const onSubmit = (data) => {
+    console.log("data", data);
+    console.log("selectedOption", selectedOption);
+    const bedData = {
+      ...data,
+      isAvailable: selectedOption.value,
+    };
+    registerBeds(bedData);
   };
-  
+
+  const handleSelectChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    setValue("isAvailable", selectedOption.value);
+  };
+
   return (
     <>
       <div className="flex flex-col   mt-5 ">
-            <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
-              Register Bed
-            </div>
-            <div className="flex flex-col gap-2 p-4 rounded-lg bg-slate-200 shadow-md font-semibold">
-              <Box component="form" onSubmit={registerHandler}>
-                <div className="flex md:flex-row gap-2 flex-col">
-                  <div className=" md:container md:mx-auto ">
-                    <label className="form-label inline-block mb-2 text-custom-blue">
-                      Bed ID
-                    </label>
-                    <input
-                      id=" Bed_ID"
-                      name="Bed_ID"
-                      type="Text"
-                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    />
-                  </div>
-                  <div className="  md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue">
-                      Room ID
-                    </label>
-                    <input
-                      id=" room_ID"
-                      name="room_ID"
-                      type="Text"
-                      className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    />
-                  </div>
-                </div>
-                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+        <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
+          Register Bed
+        </div>
+        <div className="flex flex-col gap-2 p-4 rounded-lg bg-slate-200 shadow-md font-semibold">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex md:flex-row gap-2 flex-col">
+              <div className=" md:container md:mx-auto ">
+                <label className="form-label inline-block mb-2 text-custom-blue">
+                  Bed Number
+                </label>
+                <input
+                  id="number"
+                  type="Text"
+                  className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  error={errors.number ? true : false}
+                  {...register("number", { required: "Bed Numbe is required" })}
+                />
+              </div>
+              <div className="  md:container md:mx-auto ">
+                <label className="form-label inline-block mb-2 text-custom-blue">
+                  Room Name
+                </label>
+                <input
+                  id=" roomName"
+                  type="Text"
+                  className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  error={errors.roomName ? true : false}
+                  {...register("roomName", {
+                    required: "Room Name is required",
+                  })}
+                />
+              </div>
+              <div className="  md:container md:mx-auto ">
+                <label className="form-label inline-block mb-2 text-custom-blue">
+                  Availablity
+                </label>
 
-                
-
-                {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-                <div className=" mt-5 mb-5  text-center">
-                  <button
-                    type="submit"
-                    className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </Box>
+                <Select
+                  options={isAvailable}
+                  onChange={handleSelectChange}
+                  value={selectedOption}
+                />
+              </div>
             </div>
-          </div>
+
+            <div className=" mt-5 mb-5  text-center">
+              <button
+                type="submit"
+                className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </>
   );
 };

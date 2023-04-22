@@ -3,13 +3,21 @@ import { apiSlice } from "../../../app/apiSlice";
 export const BedsAndRoomsApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
 
-        RegisterRooms: builder.mutation({
+        registerRooms: builder.mutation({
             query: (body) => ({
                 url: "roomBed/room",
                 method: "POST",
                 body: body,
             }),
             // invalidatesTags: ["RECEPTIONISTS"],
+        }),
+
+        registerBeds: builder.mutation({
+            query: (body) => ({
+                url: "roomBed/bed",
+                method: "POST",
+                body: body,
+            })
         }),
 
 
@@ -19,4 +27,4 @@ export const BedsAndRoomsApiSlice = apiSlice.injectEndpoints({
 
 
 
-export const { useRegisterRoomsMutation } = BedsAndRoomsApiSlice;
+export const { useRegisterRoomsMutation, useRegisterBedsMutation } = BedsAndRoomsApiSlice;
