@@ -27,23 +27,12 @@ export const doctorApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: ["DOCTORS"],
         }),
 
-
         getDoctor: builder.query({
             query: (id) => ({
                 url: `doctors/find/${id}`,
                 method: "GET",
             }),
         }),
-
-
-        // updateDoctor: builder.mutation({
-        //     query: ({ id, newStatus, recepId, newTime }) => ({
-        //         url: `doctors/updateDoc/${id}`,
-        //         method: "PATCH",
-        //         body: { status: newStatus, recepId: recepId, appointmentDate: newTime },
-        //     }),
-        //     invalidatesTags: ["Appointments"],
-        // }),
 
         updateDoctor: builder.mutation({
             query: ({ id, body }) => ({
@@ -54,6 +43,18 @@ export const doctorApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["DOCTORS"],
         }),
+
+
+        getDoctorName: builder.query({
+            query: (firstName) => ({
+                url: `doctors/search/${firstName}`,
+                method: "GET",
+            }),
+            providesTags: (result) =>
+                result ?
+                result.map(({ id }) => ({ type: "Doctor", id })) : [{ type: "Doctor", id: "LIST" }],
+        }),
+
     }),
 });
 
@@ -63,4 +64,5 @@ export const {
     useDeleteDoctorsMutation,
     useUpdateDoctorMutation,
     useGetDoctorQuery,
+    useGetDoctorNameQuery,
 } = doctorApiSlice;

@@ -1,5 +1,3 @@
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
@@ -8,7 +6,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Typography from "@mui/material/Typography";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
@@ -27,46 +24,10 @@ const UpdateDoctors = ({ docId }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [doctorId, setdoctorId] = useState(docId);
   const [updateDoctor, { isLoading, error }] = useUpdateDoctorMutation();
-  // const [doctor] = useGetDoctorQuery(doctorId);
 
   const { data: getDoctor = [] } = useGetDoctorQuery(doctorId, {
     skip: doctorId === null,
   });
-
-  useEffect(() => {
-    console.log("detail", getDoctor);
-    if (getDoctor.firstname) {
-      setValue("firstname", getDoctor.firstname);
-    }
-    if (getDoctor.lastname) {
-      setValue("lastname", getDoctor.lastname);
-    }
-    if (getDoctor.age) {
-      setValue("age", getDoctor.age);
-    }
-    if (getDoctor.sex) {
-      setValue("sex", getDoctor.sex);
-    }
-    if (getDoctor.number) {
-      setValue("number", getDoctor.number);
-    }
-    if (getDoctor.address) {
-      setValue("address", getDoctor.address);
-    }
-    if (getDoctor.email) {
-      setValue("email", getDoctor.email);
-    }
-    if (getDoctor.email1) {
-      setValue("email1", getDoctor.email1);
-    }
-    if (getDoctor.qualification) {
-      setValue("qualification", getDoctor.qualification);
-    }
-    if (getDoctor.specialization) {
-      setValue("specialization", getDoctor.specialization);
-    }
- 
-  }, [getDoctor]);
 
   const sex = [
     { value: "male", label: "Male" },
@@ -74,10 +35,41 @@ const UpdateDoctors = ({ docId }) => {
     { value: "other", label: "Other" },
   ];
 
+  useEffect(() => {
+    console.log("detail", getDoctor);
+    const {
+      firstname,
+      lastname,
+      age,
+      sex,
+      number,
+      address,
+      email,
+      email1,
+      qualification,
+      specialization,
+    } = getDoctor;
+    setValue("firstname", firstname ?? "");
+    setValue("lastname", lastname ?? "");
+    setValue("age", age ?? "");
+    setValue("sex", sex ?? "");
+    setValue("number", number ?? "");
+    setValue("address", address ?? "");
+    setValue("email", email ?? "");
+    setValue("email1", email1 ?? "");
+    setValue("qualification", qualification ?? "");
+    setValue("specialization", specialization ?? "");
+  }, [getDoctor]);
+
   const onSubmit = (data) => {
     console.log(doctorId);
     console.log("data", data);
-    updateDoctor({ id: doctorId, body: data });
+    try {
+      updateDoctor({ id: doctorId, body: data });
+      toast.success("Doctor Updated Successfully");
+    } catch {
+      toast.error("Doctor Update Failed");
+    }
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -165,7 +157,7 @@ const UpdateDoctors = ({ docId }) => {
                 <Select
                   options={sex}
                   name="sex"
-                  defaultValue={{value:getDoctor.sex}}
+                  defaultValue={{ value: getDoctor.sex }}
                   onChange={handleSelectChange}
                 />
               </div>
@@ -179,7 +171,6 @@ const UpdateDoctors = ({ docId }) => {
                   id="number"
                   type="Text"
                   defaultValue={getDoctor.number}
-
                   className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   error={errors.number ? true : false}
                   {...register("number", {
@@ -200,7 +191,6 @@ const UpdateDoctors = ({ docId }) => {
                   id="address"
                   type="Text"
                   defaultValue={getDoctor.address}
-
                   className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   error={errors.address ? true : false}
                   {...register("address", {
@@ -224,7 +214,6 @@ const UpdateDoctors = ({ docId }) => {
                 id="email"
                 type="email"
                 defaultValue={getDoctor.email}
-
                 className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 error={errors.email ? true : false}
                 {...register("email", { required: "This is required" })}
@@ -241,7 +230,6 @@ const UpdateDoctors = ({ docId }) => {
                 id="email1"
                 type="email"
                 defaultValue={getDoctor.email1}
-
                 className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 error={errors.email1 ? true : false}
                 {...register("email1", {
@@ -264,7 +252,6 @@ const UpdateDoctors = ({ docId }) => {
                 id="qualification"
                 type="Text"
                 defaultValue={getDoctor.qualification}
-
                 className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 error={errors.qualification ? true : false}
                 {...register("qualification", {
@@ -283,7 +270,6 @@ const UpdateDoctors = ({ docId }) => {
               <input
                 id="specialization"
                 defaultValue={getDoctor.specialization}
-
                 type="Text"
                 className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 error={errors.specialization ? true : false}

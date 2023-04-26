@@ -4,7 +4,10 @@ import { CiSearch } from "react-icons/ci";
 import Profile from "./GetDoctors";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRegisterDoctorsMutation } from "./doctorApiSlice";
+import {
+  useRegisterDoctorsMutation,
+  useGetDoctorNameQuery,
+} from "./doctorApiSlice";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Select from "react-select";
@@ -23,14 +26,10 @@ const DocDashboard = () => {
     formState: { errors },
   } = useForm();
 
-  const printHandler = (event) => {
-    console.log(searchTerm);
-  };
-
-  const [searchTerm, setsearchTerm] = React.useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [registerDoctor, { isLoading, error }] = useRegisterDoctorsMutation();
 
+  
   const onSubmit = (data) => {
     console.log("data", data);
     const payload = { ...data, sex: selectedOption.value };
@@ -67,7 +66,7 @@ const DocDashboard = () => {
             </div>
             {/* ```````````````````````````````````````` */}
           </div>
-
+          {/* 
           <div className="flex flex-col md:flex-row">
             <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
               Registered Doctors
@@ -76,14 +75,14 @@ const DocDashboard = () => {
               <div className="relative   border border-custom-blue p-2 rounded-3xl">
                 <input
                   type="text"
-                  className="w-full pl-10 text-sm outline-none  text-custom-blue"
+                  className="w-full pl-10 text-sm outline-none  text-gray-600"
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={(event) => setsearchTerm(event.target.value)}
                 />
                 <button
                   className="absolute right-0 top-0 p-2 "
-                  onClick={printHandler}
+                  onClick={searchHandler}
                 >
                   <CiSearch className="w-6 h-6  text-custom-blue" />
                 </button>
@@ -92,7 +91,8 @@ const DocDashboard = () => {
           </div>
           <div className="flex flex-col gap-4 p-3 bg-slate-200 shadow-md rounded-lg">
             <Profile />
-          </div>
+          </div> */}
+          <Profile />
         </div>
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
@@ -103,11 +103,14 @@ const DocDashboard = () => {
             </div>
             <div className="flex flex-col gap-4  rounded-lg  font-normal">
               {/* <Box component="form" onSubmit={registerHandler}> */}
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="text-custom-blue"
+              >
                 <div className="flex flex-col gap-4 p-6 rounded-lg ">
                   <div className="flex md:flex-row gap-2 flex-col">
-                    <div className=" md:container md:mx-auto ">
-                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                    <div className=" md:container md:mx-auto  ">
+                      <label className="form-label inline-block mb-2  font-semibold">
                         First name
                       </label>
                       <input
@@ -126,7 +129,7 @@ const DocDashboard = () => {
                       )}
                     </div>
                     <div className="  md:container md:mx-auto ">
-                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                      <label className="form-label inline-block mb-2 font-semibold">
                         Last name
                       </label>
                       <input
@@ -150,7 +153,7 @@ const DocDashboard = () => {
                   <div className="flex flex-col md:flex-row gap-2">
                     <div className="md:w-1/2">
                       <div className="md:container md:mx-auto">
-                        <label className="form-label  font-semibold inline-block mb-2 text-custom-blue">
+                        <label className="form-label  font-semibold inline-block mb-2 ">
                           Age
                         </label>
                         <input
@@ -168,7 +171,7 @@ const DocDashboard = () => {
                     </div>
                     <div className="md:w-1/2">
                       <div className="md:container md:mx-auto">
-                        <label className="form-label font-semibold  inline-block mb-2 text-custom-blue">
+                        <label className="form-label font-semibold  inline-block mb-2 ">
                           Sex
                         </label>
                         <Select
@@ -181,7 +184,7 @@ const DocDashboard = () => {
                     </div>
                     <div className="md:w-full">
                       <div className="md:container md:mx-auto">
-                        <label className="form-label inline-block mb-2 font-semibold text-custom-blue">
+                        <label className="form-label inline-block mb-2 font-semibold ">
                           Phone Number
                         </label>
                         <input
@@ -202,7 +205,7 @@ const DocDashboard = () => {
                     </div>
                     <div className="md:w-full">
                       <div className="md:container md:mx-auto">
-                        <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                        <label className="form-label inline-block mb-2 font-semibold">
                           Address
                         </label>
                         <input
@@ -226,7 +229,7 @@ const DocDashboard = () => {
                   {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
                   <div className="flex md:flex-row flex-col gap-2">
                     <div className="  md:container md:mx-auto ">
-                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                      <label className="form-label inline-block mb-2  font-semibold">
                         Primary Email
                       </label>
                       <input
@@ -241,7 +244,7 @@ const DocDashboard = () => {
                       )}
                     </div>
                     <div className="  md:container md:mx-auto ">
-                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                      <label className="form-label inline-block mb-2  font-semibold">
                         Secondary Email
                       </label>
                       <input
@@ -261,7 +264,7 @@ const DocDashboard = () => {
                   {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
                   <div className="flex  md:flex-row flex-col gap-2">
                     <div className="  md:container md:mx-auto ">
-                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                      <label className="form-label inline-block mb-2  font-semibold">
                         Qualification
                       </label>
 
@@ -282,7 +285,7 @@ const DocDashboard = () => {
                     </div>
 
                     <div className=" md:container md:mx-auto ">
-                      <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
+                      <label className="form-label inline-block mb-2  font-semibold">
                         Specialization
                       </label>
                       <input
@@ -306,7 +309,7 @@ const DocDashboard = () => {
                   <div className=" mt-10 mb-10  text-center">
                     <button
                       type="submit"
-                      className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+                      className="bg-custom-blue1 hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
                     >
                       Submit
                     </button>

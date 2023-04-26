@@ -63,7 +63,9 @@ const CreateAppointment = ({ recepId, patientId }) => {
 
   const [registerAppointments, { isLoading, error }] =
     useRegisterAppointmentsMutation();
-  const { data } = useGetDoctorQuery(searchTerm);
+    
+  const { data } = useGetDoctorQuery(searchTerm); 
+
   const doctorsList = data ?? [];
   const printHandler = () => {
     console.log(searchTerm);
