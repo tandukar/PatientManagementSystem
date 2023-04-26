@@ -25,12 +25,14 @@ export const ReceptionistApiSlice = apiSlice.injectEndpoints({
                 method: "DELETE",
             }),
             invalidatesTags: ["RECEPTIONISTS"],
-        })
+        }),
 
-    })
+
+    }),
 });
 
-
-
-
-export const { useGetReceptionistsQuery, useRegisterReceptionistsMutation, useDeleteReceptionistsMutation } = ReceptionistApiSlice;
+export const {
+    useGetReceptionistsQuery,
+    useRegisterReceptionistsMutation,
+    useDeleteReceptionistsMutation,
+} = ReceptionistApiSlice;

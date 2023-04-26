@@ -11,47 +11,78 @@ import "react-datepicker/dist/react-datepicker.css";
 import Typography from "@mui/material/Typography";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import { useUpdateDoctorMutation, useGetDoctorQuery } from "./doctorApiSlice";
 
-const UpdateDoctors = ({ recepId }) => {
-  const patientType = [
-    { value: "ipd", label: "Inpatient" },
-    { value: "opd", label: "Outpatient" },
-  ];
-
+const UpdateDoctors = ({ docId }) => {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm();
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [receptionId, setReceptionId] = useState(recepId);
-  console.log("receptionId", receptionId);
+  const [doctorId, setdoctorId] = useState(docId);
+  const [updateDoctor, { isLoading, error }] = useUpdateDoctorMutation();
+  // const [doctor] = useGetDoctorQuery(doctorId);
 
-  // const [registerAppointments, { isLoading, error }] =
-  //   useRegisterAppointmentsMutation();
+  const { data: getDoctor = [] } = useGetDoctorQuery(doctorId, {
+    skip: doctorId === null,
+  });
+
+  useEffect(() => {
+    console.log("detail", getDoctor);
+    if (getDoctor.firstname) {
+      setValue("firstname", getDoctor.firstname);
+    }
+    if (getDoctor.lastname) {
+      setValue("lastname", getDoctor.lastname);
+    }
+    if (getDoctor.age) {
+      setValue("age", getDoctor.age);
+    }
+    if (getDoctor.sex) {
+      setValue("sex", getDoctor.sex);
+    }
+    if (getDoctor.number) {
+      setValue("number", getDoctor.number);
+    }
+    if (getDoctor.address) {
+      setValue("address", getDoctor.address);
+    }
+    if (getDoctor.email) {
+      setValue("email", getDoctor.email);
+    }
+    if (getDoctor.email1) {
+      setValue("email1", getDoctor.email1);
+    }
+    if (getDoctor.qualification) {
+      setValue("qualification", getDoctor.qualification);
+    }
+    if (getDoctor.specialization) {
+      setValue("specialization", getDoctor.specialization);
+    }
+ 
+  }, [getDoctor]);
+
+  const sex = [
+    { value: "male", label: "Male" },
+    { value: "female", label: "Female" },
+    { value: "other", label: "Other" },
+  ];
 
   const onSubmit = (data) => {
+    console.log(doctorId);
     console.log("data", data);
-    console.log("selectedOption", selectedOption);
-    console.log("selectedDate", selectedDate);
-    const appointmentData = {
-      ...data,
-      patientType: selectedOption.value,
-      appointmentDate: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
-      recepId: receptionId,
-    };
-    registerAppointments(appointmentData);
-    toast.success("Appointment created successfully");
-    console.log(appointmentData);
+    updateDoctor({ id: doctorId, body: data });
   };
 
   const handleSelectChange = (selectedOption) => {
     setSelectedOption(selectedOption);
-    setValue("patientType", selectedOption.value);
+    setValue("sex", selectedOption.value);
   };
   const handleDateChange = (selectedDate) => {
     setSelectedDate(dayjs(selectedDate));
@@ -64,99 +95,218 @@ const UpdateDoctors = ({ recepId }) => {
         <div className="text-4xl">Update Doctor</div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={6}>
-            <label className="block mb-2 font-bold text-gray-700">
-              First Name
-            </label>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-4 p-6 rounded-lg ">
+          <div className="flex md:flex-row gap-2 flex-col">
+            <div className=" md:container md:mx-auto ">
+              <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
+                First name
+              </label>
+              <input
+                id="firstname"
+                type="Text"
+                defaultValue={getDoctor.firstname}
+                className="bg-whtie appearance-none border-2  border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                error={errors.firstname ? true : false}
+                {...register("firstname", {
+                  required: "Frist Name is required",
+                })}
+              />
+              {errors.firstname && (
+                <p className="text-red-500">{errors.firstname.message}</p>
+              )}
+            </div>
+            <div className="  md:container md:mx-auto ">
+              <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
+                Last name
+              </label>
+              <input
+                id="lastname"
+                type="Text"
+                defaultValue={getDoctor.lastname}
+                className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                error={errors.lastname ? true : false}
+                {...register("lastname", {
+                  required: "Last Name is required",
+                })}
+              />
+              {errors.lastname && (
+                <p className="text-red-500">{errors.lastname.message}</p>
+              )}
+            </div>
+          </div>
+          {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
-            <TextField
-              id="firstname"
-              fullWidth
-              autoComplete="given-name"
-              variant="outlined"
-              {...register("firstname")}
-            />
-          </Grid>
+          <div className="flex flex-col md:flex-row gap-2">
+            <div className="md:w-1/2">
+              <div className="md:container md:mx-auto">
+                <label className="form-label  font-semibold inline-block mb-2 text-gray-600">
+                  Age
+                </label>
+                <input
+                  id="age"
+                  type="Number"
+                  variant="outlined"
+                  defaultValue={getDoctor.age}
+                  className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  error={errors.age ? true : false}
+                  {...register("age", { required: "Age is required" })}
+                />
+                {errors.age && (
+                  <p className="text-red-500">{errors.age.message}</p>
+                )}
+              </div>
+            </div>
+            <div className="md:w-1/2">
+              <div className="md:container md:mx-auto">
+                <label className="form-label font-semibold  inline-block mb-2 text-gray-600">
+                  Sex
+                </label>
+                <Select
+                  options={sex}
+                  name="sex"
+                  defaultValue={{value:getDoctor.sex}}
+                  onChange={handleSelectChange}
+                />
+              </div>
+            </div>
+            <div className="md:w-full">
+              <div className="md:container md:mx-auto">
+                <label className="form-label inline-block mb-2 font-semibold text-gray-600">
+                  Phone Number
+                </label>
+                <input
+                  id="number"
+                  type="Text"
+                  defaultValue={getDoctor.number}
 
-          <Grid item xs={12} sm={6}>
-            <label className="block mb-2 font-bold text-gray-700">
-              Last Name
-            </label>
+                  className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  error={errors.number ? true : false}
+                  {...register("number", {
+                    required: "This is required",
+                  })}
+                />
+                {errors.number && (
+                  <p className="text-red-500">{errors.number.message}</p>
+                )}
+              </div>
+            </div>
+            <div className="md:w-full">
+              <div className="md:container md:mx-auto">
+                <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
+                  Address
+                </label>
+                <input
+                  id="address"
+                  type="Text"
+                  defaultValue={getDoctor.address}
 
-            <TextField
-              id="lastname"
-              fullWidth
-              autoComplete="family-name"
-              variant="outlined"
-              {...register("lastname")}
-            />
+                  className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  error={errors.address ? true : false}
+                  {...register("address", {
+                    required: "This is required",
+                  })}
+                />
+                {errors.address && (
+                  <p className="text-red-500 ">{errors.address.message}</p>
+                )}
+              </div>
+            </div>
+          </div>
 
-            {errors.doctorId && (
-              <p className="text-red-500">{errors.doctorId.message}</p>
-            )}
-          </Grid>
+          {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+          <div className="flex md:flex-row flex-col gap-2">
+            <div className="  md:container md:mx-auto ">
+              <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
+                Primary Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                defaultValue={getDoctor.email}
 
-          <Grid item xs={12} sm={6}>
-            <label className="block mb-2 font-bold text-gray-700">
-              Address
-            </label>
+                className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                error={errors.email ? true : false}
+                {...register("email", { required: "This is required" })}
+              />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+            </div>
+            <div className="  md:container md:mx-auto ">
+              <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
+                Secondary Email
+              </label>
+              <input
+                id="email1"
+                type="email"
+                defaultValue={getDoctor.email1}
 
-            <TextField
-              id="address"
-              fullWidth
-              autoComplete="shipping address-line1"
-              variant="outlined"
-              {...register("address")}
-            />
-          </Grid>
+                className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                error={errors.email1 ? true : false}
+                {...register("email1", {
+                  required: "This is required",
+                })}
+              />
+              {errors.email1 && (
+                <p className="text-red-500">{errors.email1.message}</p>
+              )}
+            </div>
+          </div>
+          {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+          <div className="flex  md:flex-row flex-col gap-2">
+            <div className="  md:container md:mx-auto ">
+              <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
+                Qualification
+              </label>
 
-          <Grid item xs={12} sm={6}>
-            <label className="block mb-2 font-bold text-gray-700">
-              Phone No
-            </label>
+              <input
+                id="qualification"
+                type="Text"
+                defaultValue={getDoctor.qualification}
 
-            <TextField
-              id="number"
-              fullWidth
-              autoComplete="shipping postal-code"
-              variant="outlined"
-              {...register("number")}
-            />
-          </Grid>
+                className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                error={errors.qualification ? true : false}
+                {...register("qualification", {
+                  required: "This is required",
+                })}
+              />
+              {errors.qualification && (
+                <p className="text-red-500">{errors.qualification.message}</p>
+              )}
+            </div>
 
-          <Grid item xs={12} sm={6}>
-            <label className="block mb-2 font-bold text-gray-700">
-              Qualification
-            </label>
-            <TextField
-              id="qualification"
-              fullWidth
-              autoComplete="shipping postal-code"
-              variant="outlined"
-              {...register("number")}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <label className="block mb-2 font-bold text-gray-700">
-              Specialization
-            </label>
-            <TextField
-              id="specialization"
-              fullWidth
-              autoComplete="shipping postal-code"
-              variant="outlined"
-              {...register("specialization")}
-            />
-          </Grid>
+            <div className=" md:container md:mx-auto ">
+              <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
+                Specialization
+              </label>
+              <input
+                id="specialization"
+                defaultValue={getDoctor.specialization}
 
-          <Grid item xs={12}  className="flex justify-center items-center">
-            <button className="mt-8 bg-custom-blue hover:bg-blue-700 text-white w-80 md:w-60 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
+                type="Text"
+                className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                error={errors.specialization ? true : false}
+                {...register("specialization", {
+                  required: "This is required",
+                })}
+              />
+              {errors.specialization && (
+                <p className="text-red-500">{errors.specialization.message}</p>
+              )}
+            </div>
+          </div>
+
+          {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
+          <div className=" mt-10 mb-10  text-center">
+            <button
+              type="submit"
+              className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+            >
               Submit
             </button>
-          </Grid>
-        </Grid>
+          </div>
+        </div>
       </form>
     </>
   );

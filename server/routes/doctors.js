@@ -104,9 +104,22 @@ router.get("/find/:id", async(req, res) => {
     }
 });
 
+router.get("/search/:firstname", async(req, res) => {
+    try {
+        const regex = new RegExp(req.params.firstname, 'i');
+        const findDoc = await Doctor.find({ "firstname": regex });
+        res.json(findDoc);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+});
+
 // update doctor
 router.patch("/updateDoc/:id", async(req, res) => {
+    console.log("asdfsaaaaaa", req.params.id)
+    console.log(req.body)
     try {
+
         const updateDoc = await Doctor.updateMany({ _id: req.params.id }, {
             $set: {
                 firstname: req.body.firstname,

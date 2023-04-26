@@ -6,7 +6,9 @@ export const AppointmentSlice = createSlice({
         appointmentCount: 0,
     },
     reducers: {
+
         setAppointmentCount: (state, action) => {
+
             state.appointmentCount = action.payload;
         },
     },

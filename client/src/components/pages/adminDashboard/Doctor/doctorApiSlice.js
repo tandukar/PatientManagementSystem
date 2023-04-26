@@ -27,15 +27,33 @@ export const doctorApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: ["DOCTORS"],
         }),
 
-        updateDoctor: builder.mutation({
-            query: ({ id, newStatus, recepId, newTime }) => ({
-                url: `doctors/updateDoc/${id}`,
-                method: "PATCH",
-                body: { status: newStatus, recepId: recepId, appointmentDate: newTime },
+
+        getDoctor: builder.query({
+            query: (id) => ({
+                url: `doctors/find/${id}`,
+                method: "GET",
             }),
-            invalidatesTags: ["Appointments"],
         }),
 
+
+        // updateDoctor: builder.mutation({
+        //     query: ({ id, newStatus, recepId, newTime }) => ({
+        //         url: `doctors/updateDoc/${id}`,
+        //         method: "PATCH",
+        //         body: { status: newStatus, recepId: recepId, appointmentDate: newTime },
+        //     }),
+        //     invalidatesTags: ["Appointments"],
+        // }),
+
+        updateDoctor: builder.mutation({
+            query: ({ id, body }) => ({
+                url: `doctors/updateDoc/${id}`,
+                method: "PATCH",
+                body: body,
+
+            }),
+            invalidatesTags: ["DOCTORS"],
+        }),
     }),
 });
 
@@ -43,5 +61,6 @@ export const {
     useGetDoctorsQuery,
     useRegisterDoctorsMutation,
     useDeleteDoctorsMutation,
-
+    useUpdateDoctorMutation,
+    useGetDoctorQuery,
 } = doctorApiSlice;

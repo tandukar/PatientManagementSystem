@@ -1,0 +1,13 @@
+{
+    "cardiologist": "Cardiologist",
+    "dentist": "Dentist",
+    "dermatologist": "Dermatologist",
+    "gynecologist": "Gynecologist",
+    "neurologist": "Neurologist",
+    "ophthalmologist": "Ophthalmologist",
+    "orthopedic surgeon": "Orthopedic Surgeon",
+    "pediatrician": "Pediatrician",
+    "psychiatrist": "Psychiatrist",
+    "radiologist": "Radiologist",
+    "surgeon": "Surgeon"
+}

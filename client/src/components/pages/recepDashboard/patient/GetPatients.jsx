@@ -2,34 +2,31 @@ import React, { useState } from "react";
 import { useGetPatientQuery } from "./PatientApiSlice";
 import { TablePagination } from "@mui/material";
 import { RxCross2 } from "react-icons/rx";
-import CreateAppointment from "../appointment/Appointment";
+import CreateAppointment from "../appointment/appointment";
 
-
-const CreateAppointmentHandler = ({ onCancel, onConfirm, id, recepId}) => {
+const CreateAppointmentHandler = ({ onCancel, onConfirm, id, recepId }) => {
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-20 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg p-4  w-150">
+    <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-25 flex justify-center items-center z-50">
+      <div className="bg-white rounded-lg p-3 w-150">
         <div className="flex justify-end">
           <RxCross2
             onClick={onCancel}
-            className="text-3xl  absoulte  text-red-600  hover:text-pink-600"
+            className="text-3xl  absoulte  text-red-400  hover:text-pink-600"
           />
         </div>
-        <div className="px-8">
-          {id}  
-          <CreateAppointment recepId={recepId}  />
+        <div className="px-6">
+          <CreateAppointment recepId={recepId} patientId={id} />
         </div>
       </div>
     </div>
   );
 };
 
-const GetPatients = ({recepId}) => {
+const GetPatients = ({ recepId }) => {
   const { data: patients = [], error, isloading } = useGetPatientQuery();
   const [showCreateAppointment, setShowCreateAppointment] = useState(false);
   const [patientId, setPatientId] = useState(null);
-  
-  // console.log("retrieved",recepId)
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
 

@@ -51,7 +51,7 @@ const StatusConfirmation = ({
         </LocalizationProvider>
         <div className="flex justify-end mt-3">
           <button
-           className="mr-4 bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
+            className="mr-4 bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
             onClick={onConfirm}
           >
             Approve
@@ -79,6 +79,7 @@ const AppointmentList = () => {
   const [userId, setUserId] = useState(null);
   const [appointmentId, setAppointmentId] = useState(null);
   const [receptionstId, setReceptionistId] = useState(null);
+  const [patientId, setPatientId] = useState(null);
   const [showStatusConfirmation, setShowStatusConfirmation] = useState(false);
   const [updateAppointmentStatus] = useUpdateAppointmentStatusMutation();
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -135,49 +136,64 @@ const AppointmentList = () => {
     },
   ];
 
-  const rows = appointments
-    ? appointments.map((appointment) => {
-        const appointmentDay = new Date(
-          appointment.appointmentDate
-        ).toLocaleDateString();
-        const appointmentTime = new Date(
-          appointment.appointmentDate
-        ).toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
+  const currentDate = new Date();
+  const currentDay = currentDate.getDate();
 
-        return createData(
-          appointment.patientName,
-          <>
-            <span className="text-teal-500 font-semibold">
-              {appointmentDay}
-              <br />
-              {appointmentTime}
-            </span>
-          </>,
-          appointment.reason,
-          appointment.patientType,
-          <button
-            type="submit"
-            onClick={() =>
-              showStatusConfirmationHandler(
-                appointment._id,
-                appointment.recepId
-              )
-            }
-            className={
-              appointment.status === "Pending"
-                ? "text-blue-600 font-bold"
-                : appointment.status === "Approved"
-                ? "text-green-600 font-bold"
-                : "text-red-600 font-bold"
-            }
-          >
-            {appointment.status}
-          </button>
-        );
-      })
+  const appointmentsSorted = [...appointments];
+
+  const rows = appointmentsSorted
+    ? appointmentsSorted
+        // .filter((appointment) => {
+        //   const appointmentDate = new Date(appointment.appointmentDate);   //YO CODE LE CURRENT DATE KO GET GAREKO HO
+        //   const appointmentDay = appointmentDate.getDate();
+        //   return appointmentDay === currentDay;
+        // })
+        .sort(
+          (a, b) => new Date(b.appointmentDate) - new Date(a.appointmentDate)
+        )
+        .map((appointment) => {
+          const appointmentDay = new Date(
+            appointment.appointmentDate
+          ).toLocaleDateString();
+          const appointmentTime = new Date(
+            appointment.appointmentDate
+          ).toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
+
+          return createData(
+            appointment.patientName,
+            <>
+              <span className="text-teal-500 font-semibold">
+                {appointmentDay}
+                <br />
+                {appointmentTime}
+              </span>
+            </>,
+            appointment.reason,
+            appointment.patientType,
+
+            <button
+              type="submit"
+              onClick={() =>
+                showStatusConfirmationHandler(
+                  appointment._id,
+                  appointment.recepId,
+                  appointment.patientId
+                )
+              }
+              className={
+                appointment.status === "Pending"
+                  ? "text-blue-600 font-bold"
+                  : appointment.status === "Approved"
+                  ? "text-green-600 font-bold"
+                  : "text-red-600 font-bold"
+              }
+            >
+              {appointment.status}
+              
+            </button>
+          );
+        })
     : [];
-
-  console.log(rows.length);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
@@ -192,9 +208,10 @@ const AppointmentList = () => {
   };
 
   // Set the id of the doctor to delete and show the delete confirmation pop-up
-  const showStatusConfirmationHandler = (id, recepId) => {
+  const showStatusConfirmationHandler = (id, recepId, patientId) => {
     setAppointmentId(id);
     setReceptionistId(recepId);
+    setPatientId(patientId);
     setShowStatusConfirmation(true);
   };
 
@@ -205,6 +222,8 @@ const AppointmentList = () => {
       id: appointmentId,
       newStatus: "Cancelled",
       recepId: receptionstId,
+      patientId: patientId,
+
     })
       .unwrap()
       .then((result) => {
@@ -221,6 +240,7 @@ const AppointmentList = () => {
       newStatus: "Approved",
       recepId: receptionstId,
       newTime: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
+      patientId: patientId,
     })
       .unwrap()
       .then((result) => {

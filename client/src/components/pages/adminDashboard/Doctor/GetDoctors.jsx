@@ -30,7 +30,7 @@ const DeleteConfirmation = ({ onCancel, onConfirm }) => {
 };
 
 // Update confirmation pop-up component
-const UpdateConfirmation = ({ onCancel }) => {
+const UpdateConfirmation = ({ onCancel, doctorId }) => {
   return (
     <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg p-4  w-150">
@@ -41,7 +41,7 @@ const UpdateConfirmation = ({ onCancel }) => {
           />
         </div>
         <div className="px-8">
-          <UpdateDoctors />
+          <UpdateDoctors docId={doctorId} />
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@ const UpdateConfirmation = ({ onCancel }) => {
 
 const DoctorList = () => {
   // const [doctors, setDoctors] = useState([]);
-  const [deleteDoctorId, setDeleteDoctorId] = useState(null);
+  const [doctorID, setdoctorID] = useState(null);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showUpdateConfirmation, setShowUpdateConfirmation] = useState(false);
 
@@ -61,14 +61,15 @@ const DoctorList = () => {
 
   // Set the id of the doctor to delete and show the delete confirmation pop-up
   const showDeleteConfirmationHandler = (id) => {
-    setDeleteDoctorId(id);
+    setdoctorID(id);
     setShowDeleteConfirmation(true);
   };
 
-  // Set the id of the doctor to delete and show the update confirmation pop-up
+  // Set the id of the doctor to update and show the update confirmation pop-up
   const showUpdateConfirmationHandler = (id) => {
-    setDeleteDoctorId(id);
+    setdoctorID(id);
     setShowUpdateConfirmation(true);
+    console.log("doc", id)
   };
 
   // Hide the delete confirmation pop-up
@@ -82,11 +83,11 @@ const DoctorList = () => {
 
   // Delete the selected doctor
   const deleteDoctorHandler = () => {
-    console.log(deleteDoctorId);
-    deleteDoctor(deleteDoctorId)
+    console.log(doctorID);
+    deleteDoctor(doctorID)
       .unwrap()
       .then((result) => {
-        console.log(`Doctor deleted: ${deleteDoctorId}`);
+        console.log(`Doctor deleted: ${doctorID}`);
         setShowDeleteConfirmation(false);
         toast.error("Doctor deleted successfully");
       })
@@ -138,6 +139,7 @@ const DoctorList = () => {
       {showUpdateConfirmation && (
         <UpdateConfirmation
           onCancel={hideUpdateConfirmationHandler}
+          doctorId={doctorID}
           // onConfirm={UpdateDoctorHandler}
         />
       )}
