@@ -1,4 +1,4 @@
 # Remedial 
 
-Remedial is a patient management system designed to make your hospitals, clinics or any other healthcare industries easier to manage.
+Remedial is a comprehensive system designed to streamline patient management in hospitals.
 
