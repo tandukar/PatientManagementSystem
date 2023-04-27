@@ -29,13 +29,20 @@ const DocDashboard = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [registerDoctor, { isLoading, error }] = useRegisterDoctorsMutation();
 
-  
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("data", data);
     const payload = { ...data, sex: selectedOption.value };
-    registerDoctor(payload);
-    toast.success("Doctor registered successfully");
-    console.log(payload);
+
+    try {
+      const result = await registerDoctor(payload).unwrap();
+      if (result) {
+        toast.success("Doctor registered successfully");
+        console.log(payload);
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error(error.data);
+    }
   };
 
   const handleSelectChange = (selectedOption) => {
@@ -176,6 +183,7 @@ const DocDashboard = () => {
                         </label>
                         <Select
                           options={sex}
+                          className="text-gray-600"
                           name="sex"
                           onChange={handleSelectChange}
                           value={selectedOption}

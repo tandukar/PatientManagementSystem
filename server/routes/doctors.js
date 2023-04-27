@@ -10,7 +10,7 @@ router.post("/register", async(req, res) => {
     const { error } = docRegisterValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    const emailExists = await Doctor.findOne({ email: req.body.email1 });
+    const emailExists = await Doctor.findOne({ email: req.body.email });
     if (emailExists) return res.send("Email Already Exists");
 
     //hash password
@@ -72,14 +72,14 @@ router.post("/register", async(req, res) => {
 
         (
             await transporter.sendMail(message).then(() => {
-                res.send("Mail Sent");
-                return res.end();
+                return res.status(200).json("Doctor Registered Successfully");
+                // return res.end();
             })
         ).catch((err) => {
             return res.send(err.message);
         });
     } catch (err) {
-        res.status(400).send(err.message);
+        return res.send(err.message);
     }
 });
 
@@ -104,6 +104,7 @@ router.get("/find/:id", async(req, res) => {
     }
 });
 
+//search doctor by firstname
 router.get("/search/:firstname", async(req, res) => {
     try {
         const regex = new RegExp(req.params.firstname, 'i');
