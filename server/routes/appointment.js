@@ -110,7 +110,7 @@ router.patch("/updateAppointmentStatus/:id", async(req, res) => {
     };
 
     await transporter.sendMail(message).then(() => {
-      return res.send({ message: "Mail Sent" });
+      return res.json({ message: "Mail Sent" });
     });
   } catch (err) {
     res.json(err.message);

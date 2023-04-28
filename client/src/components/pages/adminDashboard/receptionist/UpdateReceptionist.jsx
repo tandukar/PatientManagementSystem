@@ -10,9 +10,12 @@ import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { useUpdateDoctorMutation, useGetDoctorQuery } from "./doctorApiSlice";
+import {
+  useUpdateReceptionistMutation,
+  useGetReceptionistQuery,
+} from "./ReceptionistApiSlice";
 
-const UpdateDoctors = ({ docId }) => {
+const UpdateReceptionist = ({ receptionistId }) => {
   const {
     register,
     handleSubmit,
@@ -22,11 +25,13 @@ const UpdateDoctors = ({ docId }) => {
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [doctorId, setdoctorId] = useState(docId);
-  const [updateDoctor, { isLoading, error }] = useUpdateDoctorMutation();
+  const [recepId, setrecepId] = useState(receptionistId);
 
-  const { data: getDoctor = [] } = useGetDoctorQuery(doctorId, {
-    skip: doctorId === null,
+  const [UpdateReceptionist, { isLoading, error }] =
+    useUpdateReceptionistMutation();
+
+  const { data: getRecep = [] } = useGetReceptionistQuery(recepId, {
+    skip: recepId === null,
   });
 
   const sex = [
@@ -36,19 +41,9 @@ const UpdateDoctors = ({ docId }) => {
   ];
 
   useEffect(() => {
-    console.log("detail", getDoctor);
-    const {
-      firstname,
-      lastname,
-      age,
-      sex,
-      number,
-      address,
-      email,
-      email1,
-      qualification,
-      specialization,
-    } = getDoctor;
+    console.log("detail", getRecep);
+    const { firstname, lastname, age, sex, number, address, email, email1 } =
+      getRecep;
     setValue("firstname", firstname ?? "");
     setValue("lastname", lastname ?? "");
     setValue("age", age ?? "");
@@ -57,18 +52,27 @@ const UpdateDoctors = ({ docId }) => {
     setValue("address", address ?? "");
     setValue("email", email ?? "");
     setValue("email1", email1 ?? "");
-    setValue("qualification", qualification ?? "");
-    setValue("specialization", specialization ?? "");
-  }, [getDoctor]);
+  }, [getRecep]);
 
   const onSubmit = (data) => {
-    console.log(doctorId);
-    console.log("data", data);
+    // console.log(recepId);
+    // console.log("data", data);
+    console.log("submitting");
     try {
-      updateDoctor({ id: doctorId, body: data });
-      toast.success("Doctor Updated Successfully");
+      console.log("updating receptionist");
+      UpdateReceptionist({ id: recepId, body: data });
+    //   toast.success("Receptionist Updated Successfully", {
+    //     toastId: "success1",
+    //   }); 
+      //prevent duplicate toast
+      toast.success("success1", {
+        render: "Receptionist Updated Successfully",
+        type: toast.TYPE.SUCCESS,
+        autoClose: 2000,
+        });
+      console.log("submitted");
     } catch {
-      toast.error("Doctor Update Failed");
+      toast.error("Receptionist Update Failed");
     }
   };
 
@@ -82,8 +86,9 @@ const UpdateDoctors = ({ docId }) => {
 
   return (
     <>
+
       <div className="text-center my-8">
-        <div className="text-4xl">Update Doctor</div>
+        <div className="text-4xl">Update Receptionist</div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -96,7 +101,7 @@ const UpdateDoctors = ({ docId }) => {
               <input
                 id="firstname"
                 type="Text"
-                defaultValue={getDoctor.firstname}
+                defaultValue={getRecep.firstname}
                 className="bg-whtie appearance-none border-2  border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 error={errors.firstname ? true : false}
                 {...register("firstname", {
@@ -114,7 +119,7 @@ const UpdateDoctors = ({ docId }) => {
               <input
                 id="lastname"
                 type="Text"
-                defaultValue={getDoctor.lastname}
+                defaultValue={getRecep.lastname}
                 className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 error={errors.lastname ? true : false}
                 {...register("lastname", {
@@ -138,7 +143,7 @@ const UpdateDoctors = ({ docId }) => {
                   id="age"
                   type="Number"
                   variant="outlined"
-                  defaultValue={getDoctor.age}
+                  defaultValue={getRecep.age}
                   className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   error={errors.age ? true : false}
                   {...register("age", { required: "Age is required" })}
@@ -156,7 +161,7 @@ const UpdateDoctors = ({ docId }) => {
                 <Select
                   options={sex}
                   name="sex"
-                  defaultValue={{ value: getDoctor.sex }}
+                  defaultValue={{ value: getRecep.sex }}
                   onChange={handleSelectChange}
                 />
               </div>
@@ -169,7 +174,7 @@ const UpdateDoctors = ({ docId }) => {
                 <input
                   id="number"
                   type="Text"
-                  defaultValue={getDoctor.number}
+                  defaultValue={getRecep.number}
                   className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   error={errors.number ? true : false}
                   {...register("number", {
@@ -189,7 +194,7 @@ const UpdateDoctors = ({ docId }) => {
                 <input
                   id="address"
                   type="Text"
-                  defaultValue={getDoctor.address}
+                  defaultValue={getRecep.address}
                   className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                   error={errors.address ? true : false}
                   {...register("address", {
@@ -212,7 +217,7 @@ const UpdateDoctors = ({ docId }) => {
               <input
                 id="email"
                 type="email"
-                defaultValue={getDoctor.email}
+                defaultValue={getRecep.email}
                 className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 error={errors.email ? true : false}
                 {...register("email", { required: "This is required" })}
@@ -228,7 +233,7 @@ const UpdateDoctors = ({ docId }) => {
               <input
                 id="email1"
                 type="email"
-                defaultValue={getDoctor.email1}
+                defaultValue={getRecep.email1}
                 className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
                 error={errors.email1 ? true : false}
                 {...register("email1", {
@@ -237,47 +242,6 @@ const UpdateDoctors = ({ docId }) => {
               />
               {errors.email1 && (
                 <p className="text-red-500">{errors.email1.message}</p>
-              )}
-            </div>
-          </div>
-          {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-          <div className="flex  md:flex-row flex-col gap-2">
-            <div className="  md:container md:mx-auto ">
-              <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
-                Qualification
-              </label>
-
-              <input
-                id="qualification"
-                type="Text"
-                defaultValue={getDoctor.qualification}
-                className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                error={errors.qualification ? true : false}
-                {...register("qualification", {
-                  required: "This is required",
-                })}
-              />
-              {errors.qualification && (
-                <p className="text-red-500">{errors.qualification.message}</p>
-              )}
-            </div>
-
-            <div className=" md:container md:mx-auto ">
-              <label className="form-label inline-block mb-2 text-gray-600 font-semibold">
-                Specialization
-              </label>
-              <input
-                id="specialization"
-                defaultValue={getDoctor.specialization}
-                type="Text"
-                className="bg-white appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                error={errors.specialization ? true : false}
-                {...register("specialization", {
-                  required: "This is required",
-                })}
-              />
-              {errors.specialization && (
-                <p className="text-red-500">{errors.specialization.message}</p>
               )}
             </div>
           </div>
@@ -297,4 +261,4 @@ const UpdateDoctors = ({ docId }) => {
   );
 };
 
-export default UpdateDoctors;
+export default UpdateReceptionist;

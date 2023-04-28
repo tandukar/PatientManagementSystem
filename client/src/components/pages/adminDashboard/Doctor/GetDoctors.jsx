@@ -82,7 +82,6 @@ const DoctorList = () => {
     // setList(searchTerm)
   };
 
-  console.log(doctors);
 
   // Set the id of the doctor to delete and show the delete confirmation pop-up
   const showDeleteConfirmationHandler = (id) => {
@@ -121,7 +120,6 @@ const DoctorList = () => {
 
   return (
     <div>
-      <ToastContainer />
 
       <div className="flex flex-col md:flex-row">
         <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">

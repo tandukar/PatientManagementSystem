@@ -113,12 +113,17 @@ router.patch("/updateRecep/:id", async(req, res) => {
 
         const updateRecep = await Receptionist.updateMany({ _id: req.params.id }, {
             $set: {
+
+
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
-                password: req.body.password,
                 age: req.body.age,
+                sex: req.body.sex,
                 email: req.body.email,
-                phone: req.body.phone,
+                email1: req.body.email1,
+                address: req.body.address,
+                number: req.body.number,
+
             },
         });
         res.send(updateRecep);
@@ -126,6 +131,19 @@ router.patch("/updateRecep/:id", async(req, res) => {
         res.json(err.message);
     }
 });
+
+
+//search doctor by firstname
+router.get("/search/:firstname", async(req, res) => {
+    try {
+        const regex = new RegExp(req.params.firstname, 'i');
+        const findRecep = await Receptionist.find({ "firstname": regex });
+        res.json(findRecep);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+});
+
 
 //delete a Receptionist
 router.delete("/deleteReceptionist/:id", async(req, res) => {

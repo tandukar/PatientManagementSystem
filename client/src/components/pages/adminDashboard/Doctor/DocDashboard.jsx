@@ -39,7 +39,7 @@ const DocDashboard = () => {
         toast.success("Doctor registered successfully");
         console.log(payload);
       }
-    } catch (error) {
+    } catch (error) { 
       console.log("error", error);
       toast.error(error.data);
     }
@@ -73,32 +73,7 @@ const DocDashboard = () => {
             </div>
             {/* ```````````````````````````````````````` */}
           </div>
-          {/* 
-          <div className="flex flex-col md:flex-row">
-            <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
-              Registered Doctors
-            </div>
-            <div className="md:w-1/2 p-4 ">
-              <div className="relative   border border-custom-blue p-2 rounded-3xl">
-                <input
-                  type="text"
-                  className="w-full pl-10 text-sm outline-none  text-gray-600"
-                  placeholder="Search..."
-                  value={searchTerm}
-                  onChange={(event) => setsearchTerm(event.target.value)}
-                />
-                <button
-                  className="absolute right-0 top-0 p-2 "
-                  onClick={searchHandler}
-                >
-                  <CiSearch className="w-6 h-6  text-custom-blue" />
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col gap-4 p-3 bg-slate-200 shadow-md rounded-lg">
-            <Profile />
-          </div> */}
+  
           <Profile />
         </div>
         {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}

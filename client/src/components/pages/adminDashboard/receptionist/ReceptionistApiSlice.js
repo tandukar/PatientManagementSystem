@@ -27,6 +27,34 @@ export const ReceptionistApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: ["RECEPTIONISTS"],
         }),
 
+        updateReceptionist: builder.mutation({
+            query: ({ id, body }) => ({
+                url: `receptionists/updateRecep/${id}`,
+                method: "PATCH",
+                body: body,
+
+            }),
+            invalidatesTags: ["RECEPTIONISTS"],
+        }),
+
+        getReceptionist: builder.query({
+            query: (id) => ({
+                url: `receptionists/find/${id}`,
+                method: "GET",
+            }),
+        }),
+
+
+
+        getReceptionistName: builder.query({
+            query: (firstName) => ({
+                url: `receptionists/search/${firstName}`,
+                method: "GET",
+            }),
+            providesTags: (result) =>
+                result ?
+                result.map(({ id }) => ({ type: "Receptionist", id })) : [{ type: "Receptionist", id: "LIST" }],
+        }),
 
     }),
 });
@@ -35,4 +63,7 @@ export const {
     useGetReceptionistsQuery,
     useRegisterReceptionistsMutation,
     useDeleteReceptionistsMutation,
+    useGetReceptionistNameQuery,
+    useUpdateReceptionistMutation,
+    useGetReceptionistQuery,
 } = ReceptionistApiSlice;
