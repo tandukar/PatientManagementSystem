@@ -53,6 +53,7 @@ router.post("/create", async(req, res, next) => {
     }
 });
 
+
 // update doctor
 router.patch("/updateAppointmentStatus/:id", async(req, res) => {
             const { status, recepId, appointmentDate, patientId } = req.body;

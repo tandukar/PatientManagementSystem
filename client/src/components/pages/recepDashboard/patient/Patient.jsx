@@ -179,7 +179,7 @@ const Patient = () => {
               )}
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}  className="flex justify-center">
               <button className="mt-8  bg-custom-blue hover:bg-custom-blue text-white w-80  md:w-60 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
                 Submit
               </button>

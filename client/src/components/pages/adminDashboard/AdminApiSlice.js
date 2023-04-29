@@ -5,7 +5,7 @@ export const AdminApiSlice = apiSlice.injectEndpoints({
         userDetail: builder.query({
             query: (id) => ({
                 url: `admin/${id}`,
-                methos: "GET",
+                method: "GET",
             }),
         }),
     }),

@@ -3,16 +3,17 @@ import React from "react";
 import { RiHomeLine } from "react-icons/ri";
 import { MdPeopleOutline } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
+import { TbBuildingHospital } from "react-icons/tb";
 import { RxCross2 } from "react-icons/rx";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
   const [visibleIcon, setvisibleIcon] = React.useState(false);
 
-  const logoutHandler =()=>{
-    localStorage.removeItem("token"); 
-    sessionStorage.removeItem("role"); 
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("role");
     window.location.href = "/login";
-  }
+  };
 
   return (
     <>
@@ -76,7 +77,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
                       Doctors
                     </a>
                   </li>
-                 
+                  <li className="py-2">
+                    <a
+                      className=" flex items-center text-white md:text-gray-300 hover:text-white"
+                      href="#"
+                      onClick={() => onItemClick("Rooms/Beds")}
+                    >
+                      <span className="inline-block  pr-3">
+                        <TbBuildingHospital className="w-7 h-7" />
+                      </span>
+                      Rooms/Beds
+                    </a>
+                  </li>
+                  <li className="py-2">
+                    <a
+                      className=" flex items-center text-white md:text-gray-300 hover:text-white"
+                      href="#"
+                      onClick={() => onItemClick("GetAppointments")}
+                    >
+                      <span className="inline-block  pr-3">
+                        {/* <TbBuildingHospital className="w-7 h-7" /> */}
+                      </span>
+                      GetAppointments
+                    </a>
+                  </li>
                 </ul>
               </nav>
             </div>

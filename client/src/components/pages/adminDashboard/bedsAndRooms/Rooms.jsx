@@ -10,11 +10,7 @@ const RoomDashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [registerRooms, { isLoading, error }] = useRegisterRoomsMutation();
 
-  const isAvailable = [
-    { value: "true", label: "Available" },
-    { value: 
-      "false", label: "Not Available" },
-  ];
+
   const category = [
 
     { value: "General ward", label: "General ward" },
@@ -37,15 +33,11 @@ const RoomDashboard = () => {
     console.log("selectedOption", selectedOption);
     const roomData = {
       ...data,
-      isAvailable: selectedOption.value,
     };
     registerRooms(roomData);
   };
 
-  const handleSelectChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
-    setValue("isAvailable", selectedOption.value);
-  };
+
 
   const handleCategoryChange = (selectedCategory) => {
     setSelectedCategory(selectedCategory);
@@ -72,21 +64,11 @@ const RoomDashboard = () => {
                   {...register("name", { required: "Room Name is required" })}
                 />
               </div>
-              <div className="  md:container md:mx-auto ">
-                <label className="form-label inline-block mb-2 text-custom-blue">
-                  Category
-                </label>
-                <Select
-                  options={isAvailable}
-                  onChange={handleSelectChange}
-                  value={selectedOption}
-                />
-              </div>
+       
               <div className="  md:container md:mx-auto ">
                 <label className="block mb-2 font-bold text-gray-700">
                   Availability
                 </label>
-
                 <Select
                   options={category}
                   onChange={handleCategoryChange}

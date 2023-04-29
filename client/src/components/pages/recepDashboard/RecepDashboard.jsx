@@ -9,6 +9,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import GetPatients from "./patient/GetPatients";
 import GetDoctorList from "./doctor/GetDoctorList";
+import GetRooms from "./bedsAndRooms/Rooms";
+import GetPatientAppointment from "./patient/GetAppointments";
 import { getIdFromLocalStorage } from "../utlis";
 
 const RecepDashboard = () => {
@@ -63,11 +65,15 @@ const RecepDashboard = () => {
           )}
           <div className="w-full md:pr-10 overflow-x-hidden p-10">
             {selectedItem === "Appointments" ? (
-              <GetPatients recepId={recepId}/>
+              <GetPatients recepId={recepId} />
             ) : selectedItem === "Patients" ? (
               <Patient />
             ) : selectedItem === "Doctors" ? (
               <GetDoctorList />
+            ) : selectedItem === "Rooms/Beds" ? (
+              <GetRooms />
+            ) : selectedItem === "GetAppointments" ? (
+              <GetPatientAppointment />
             ) : null}
           </div>
         </div>

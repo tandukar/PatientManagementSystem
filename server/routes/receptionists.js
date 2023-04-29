@@ -113,8 +113,6 @@ router.patch("/updateRecep/:id", async(req, res) => {
 
         const updateRecep = await Receptionist.updateMany({ _id: req.params.id }, {
             $set: {
-
-
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 age: req.body.age,

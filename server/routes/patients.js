@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Patient = require("../model/Patient");
+const Appointment = require("../model/Appointment");
 const { patientRegisterValidation } = require("../validation");
 
 router.post("/register", async(req, res) => {
@@ -53,6 +54,22 @@ router.get("/find/:patiendID", async(req, res) => {
     try {
         const findPatient = await Patient.findById(req.params.patiendID);
         res.json(findPatient);
+    } catch (err) {
+        // res.status(400).send(err.message);
+        res.status(400).send("Could not find patient");
+    }
+});
+
+router.get("/search/:number", async(req, res) => {
+    try {
+        const findPatient = await Patient.find({ number: req.params.number });
+        const patientId = findPatient[0]._id;
+        console.log(patientId);
+
+        const appointments = await Appointment.find({ patientId: patientId });
+        console.log(appointments);
+
+        res.json(appointments);
     } catch (err) {
         // res.status(400).send(err.message);
         res.status(400).send("Could not find patient");

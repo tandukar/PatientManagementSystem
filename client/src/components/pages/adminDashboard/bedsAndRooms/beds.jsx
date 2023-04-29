@@ -7,10 +7,7 @@ import Select from "react-select";
 const BedDashboard = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [registerBeds, { isLoading, error }] = useRegisterBedsMutation();
-  const isAvailable = [
-    { value: "true", label: "Available" },
-    { value: "false", label: "Not Available" },
-  ];
+
   const {
     register,
     handleSubmit,
@@ -23,14 +20,8 @@ const BedDashboard = () => {
     console.log("selectedOption", selectedOption);
     const bedData = {
       ...data,
-      isAvailable: selectedOption.value,
     };
     registerBeds(bedData);
-  };
-
-  const handleSelectChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
-    setValue("isAvailable", selectedOption.value);
   };
 
   return (
@@ -66,17 +57,6 @@ const BedDashboard = () => {
                   {...register("roomName", {
                     required: "Room Name is required",
                   })}
-                />
-              </div>
-              <div className="  md:container md:mx-auto ">
-                <label className="form-label inline-block mb-2 text-custom-blue">
-                  Availablity
-                </label>
-
-                <Select
-                  options={isAvailable}
-                  onChange={handleSelectChange}
-                  value={selectedOption}
                 />
               </div>
             </div>
