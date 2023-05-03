@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
 
-//creating appointment schema
-
-const appointmentSchema = mongoose.Schema({
+const ipdAdmissionSchema = new mongoose.Schema({
     patientId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Patient",
-        required: [true, "Patient Id required"],
+        required: [true, "Patient ID required"],
     },
     patientName: {
         type: String,
@@ -21,33 +19,29 @@ const appointmentSchema = mongoose.Schema({
         type: String,
         required: [true, "Doctor Name required"],
     },
+    admissionDate: {
+        type: Date,
+        default: Date.now,
+        required: [true, "Admission Date required"],
+    },
+    dischargeDate: {
+        type: Date,
+    },
+    roomNumber: {
+        type: String,
+        required: [true, "Room Number required"],
+    },
+    bedNumber: {
+        type: String,
+        required: [true, "Bed Number required"],
+    },
 
-    reason: {
-        type: [String],
-        required: [true, "Reason required"],
-    },
-    notes: {
-        type: [String],
-    },
-    procedures: {
-        type: [String],
-    },
     diagnosis: {
         type: String,
     },
-
-    patientType: {
-        type: String,
-        enum: ["ipd", "opd"],
-        required: [true, "Patient Type required"],
-    },
-    appointmentDate: {
-        type: Date,
-    },
-    roomNo: {
+    treatment: {
         type: String,
     },
-
     status: {
         type: String,
         enum: ["Pending", "Approved", "Cancelled", "Completed"],
@@ -59,4 +53,4 @@ const appointmentSchema = mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("Appointment", appointmentSchema);
+module.exports = mongoose.model("IPDAdmission", ipdAdmissionSchema);

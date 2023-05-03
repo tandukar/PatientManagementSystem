@@ -69,6 +69,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"
                       href="#"
+                      onClick={() => onItemClick("IpdAdmission")}
+                    >
+                      <span className="inline-block  pr-3">
+                        <MdPeopleOutline className="w-7 h-7" />
+                      </span>
+                      Ipd Admission
+                    </a>
+                  </li>
+                  <li className="py-2">
+                    <a
+                      className=" flex items-center text-white md:text-gray-300 hover:text-white"
+                      href="#"
                       onClick={() => onItemClick("Doctors")}
                     >
                       <span className="inline-block  pr-3">

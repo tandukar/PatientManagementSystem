@@ -7,6 +7,7 @@ import Dashboard from "./components/pages/adminDashboard/dashboard/Dashboard";
 import RecepDashboard from "./components/pages/recepDashboard/RecepDashboard";
 import Patient from "./components/pages/recepDashboard/patient/Patient";
 import Profile from "./components/pages/adminDashboard/Doctor/GetDoctors";
+import Home from "./components/pages/landingPage";
 //import app.css
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/doctor" element={<DoctorDashboard />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/receptionist" element={<RecepDashboard />} />
           <Route path="/patient" element={<Patient />} />

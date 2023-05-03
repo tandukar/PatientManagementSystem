@@ -1,12 +1,11 @@
-
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  useRegisterAppointmentsMutation,
-  useGetDoctorNameQuery,
-} from "./AppointmentApiSlice";
+// import {
+//   useRegisterAppointmentsMutation,
+//   useGetDoctorQuery,
+// } from "./AppointmentApiSlice";
 import DatePicker from "react-datepicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -20,8 +19,8 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { CiSearch } from "react-icons/ci";
 import specialization from "../../specialization.json";
-
-const CreateAppointment = ({ recepId, patientId }) => {
+import { useGetDoctorNameQuery } from "../appointment/AppointmentApiSlice";
+const CreateIpdAdmission = ({ recepId, patientId }) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [receptionId, setReceptionId] = useState(recepId);
@@ -45,15 +44,15 @@ const CreateAppointment = ({ recepId, patientId }) => {
   console.log("receptionId", receptionId);
   console.log("patient", patient);
 
-  const [registerAppointments, { isLoading, error }] =
-    useRegisterAppointmentsMutation();
-    
-  const { data } = useGetDoctorNameQuery(searchTerm); 
+//   const [registerAppointments, { isLoading, error }] =
+//     useRegisterAppointmentsMutation();
+
+  const { data } = useGetDoctorNameQuery(searchTerm);
 
   const doctorsList = data ?? [];
   const printHandler = () => {
     console.log(searchTerm);
-    console.log("search",data);
+    console.log(data);
   };
 
   const handleFilterClick = () => {
@@ -77,7 +76,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
       doctorId: searchTerm,
     };
     try {
-      const result = await registerAppointments(appointmentData).unwrap();
+    //   const result = await registerAppointments(appointmentData).unwrap();
       if (result) {
         toast.success("Appointment created successfully");
         console.log(appointmentData);
@@ -105,7 +104,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
     <>
       <ToastContainer />
       <div className="text-center my-8">
-        <div className="text-4xl">Create Appointment</div>
+        <div className="text-4xl">Create Ipd Admission</div>
       </div>
 
       <label className="block mb-2 font-bold text-gray-700">Doctor</label>
@@ -122,7 +121,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
             />
             <button
               className="absolute right-60 top-0 p-3"
-              onClick={printHandler}
+            //   onClick={printHandler}
             >
               <CiSearch className="w-6 h-6" />
             </button>
@@ -170,7 +169,9 @@ const CreateAppointment = ({ recepId, patientId }) => {
           )}
         </div>
 
-        {doctorsList.length > 0 && (
+
+{console.log(doctorsList)}
+     {doctorsList.length > 0 && (
           <ul className="mt-2 border border-gray-400 p-2 rounded-lg bg-white text-gray-600">
             {doctorsList.map((doctor) => (
               <li
@@ -184,12 +185,12 @@ const CreateAppointment = ({ recepId, patientId }) => {
               </li>
             ))}
           </ul>
-        )}
+        )} 
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 text-gray-600">
         <Grid container spacing={4}>
-       
+        
           <Grid item xs={12}>
             <label className="block mb-2 font-bold text-gray-700">Reason</label>
 
@@ -238,10 +239,28 @@ const CreateAppointment = ({ recepId, patientId }) => {
               <p className="text-red-500">{errors.roomNo.message}</p>
             )}
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <label className="block mb-2 font-bold text-gray-700">
+              Bed Bumber
+            </label>
+
+            <TextField
+              id="roomNo"
+              fullWidth
+              autoComplete="shipping postal-code"
+              variant="outlined"
+              error={errors.roomNo ? true : false}
+              {...register("roomNo", { required: "This is required" })}
+            />
+
+            {errors.roomNo && (
+              <p className="text-red-500">{errors.roomNo.message}</p>
+            )}
+          </Grid>
 
           <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">
-              Appointment Date
+              Admission Date
             </label>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -267,4 +286,4 @@ const CreateAppointment = ({ recepId, patientId }) => {
   );
 };
 
-export default CreateAppointment;
+export default CreateIpdAdmission;

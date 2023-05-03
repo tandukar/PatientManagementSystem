@@ -11,6 +11,7 @@ import GetPatients from "./patient/GetPatients";
 import GetDoctorList from "./doctor/GetDoctorList";
 import GetRooms from "./bedsAndRooms/Rooms";
 import GetPatientAppointment from "./patient/GetAppointments";
+import CreateIpdAdmission from "./ipdAdmission/ipdAdmission"
 import { getIdFromLocalStorage } from "../utlis";
 
 const RecepDashboard = () => {
@@ -74,7 +75,15 @@ const RecepDashboard = () => {
               <GetRooms />
             ) : selectedItem === "GetAppointments" ? (
               <GetPatientAppointment />
-            ) : null}
+            ) :
+            selectedItem === "IpdAdmission" ? (
+              <CreateIpdAdmission />
+            ) :
+            
+            
+            
+            
+            null}
           </div>
         </div>
       </>

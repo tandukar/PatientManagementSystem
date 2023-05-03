@@ -3,22 +3,94 @@ import React from "react";
 // import Sidebar from "./sidebar/Sidebar";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import TextField from "@mui/material/TextField";
 import { CiSearch } from "react-icons/ci";
 import AppointmentList from "./GetAppointment";
 import { useSelector } from "react-redux";
+import Select from "react-select";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import dayjs from "dayjs";
+import Grid from "@mui/material/Grid";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  useGetPatientNumberQuery,
+  useRegisterAppointmentsMutation,
+} from "./AppointmentApiSlice";
 
 const Appointment = (props) => {
   const [searchTerm, setsearchTerm] = React.useState([]);
+  const [patientNumber, setPatientNumber] = React.useState([]);
   const [email, setEmail] = React.useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+
   const appointmentCount = useSelector(
     (state) => state.appointmentCount.appointmentCount
   );
 
   const printHandler = (event) => {
     console.log(searchTerm);
+    console.log("patientNumber",data);
   };
+
+  // ``````````````````````````````````````````````````````
+  const { data } = useGetPatientNumberQuery(patientNumber);
+  const patientList = data ?? [];
+
+  const [registerAppointments, { isLoading, error }] =
+    useRegisterAppointmentsMutation();
+
+  const patientType = [
+    { value: "ipd", label: "Inpatient" },
+    { value: "opd", label: "Outpatient" },
+  ];
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log("selectedOption", selectedOption);
+    console.log("selectedDate", selectedDate);
+
+    const appointmentData = {
+      ...data,
+      patientType: "opd",
+      appointmentDate: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
+      patientId: patientNumber,
+      doctorId: props.docId,
+      roomNo: 34,
+    };
+
+    try {
+      const result = await registerAppointments(appointmentData).unwrap();
+      if (result) {
+        toast.success("Appointment created successfully");
+        console.log(appointmentData);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.data.message);
+    }
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    setValue("patientType", selectedOption.value);
+  };
+
+  const handleDateChange = (selectedDate) => {
+    setSelectedDate(dayjs(selectedDate));
+  };
+
+  // ``````````````````````````````````````````````````````
   return (
     <>
       <div className="flex flex-col md:flex-row  w-full p-3 ">
@@ -78,91 +150,116 @@ const Appointment = (props) => {
             </div>
             {/* <div className="flex flex-col gap-4 p-6 rounded-lg bg-slate-200  font-semibold"> */}
             <div className="flex flex-col gap-4 p-6 rounded-lg   ">
-              <div className="flex md:flex-row gap-2 flex-col">
-                <div className=" md:container md:mx-auto ">
-                  <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
-                    Patient Name
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2  border-gray-300  rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
-                    onChange={(event) => setEmail(event.target.value)}
-                  />
-                </div>
-                <div className="  md:container md:mx-auto ">
-                  <label
-                    htmlFor="exampleEmail0"
-                    className="form-label inline-block mb-2 text-custom-blue font-semibold"
-                  >
-                    Doctor Name
-                  </label>
-                  <input
-                    type="Text"
-                    className="bg-whtie appearance-none border-2  border-gray-300  rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-custom-blue"
-                  />
-                </div>
-              </div>
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
 
-              <div className="flex flex-col md:flex-row gap-2">
-                <div className="md:container md:mx-auto">
-                  <label className="form-label inline-block mb-2 text-custom-blue font-semibold ">
-                    Appointment Date
-                  </label>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker className="outline-custom-blue w-full   " />
-                  </LocalizationProvider>
-                </div>
+              <label className="block mb-2 font-bold text-gray-700">
+                Patient
+              </label>
 
-                <div className="md:w-full">
-                  <div className="md:container md:mx-auto">
-                    <label
-                      htmlFor="exampleEmail0"
-                      className="form-label inline-block mb-2 text-custom-blue font-semibold"
-                    >
-                      Appointment time
-                    </label>
+              <div className="relative">
+                <div className="flex flex-row gap-5">
+                  <div className="flex w-2/3 items-center border border-gray-400 p-2 rounded-md focus-within:border-blue-500">
                     <input
-                      type="email"
-                      className="bg-white appearance-none border-2 border-gray-300 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-custom-blue"
+                      type="text"
+                      className="w-full pr-10 text-sm outline-none text-gray-600 p-1 "
+                      placeholder="Search..."
+                      value={patientNumber}
+                      onChange={(event) => setPatientNumber(event.target.value)}
                     />
+                    <button
+                      className="absolute right-64 top-0 p-3"
+                      onClick={printHandler}
+                    >
+                      <CiSearch className="w-6 h-6" />
+                    </button>
                   </div>
+                  
                 </div>
+                {patientList.length > 0 && (
+                    <ul className="mt-2 border border-gray-400 p-2 rounded-lg bg-white text-gray-600">
+                      {patientList.map((patient) => (
+                        <li
+                          key={patient._id}
+                          onClick={() => {
+                            setPatientNumber(patient._id);
+                          }}
+                          className="cursor-pointer hover:bg-gray-100 p-2"
+                        >
+                          {patient.firstname} {patient.lastname}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
               </div>
+
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="mt-8 text-gray-600"
+              >
+                <Grid container spacing={4}>
+                  <Grid item xs={12}>
+                    <label className="block mb-2 font-bold text-gray-700">
+                      Appointment Date
+                    </label>
+
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={["DateTimePicker"]}>
+                        <DateTimePicker
+                          value={selectedDate}
+                          selected={selectedDate}
+                          onChange={handleDateChange}
+                          format="hh:mm A"
+                        />
+                      </DemoContainer>
+                    </LocalizationProvider>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <label className="block mb-2 font-bold text-gray-700">
+                      Reason
+                    </label>
+
+                    <TextField
+                      id="reason"
+                      fullWidth
+                      autoComplete="shipping address-line1"
+                      variant="outlined"
+                      error={errors.reason ? true : false}
+                      {...register("reason", { required: "This is required" })}
+                    />
+
+                    {errors.reason && (
+                      <p className="text-red-500">{errors.reason.message}</p>
+                    )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <label className="block mb-2 font-bold text-gray-700">
+                      Notes
+                    </label>
+
+                    <TextField
+                      id="notes"
+                      fullWidth
+                      autoComplete="shipping address-line1"
+                      variant="outlined"
+                      error={errors.notes ? true : false}
+                      {...register("notes", { required: "This is required" })}
+                    />
+
+                    {errors.notes && (
+                      <p className="text-red-500">{errors.notes.message}</p>
+                    )}
+                  </Grid>
+
+                  <Grid item xs={12} className="flex justify-center ">
+                    <button className="mt-11   bg-custom-blue hover:bg-blue-700 text-white w-80 md:w-60 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
+                      Create Revisit
+                    </button>
+                  </Grid>
+                </Grid>
+              </form>
 
               {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className="flex  flex-col gap-2">
-                <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
-                  Notes
-                </label>
-
-                <TextField
-                  id="outlined-multiline-static"
-                  // label="Multiline"
-
-                  multiline
-                  rows={4}
-                />
-
-                <label className="form-label inline-block mb-2 text-custom-blue font-semibold">
-                  Reason
-                </label>
-
-                <TextField
-                  id="outlined-multiline-static"
-                  // label="Multiline"
-                  className="bg-white"
-                  multiline
-                  rows={4}
-                />
-              </div>
-
-              {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}
-              <div className=" mt-10 mb-10  text-center ">
-                <button className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg">
-                  Create Revisit
-                </button>
-              </div>
             </div>
           </div>
           {/* ```````````````````````````````````````````````````````````````````````````````````````````````````` */}

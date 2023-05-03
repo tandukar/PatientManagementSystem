@@ -21,7 +21,7 @@ export const AppointmentApiSlice = apiSlice.injectEndpoints({
 
         }),
 
-        getDoctor: builder.query({
+        getDoctorName: builder.query({
             query: (firstName) => ({
                 url: `doctors/search/${firstName}`,
                 method: "GET",
@@ -35,4 +35,4 @@ export const AppointmentApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useRegisterAppointmentsMutation, useGetDoctorQuery } = AppointmentApiSlice;
+export const { useRegisterAppointmentsMutation, useGetDoctorNameQuery } = AppointmentApiSlice;

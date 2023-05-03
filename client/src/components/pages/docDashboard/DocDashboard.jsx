@@ -20,7 +20,7 @@ const DoctorDashboard = () => {
       setUserId(id);
       setAuthenticated(true);
       console.log("token");
-      console.log("ID =", userId);
+      // console.log("ID =", userId);
     } else {
       console.log("no token");
       setAuthenticated(false);
@@ -63,7 +63,7 @@ const DoctorDashboard = () => {
           )}
           <div className="flex-1  ">
             <div className="min-height: 100vh ">
-              <Appointment docNameProp={docName} />
+              <Appointment docNameProp={docName} docId={userId}/>
             </div>
           </div>
         </div>

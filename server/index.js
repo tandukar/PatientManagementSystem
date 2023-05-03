@@ -14,6 +14,7 @@ const authRoute = require("./routes/auth");
 const patientRoute = require("./routes/patients");
 const appointmentRoute = require("./routes/appointment");
 const roomBedRoute = require("./routes/roomBed")
+const ipdRoute = require("./routes/ipdAdmission");
 
 const initializeAdmin = require("./initializeAdmin");
 
@@ -60,14 +61,13 @@ const setCurrentUser = (req, res, next) => {
 //routes middlewares
 app.use("/api/auth", authRoute);
 app.use(setCurrentUser);
-
-
 app.use("/api/doctors", docRoute);
 app.use('/api/receptionists', recepRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/patients", patientRoute);
 app.use("/api/appointments", appointmentRoute);
 app.use("/api/roomBed", roomBedRoute);
+app.use("/api/ipd", ipdRoute);
 
 app.listen(5000, () => {
     console.log("port running in 5000");

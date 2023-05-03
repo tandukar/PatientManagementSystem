@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Doctor = require("../model/Doctor");
 const Patient = require("../model/Patient");
 const Appointment = require("../model/Appointment");
-const jwt = require("jsonwebtoken");
+const IpdAdmission = require("../model/IpdAdmission");
 const Receptionist = require("../model/Receptionist");
 const nodemailer = require("nodemailer");
 
@@ -16,35 +16,30 @@ router.post("/create", async(req, res, next) => {
         if (!patient) {
             return res.status(404).json({ message: "Patient not found" });
         }
-        const appointments = await Appointment.find({
-            appointmentDate: req.body.appointmentDate,
-        });
-        if (appointments.length > 0)
-            return res.send("Appointment already exists for this date");
+        // const ipd = await IpdAdmission.find({
+        //     admissionDate: req.body.admissionDate,
+        // });
+        // if (ipd.length > 0)
+        //     return res.send("Ipd already exists for this date");
 
         console.log(req.body.appointmentDate);
-        const createApp = new Appointment({
+        const createIpd = new IpdAdmission({
             patientId: req.body.patientId,
             patientName: patient.firstname + " " + patient.lastname,
             doctorId: req.body.doctorId,
             docName: doctor.firstname + " " + doctor.lastname,
-            reason: req.body.reason,
-            notes: req.body.notes,
-            procedures: req.body.procedures,
+            admissionDate: req.body.admissionDate,
+            dischargeDate: req.body.dischargeDate,
+            roomNumber: req.body.roomNumber,
+            bedNumber: req.body.bedNumber,
             diagnosis: req.body.diagnosis,
-            // ipd: req.body.ipd,
-            // opd: req.body.opd,
-            patientType: req.body.patientType,
-            appointmentDate: req.body.appointmentDate,
-            roomNo: req.body.roomNo,
-            // ipdDetails: req.body.ipdDetails,
-            // opdDetails: req.body.opdDetails,
+            treatment: req.body.treatment,
             status: req.body.status,
             recepId: req.body.recepId,
         });
 
-        const savedDoc = await createApp.save();
-        res.json(savedDoc);
+        const savedIpd = await createIpd.save();
+        res.json(savedIpd);
     } catch (err) {
         if (err.message.startsWith("Cast to ObjectId failed")) {
             return res.status(400).json({ message: "Invalid ID" });
@@ -52,7 +47,6 @@ router.post("/create", async(req, res, next) => {
         res.status(400).send(err.message);
     }
 });
-
 
 // update doctor
 router.patch("/updateAppointmentStatus/:id", async(req, res) => {
