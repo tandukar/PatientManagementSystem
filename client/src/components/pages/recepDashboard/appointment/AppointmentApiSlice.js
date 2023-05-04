@@ -21,6 +21,15 @@ export const AppointmentApiSlice = apiSlice.injectEndpoints({
 
         }),
 
+        registerIpd: builder.mutation({
+            query: (body) => ({
+                url: "ipd/create",
+                method: "Post",
+                body: body,
+            }),
+            invalidatesTags: ["IPD"],
+        }),
+
         getDoctorName: builder.query({
             query: (firstName) => ({
                 url: `doctors/search/${firstName}`,
@@ -32,7 +41,8 @@ export const AppointmentApiSlice = apiSlice.injectEndpoints({
         }),
 
 
+
     }),
 });
 
-export const { useRegisterAppointmentsMutation, useGetDoctorNameQuery } = AppointmentApiSlice;
+export const { useRegisterAppointmentsMutation, useGetDoctorNameQuery, useRegisterIpdMutation } = AppointmentApiSlice;

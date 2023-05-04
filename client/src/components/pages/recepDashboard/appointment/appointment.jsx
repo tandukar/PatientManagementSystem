@@ -180,7 +180,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
                 }}
                 className="cursor-pointer hover:bg-gray-100 p-2"
               >
-                {doctor.firstname} {doctor.lastname}
+                Dr. {doctor.firstname} {doctor.lastname}  <span className="ml-10 font-bold text-gray-800"> {doctor.specialization}</span>
               </li>
             ))}
           </ul>

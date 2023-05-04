@@ -19,13 +19,18 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import { CiSearch } from "react-icons/ci";
 import specialization from "../../specialization.json";
-import { useGetDoctorNameQuery } from "../appointment/AppointmentApiSlice";
-const CreateIpdAdmission = ({ recepId, patientId }) => {
+import {
+  useGetDoctorNameQuery,
+  useRegisterIpdMutation,
+} from "../appointment/AppointmentApiSlice";
+import { useGetPatientAppointmentsQuery } from "../patient/PatientApiSlice";
+const CreateIpdAdmission = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [receptionId, setReceptionId] = useState(recepId);
-  const [patient, setPatient] = useState(patientId);
+  // const [receptionId, setReceptionId] = useState(recepId);
+  // const [patient, setPatient] = useState(patientId);
   const [searchTerm, setSearchTerm] = useState([]);
+  const [patientNumber, setpatientNumber] = useState([]);
   const [specializationTerm, setSpecializationTerm] = useState([]);
   const [showOverlay, setShowOverlay] = useState(false);
 
@@ -41,19 +46,22 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
     formState: { errors },
   } = useForm();
 
-  console.log("receptionId", receptionId);
-  console.log("patient", patient);
+  // console.log("receptionId", receptionId);
+  // console.log("patient", patient);
 
-//   const [registerAppointments, { isLoading, error }] =
-//     useRegisterAppointmentsMutation();
+  const [registerIpd, { isLoading, error }] = useRegisterIpdMutation();
 
-  const { data } = useGetDoctorNameQuery(searchTerm);
+  const { data: doctorData } = useGetDoctorNameQuery(searchTerm);
+  const { data: appointmentData } =
+    useGetPatientAppointmentsQuery(patientNumber);
 
-  const doctorsList = data ?? [];
-  const printHandler = () => {
-    console.log(searchTerm);
-    console.log(data);
-  };
+  const doctorsList = doctorData ?? [];
+  const patientsList = appointmentData ?? [];
+
+  // const printHandler = () => {
+  //   console.log(searchTerm);
+  //   console.log(docName);
+  // };
 
   const handleFilterClick = () => {
     setShowOverlay(true);
@@ -69,14 +77,14 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
     console.log("selectedDate", selectedDate);
     const appointmentData = {
       ...data,
-      patientType: selectedOption.value,
-      appointmentDate: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
-      recepId: receptionId,
-      patientId: patient,
+      admissionDate: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
+      // recepId: receptionId,
+      patientId: patientNumber,
       doctorId: searchTerm,
     };
+    console.log("appointmentData", appointmentData);
     try {
-    //   const result = await registerAppointments(appointmentData).unwrap();
+      const result = await registerIpd(appointmentData).unwrap();
       if (result) {
         toast.success("Appointment created successfully");
         console.log(appointmentData);
@@ -98,7 +106,7 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
   const handleDateChange = (selectedDate) => {
     setSelectedDate(dayjs(selectedDate));
   };
-  console.log(specializationTerm);
+  // console.log(specializationTerm);
 
   return (
     <>
@@ -108,70 +116,36 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
       </div>
 
       <label className="block mb-2 font-bold text-gray-700">Doctor</label>
-
       <div className="relative">
-        <div className="flex flex-row gap-5">
-          <div className="flex w-2/3 items-center border border-gray-400 p-2 rounded-md focus-within:border-blue-500">
-            <input
-              type="text"
-              className="w-full pr-10 text-sm outline-none text-gray-600 p-1 "
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-            />
-            <button
-              className="absolute right-60 top-0 p-3"
-            //   onClick={printHandler}
-            >
-              <CiSearch className="w-6 h-6" />
-            </button>
+        <div className="flex flex-row">
+          <div className="flex flex-row gap-5 w-1/2">
+            <div className="flex w-2/3 items-center border border-gray-400 p-2 rounded-md focus-within:border-blue-500">
+              <input
+                type="text"
+                className="w-full pr-10 text-sm outline-none text-gray-600 p-1 "
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+            </div>
           </div>
 
-          <button
-            className="w-1/3 bg-gray-600  text-white font-bold py-2 px-4 rounded "
-            onClick={handleFilterClick}
-          >
-            Filter
-          </button>
-          {showOverlay && (
-            <div className="fixed inset-0 flex">
-              <div className="bg-white w-60 rounded-md p-4">
-                <h2 className="text-lg font-semibold mb-4">Specializations</h2>
-                {Object.entries(specialization).map(([key, value]) => (
-                  <div key={key} className="p-1">
-                    <input
-                      type="checkbox"
-                      id={key}
-                      value={key}
-                      checked={specializationTerm.includes(key)}
-                      onChange={(e) => {
-                        const isChecked = e.target.checked;
-                        if (isChecked) {
-                          setSpecializationTerm((prev) => [...prev, key]);
-                        } else {
-                          setSpecializationTerm((prev) =>
-                            prev.filter((spec) => spec !== key)
-                          );
-                        }
-                      }}
-                    />
-                    <label htmlFor={key}>{value}</label>
-                  </div>
-                ))}
-                <button
-                  className="bg-gray-600 text-white px-4 py-2 rounded mt-4"
-                  onClick={handleOverlayClose}
-                >
-                  Close
-                </button>
-              </div>
+          <div className="flex  gap-5 w-1/2">
+            <div className="w-full items-center border border-gray-400 p-2 rounded-md focus-within:border-blue-500">
+              <input
+                type="text"
+                className="w-full pr-10 text-sm outline-none text-gray-600 p-1 "
+                placeholder="Search Patient Phone Number..."
+                value={patientNumber}
+                onChange={(event) => setpatientNumber(event.target.value)}
+              />
             </div>
-          )}
+          </div>
         </div>
+        {/* {console.log(s)} */}
 
-
-{console.log(doctorsList)}
-     {doctorsList.length > 0 && (
+        {console.log(doctorsList)}
+        {doctorsList.length > 0 && (
           <ul className="mt-2 border border-gray-400 p-2 rounded-lg bg-white text-gray-600">
             {doctorsList.map((doctor) => (
               <li
@@ -181,16 +155,32 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
                 }}
                 className="cursor-pointer hover:bg-gray-100 p-2"
               >
-                {doctor.firstname} {doctor.lastname}
+                {doctor.firstname} {doctor.lastname}{" "}
+                <span className="font-bold">{doctor.specialization}</span>
               </li>
             ))}
           </ul>
-        )} 
+        )}
+
+        {patientsList.length > 0 && (
+          <ul className="mt-2 border border-gray-400 p-2 rounded-lg bg-white text-gray-600">
+            {patientsList.map((patient) => (
+              <li
+                key={patient.id}
+                onClick={() => {
+                  setpatientNumber(patient._id);
+                }}
+                className="cursor-pointer hover:bg-gray-100 p-2"
+              >
+                {patient.firstname} {patient.lastname}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 text-gray-600">
         <Grid container spacing={4}>
-        
           <Grid item xs={12}>
             <label className="block mb-2 font-bold text-gray-700">Reason</label>
 
@@ -208,7 +198,7 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
             )}
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">
               Select patient type
             </label>
@@ -219,7 +209,7 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
               onChange={handleSelectChange}
               value={selectedOption}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">
@@ -227,16 +217,16 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
             </label>
 
             <TextField
-              id="roomNo"
+              id="roomNumber"
               fullWidth
               autoComplete="shipping postal-code"
               variant="outlined"
-              error={errors.roomNo ? true : false}
-              {...register("roomNo", { required: "This is required" })}
+              error={errors.roomNumber ? true : false}
+              {...register("roomNumber", { required: "This is required" })}
             />
 
-            {errors.roomNo && (
-              <p className="text-red-500">{errors.roomNo.message}</p>
+            {errors.roomNumber && (
+              <p className="text-red-500">{errors.roomNumber.message}</p>
             )}
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -245,16 +235,16 @@ const CreateIpdAdmission = ({ recepId, patientId }) => {
             </label>
 
             <TextField
-              id="roomNo"
+              id="bedNumber"
               fullWidth
               autoComplete="shipping postal-code"
               variant="outlined"
-              error={errors.roomNo ? true : false}
-              {...register("roomNo", { required: "This is required" })}
+              error={errors.bedNumber ? true : false}
+              {...register("bedNumber", { required: "This is required" })}
             />
 
-            {errors.roomNo && (
-              <p className="text-red-500">{errors.roomNo.message}</p>
+            {errors.bedNumber && (
+              <p className="text-red-500">{errors.bedNumber.message}</p>
             )}
           </Grid>
 

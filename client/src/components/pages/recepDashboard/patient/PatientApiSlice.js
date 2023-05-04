@@ -20,12 +20,12 @@ export const patientApiSlice = apiSlice.injectEndpoints({
 
         getPatientAppointments: builder.query({
             query: (number) => ({
-                url: `patients/search/${number}`,
+                url: `doctors/patient/search/${number}`,
                 method: "GET",
             }),
             providesTags: (result) =>
                 result ?
-                result.map(({ id }) => ({ type: "PATIENTS", id })) : [{ type: "PATIENTS", id: "LIST" }],
+                result.map(({ id }) => ({ type: "Patients", id })) : [{ type: "Patients", id: "LIST" }],
         }),
     }),
 });

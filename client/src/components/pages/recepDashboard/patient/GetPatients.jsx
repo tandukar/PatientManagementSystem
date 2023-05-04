@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useGetPatientQuery,  } from "./PatientApiSlice";
 import { TablePagination } from "@mui/material";
 import { RxCross2 } from "react-icons/rx";
-import CreateAppointment from "../appointment/appointment";
+import CreateAppointment from "../appointment/Appointment";
 import { CiSearch } from "react-icons/ci";
 
 const CreateAppointmentHandler = ({ onCancel, onConfirm, id, recepId }) => {
