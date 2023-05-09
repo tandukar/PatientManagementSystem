@@ -38,10 +38,19 @@ router.post('/bed', async(req, res) => {
     }
 });
 
-router.get('/bed', async(req, res) => {
+router.get('/beds/:name', async(req, res) => {
     try {
-        const beds = await Room.find();
+        const beds = await Bed.find({ roomName: req.params.name });
         res.json(beds);
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+router.get('/room', async(req, res) => {
+    try {
+        const rooms = await Room.find();
+        res.json(rooms);
     } catch (err) {
         console.log(err);
     }
