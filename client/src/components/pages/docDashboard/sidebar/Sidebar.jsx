@@ -5,14 +5,14 @@ import { MdPeopleOutline } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
   const [visibleIcon, setvisibleIcon] = React.useState(false);
 
-  const logoutHandler =()=>{
-    localStorage.removeItem("token"); 
-    sessionStorage.removeItem("role"); 
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("role");
     window.location.href = "/login";
-  }
+  };
 
   return (
     <>
@@ -44,25 +44,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"
                       href="#"
+                      onClick={() => onItemClick("Dashboard")}
                     >
                       <span className="inline-block  pr-3">
                         <RiHomeLine className="w-7 h-7" />
                       </span>
-                      Appointments
+                      Dashbaord
                     </a>
                   </li>
                   <li className="py-2">
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"
                       href="#"
+                      onClick={() => onItemClick("IPD")}
                     >
                       <span className="inline-block  pr-3">
                         <MdPeopleOutline className="w-7 h-7" />
                       </span>
-                      Calendar
+                      IPD
                     </a>
                   </li>
-                 
                 </ul>
               </nav>
             </div>
@@ -80,7 +81,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           </div>
         </div>
       </div>
-      {/* )} */}
     </>
   );
 };

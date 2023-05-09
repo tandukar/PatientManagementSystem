@@ -28,7 +28,8 @@ const RecepDashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    const role = sessionStorage.getItem("role");
+    if (token && role === "Receptionist") {
       setAuthenticated(true);
       const recepId = getIdFromLocalStorage(token);
       setRecepId(recepId);

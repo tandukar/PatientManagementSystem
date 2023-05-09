@@ -25,7 +25,8 @@ const AdminDashboard = () => {
   useEffect(() => {
     // Get the JWT token from local storage
     const token = localStorage.getItem("token");
-    if (token) {
+    const role = sessionStorage.getItem("role");
+    if (token && role === "Admin") {
       const id = getIdFromLocalStorage(token);
 
       setUserId(id); // Set the user ID state variable

@@ -10,13 +10,20 @@ const DoctorDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [authenticated, setAuthenticated] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [selectedItem, setSelectedItem] = useState("Dashboard");
 
   const navigate = useNavigate();
+
+  // Callback function to handle clicks on items in the sidebar
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    const role = sessionStorage.getItem("role");
+    if (token && role === "Doctor") {
       const id = getIdFromLocalStorage(token);
-
       setUserId(id);
       setAuthenticated(true);
       console.log("token");
@@ -58,12 +65,17 @@ const DoctorDashboard = () => {
               <Sidebar
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
+                onItemClick={handleItemClick}
               />
             </div>
           )}
           <div className="flex-1  ">
             <div className="min-height: 100vh ">
-              <Appointment docNameProp={docName} docId={userId}/>
+              {selectedItem === "Dashboard" ? (
+                <Appointment docNameProp={docName} docId={userId} />
+              ) : selectedItem === "IPD" ? (
+                <div>IPD</div>
+              ) : null}
             </div>
           </div>
         </div>
