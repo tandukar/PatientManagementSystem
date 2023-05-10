@@ -23,7 +23,7 @@ import {
   useGetDoctorNameQuery,
   useRegisterIpdMutation,
 } from "../appointment/AppointmentApiSlice";
-import { useGetPatientAppointmentsQuery } from "../patient/PatientApiSlice";
+import { useGetPatientInfoQuery } from "../patient/PatientApiSlice";
 const CreateIpdAdmission = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -53,7 +53,7 @@ const CreateIpdAdmission = () => {
 
   const { data: doctorData } = useGetDoctorNameQuery(searchTerm);
   const { data: appointmentData } =
-    useGetPatientAppointmentsQuery(patientNumber);
+    useGetPatientInfoQuery(patientNumber);
 
   const doctorsList = doctorData ?? [];
   const patientsList = appointmentData ?? [];

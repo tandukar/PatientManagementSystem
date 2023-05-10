@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Doctor = require("../model/Doctor");
 const Patient = require("../model/Patient");
 const Appointment = require("../model/Appointment");
+const Ipd = require("../model/IpdAdmission");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { docRegisterValidation, loginValidation } = require("../validation");
@@ -162,13 +163,21 @@ router.get("/appointments/:id", async(req, res) => {
     }
 });
 
+//get ipd
+router.get("/ipd/:id", async(req, res) => {
+    try {
+        const getIpd = await Ipd.find({ doctorId: req.params.id });
+        res.json(getIpd);
+    } catch (err) {
+        res.json(err.message);
+    }
+});
+
 router.get("/patient/search/:number", async(req, res) => {
     try {
         const findPatient = await Patient.find({ number: req.params.number });
         const patientId = findPatient[0]._id;
         console.log(patientId);
-
-
         res.json(findPatient);
     } catch (err) {
         // res.status(400).send(err.message);

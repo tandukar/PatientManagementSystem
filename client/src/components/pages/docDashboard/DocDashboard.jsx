@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar/Sidebar";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import Appointment from "./appointment/Appointment";
+import Ipd from "./appointment/Ipd";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getIdFromLocalStorage } from "../utlis";
 import { useDoctorDetailQuery, useAppointmentsQuery } from "./DoctorApiSlice";
@@ -74,7 +75,7 @@ const DoctorDashboard = () => {
               {selectedItem === "Dashboard" ? (
                 <Appointment docNameProp={docName} docId={userId} />
               ) : selectedItem === "IPD" ? (
-                <div>IPD</div>
+                <Ipd docNameProp={docName} docId={userId} />
               ) : null}
             </div>
           </div>

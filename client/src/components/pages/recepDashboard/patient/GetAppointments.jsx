@@ -65,6 +65,20 @@ const GetPatientAppointment = ({ recepId }) => {
           </div>
         </div>
       </div>
+      <div className="p-1 rounded-xl h-10 flex flex-row">
+        <div className="w-2/4 ml-5 font-bold text-gray-600  text-md">
+          Patient Name
+        </div>
+        <div className="w-2/4 ml-5 font-bold text-gray-600  text-md">
+          Doctor Name
+        </div>
+        <div className="w-2/4 ml-5 font-bold text-gray-600  text-md">
+          Appointment Date
+        </div>
+        <div className="w-1/4 font-bold text-gray-600  text-md text-end mr-5">
+          Actions
+        </div>
+      </div>
       <div className="flex flex-col gap-4 p-3 bg-slate-200 shadow-md rounded-lg">
         {console.log(list)}
         <ul>
@@ -80,7 +94,7 @@ const GetPatientAppointment = ({ recepId }) => {
                       {patient.docName}
                     </div>
                     <div className="w-2/4 ml-5 font-bold text-custom-blue text-md">
-                      {patient.appointmentDate}
+                    {new Date(patient.appointmentDate).toLocaleString()}
                     </div>
 
                     <div className="w-1/4 font-bold text-red-700 text-md text-end mr-5">

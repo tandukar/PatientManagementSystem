@@ -18,9 +18,18 @@ export const patientApiSlice = apiSlice.injectEndpoints({
             ],
         }),
 
-        getPatientAppointments: builder.query({
+        getPatientInfo: builder.query({
             query: (number) => ({
                 url: `doctors/patient/search/${number}`,
+                method: "GET",
+            }),
+            providesTags: (result) =>
+                result ?
+                result.map(({ id }) => ({ type: "Patients", id })) : [{ type: "Patients", id: "LIST" }],
+        }),
+        getPatientAppointments: builder.query({
+            query: (number) => ({
+                url: `patients/appointment/search/${number}`,
                 method: "GET",
             }),
             providesTags: (result) =>
@@ -30,5 +39,5 @@ export const patientApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useRegisterPatientMutation, useGetPatientQuery, useGetPatientAppointmentsQuery } =
+export const { useRegisterPatientMutation, useGetPatientQuery, useGetPatientInfoQuery, useGetPatientAppointmentsQuery } =
 patientApiSlice;

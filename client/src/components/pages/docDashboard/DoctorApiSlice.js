@@ -15,6 +15,14 @@ export const DoctorApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
+        ipd: builder.query({
+            query: (id) => ({
+                url: `doctors/ipd/${id}`,
+                method: "GET",
+            }),
+        }),
+
+
         updateAppointmentStatus: builder.mutation({
             query: ({ id, newStatus, recepId, newTime, patientId }) => ({
                 url: `appointments/updateAppointmentStatus/${id}`,
@@ -24,10 +32,21 @@ export const DoctorApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: ["Appointments"],
         }),
 
+        updateIpdStatus: builder.mutation({
+            query: ({ id, newStatus, recepId, patientId }) => ({
+                url: `ipd/updateIpdStatus/${id}`,
+                method: "PATCH",
+                body: { status: newStatus, recepId: recepId, patientId: patientId },
+            }),
+            invalidatesTags: ["DOCTORS"],
+        }),
+
     }),
 });
 export const {
     useDoctorDetailQuery,
     useAppointmentsQuery,
     useUpdateAppointmentStatusMutation,
+    useIpdQuery,
+    useUpdateIpdStatusMutation,
 } = DoctorApiSlice;

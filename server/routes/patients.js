@@ -60,7 +60,7 @@ router.get("/find/:patiendID", async(req, res) => {
     }
 });
 
-router.get("/search/:number", async(req, res) => {
+router.get("/appointment/search/:number", async(req, res) => {
     try {
         const findPatient = await Patient.find({ number: req.params.number });
         const patientId = findPatient[0]._id;

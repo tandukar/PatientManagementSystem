@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Doctor = require("../model/Doctor");
 const Patient = require("../model/Patient");
+// const Ipd = require("../model/IpdAdmission");
 const Appointment = require("../model/Appointment");
 const IpdAdmission = require("../model/IpdAdmission");
 const Receptionist = require("../model/Receptionist");
@@ -49,67 +50,62 @@ router.post("/create", async(req, res, next) => {
 });
 
 // update doctor
-router.patch("/updateAppointmentStatus/:id", async(req, res) => {
-            const { status, recepId, appointmentDate, patientId } = req.body;
-            try {
-                const updateAppointment = await Appointment.updateMany({ _id: req.params.id }, {
-                    $set: {
-                        status: status,
-                        appointmentDate: appointmentDate,
-                    },
-                });
-                // res.send(updateAppointment);po
-                // console.log(updateAppointment);
-                // console.log("the reception id", recepId);
-                // console.log("status", status);
-                // console.log("new Time", appointmentDate);
-                // console.log("Patient ID", patientId);
+router.patch("/updateIpdStatus/:id", async(req, res) => {
+    const { status, recepId, patientId } = req.body;
+    try {
+        const updateIpdAdmission = await IpdAdmission.updateMany({ _id: req.params.id }, {
+            $set: {
+                status: status,
 
-                const receptionistDetails = await Receptionist.findById(recepId);
-                const PatientDetails = await Patient.findById(patientId);
+            },
+        });
+        // res.send(updateIpdAdmission);po
+        // console.log(updateIpdAdmission);
+        // console.log("the reception id", recepId);
+        // console.log("status", status);
+        // console.log("new Time", appointmentDate);
+        // console.log("Patient ID", patientId);
 
-                if (!receptionistDetails) {
-                    return res.status(404).send("Receptionist not found");
-                }
-                if (!PatientDetails) {
-                    return res.status(404).send("Patient not found");
-                }
-                const receptionistEmail = receptionistDetails.email1;
-                const patientEmail = PatientDetails.email;
-                console.log(receptionistEmail);
-                console.log(receptionistDetails);
-                console.log("patientemail", patientEmail);
+        const receptionistDetails = await Receptionist.findById(recepId);
+        const PatientDetails = await Patient.findById(patientId);
 
-                // create reusable transporter object using the default SMTP transport
-                let transporter = nodemailer.createTransport({
-                    service: "gmail",
-                    auth: {
-                        user: " tandukarpragyo@gmail.com",
-                        pass: "yxeirihafpscekxh",
-                    },
-                });
+        if (!receptionistDetails) {
+            return res.status(404).send("Receptionist not found");
+        }
+        if (!PatientDetails) {
+            return res.status(404).send("Patient not found");
+        }
+        const receptionistEmail = receptionistDetails.email1;
+        const patientEmail = PatientDetails.email;
+        console.log(receptionistEmail);
+        console.log(receptionistDetails);
+        console.log("patientemail", patientEmail);
 
-                var mailList = [receptionistEmail, patientEmail];
-                let message = {
-                        from: '"Admin" <tandukarpragyo@gmail.com>', // sender address
-                        to: mailList, // list of receivers
-                        subject: "Appointment Status Updated", // Subject line
-                        html: `<h4>The appointment has been updated to: </h4>
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: " tandukarpragyo@gmail.com",
+                pass: "yxeirihafpscekxh",
+            },
+        });
+
+        var mailList = [receptionistEmail, patientEmail];
+        let message = {
+            from: '"Admin" <tandukarpragyo@gmail.com>', // sender address
+            to: mailList, // list of receivers
+            subject: "Appointment Status Updated", // Subject line
+            html: `<h4>The appointment has been updated to: </h4>
             <h3>${status}</h3>
-            ${
-              status !== "Cancelled"
-                ? `<span> for the date:</span> <h3>${appointmentDate}</h3>`
-                : ""
-            }
-            `,
-    };
+            <h4>Thank you for your patience</h4>`,
+        };
 
-    await transporter.sendMail(message).then(() => {
-      return res.json({ message: "Mail Sent" });
-    });
-  } catch (err) {
-    res.json(err.message);
-  }
+        await transporter.sendMail(message).then(() => {
+            return res.json({ message: "Mail Sent" });
+        });
+    } catch (err) {
+        res.json(err.message);
+    }
 });
 
 module.exports = router;
