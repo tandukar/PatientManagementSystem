@@ -22,6 +22,14 @@ export const DoctorApiSlice = apiSlice.injectEndpoints({
             }),
         }),
 
+        updatePassword: builder.mutation({
+            query: ({ id, oldPassword, newPassword }) => ({
+                url: `doctors/updatePassword/${id}`,
+                method: "PATCH",
+                body: { oldPassword: oldPassword, newPassword: newPassword },
+            }),
+            invalidatesTags: ["Doctors"],
+        }),
 
         updateAppointmentStatus: builder.mutation({
             query: ({ id, newStatus, recepId, newTime, patientId }) => ({
@@ -49,4 +57,5 @@ export const {
     useUpdateAppointmentStatusMutation,
     useIpdQuery,
     useUpdateIpdStatusMutation,
+    useUpdatePasswordMutation,
 } = DoctorApiSlice;

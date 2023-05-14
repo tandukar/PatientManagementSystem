@@ -121,7 +121,6 @@ router.patch("/updateRecep/:id", async(req, res) => {
                 email1: req.body.email1,
                 address: req.body.address,
                 number: req.body.number,
-
             },
         });
         res.send(updateRecep);
@@ -130,18 +129,48 @@ router.patch("/updateRecep/:id", async(req, res) => {
     }
 });
 
-
-//search doctor by firstname
-router.get("/search/:firstname", async(req, res) => {
+// update Receptionist
+router.patch("/updatePasswordRecep/:id", async(req, res) => {
     try {
-        const regex = new RegExp(req.params.firstname, 'i');
-        const findRecep = await Receptionist.find({ "firstname": regex });
-        res.json(findRecep);
+        const user = await Receptionist.findById(req.params.id);
+        if (!user) return res.status(404).send("User not found");
+        const { oldPassword, newPassword } = req.body;
+        const salt = await bcrypt.genSalt(10);
+        const validPwd = await bcrypt.compare(req.body.oldPassword, user.password);
+        // const validPwd = await bcrypt.compare(oldPasswordhashPwd, user.password);
+        console.log(validPwd);
+        console.log(user.password)
+        console.log("old", oldPassword)
+
+        // if (!validPwd) return res.status(400).send("Old password is incorrect");
+        if (!validPwd) return res.status(400).send({ message: "Old password is incorrect" });
+
+        const hashPwd = await bcrypt.hash(newPassword, salt);
+
+        console.log('sdf')
+        const updateRecepPass = await Receptionist.updateOne({ _id: req.params.id }, {
+            $set: {
+                password: hashPwd,
+            },
+        });
+        // res.send(updateRecepPass);
+        res.status(200).send({ data: { message: "Password updated successfully" } });
+
     } catch (err) {
         res.status(400).send(err.message);
     }
 });
 
+//search doctor by firstname
+router.get("/search/:firstname", async(req, res) => {
+    try {
+        const regex = new RegExp(req.params.firstname, "i");
+        const findRecep = await Receptionist.find({ firstname: regex });
+        res.json(findRecep);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+});
 
 //delete a Receptionist
 router.delete("/deleteReceptionist/:id", async(req, res) => {

@@ -14,8 +14,9 @@ const Home = () => {
       <div className="relative">
         <img
           className="w-full object-cover h-screen "
-          src="https://absolutecorporatesolutions.com/images/hospital-management-system-in-kenya.jpg"
+          // src="https://absolutecorporatesolutions.com/images/hospital-management-system-in-kenya.jpg"
           // src="https://ledenews.com/wp-content/uploads/2021/06/healthcare-system-1536x864.jpg"
+          src="https://www.coynecollege.edu/wp-content/uploads/2020/09/medical-billing-coding-coynecollege-scaled.jpeg"
           alt="hero"
         />
         <div className="absolute inset-0 bg-black opacity-50"></div>

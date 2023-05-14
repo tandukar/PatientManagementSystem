@@ -106,6 +106,38 @@ router.get("/find/:id", async(req, res) => {
     }
 });
 
+// update DoctorPassword
+router.patch("/updatePassword/:id", async(req, res) => {
+    try {
+        const user = await Doctor.findById(req.params.id);
+        if (!user) return res.status(404).send("User not found");
+        const { oldPassword, newPassword } = req.body;
+        const salt = await bcrypt.genSalt(10);
+        const validPwd = await bcrypt.compare(req.body.oldPassword, user.password);
+        // const validPwd = await bcrypt.compare(oldPasswordhashPwd, user.password);
+        console.log(validPwd);
+        console.log(user.password)
+        console.log("old", oldPassword)
+
+        // if (!validPwd) return res.status(400).send("Old password is incorrect");
+        if (!validPwd) return res.status(400).send({ message: "Old password is incorrect" });
+
+        const hashPwd = await bcrypt.hash(newPassword, salt);
+
+        console.log('sdf')
+        const updateDoctorPass = await Doctor.updateOne({ _id: req.params.id }, {
+            $set: {
+                password: hashPwd,
+            },
+        });
+        // res.send(updateDoctorPass);
+        res.status(200).send({ data: { message: "Password updated successfully" } });
+
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+});
+
 //search doctor by firstname
 router.get("/search/:firstname", async(req, res) => {
     try {

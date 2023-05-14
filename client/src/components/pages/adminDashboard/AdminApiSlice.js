@@ -8,7 +8,15 @@ export const AdminApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        updatePasswordAdmin: builder.mutation({
+            query: ({ id, oldPassword, newPassword }) => ({
+                url: `admin/updatePasswordAdmin/${id}`,
+                method: "PATCH",
+                body: { oldPassword: oldPassword, newPassword: newPassword },
+            }),
+            invalidatesTags: ["ADMIN"],
+        }),
     }),
 });
 
-export const { useUserDetailQuery } = AdminApiSlice;
+export const { useUserDetailQuery, useUpdatePasswordAdminMutation } = AdminApiSlice;
