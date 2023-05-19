@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { useRegisterRoomsMutation } from "./BedsAndRoomsApiSlice";
+import { useRegisterRoomsMutation, useGetRoomsQuery  } from "./BedsAndRoomsApiSlice";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Select from "react-select";
@@ -9,7 +9,7 @@ const RoomDashboard = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [registerRooms, { isLoading, error }] = useRegisterRoomsMutation();
-
+  const { data: RoomsData = [] } = useGetRoomsQuery();
 
   const category = [
 
@@ -37,6 +37,7 @@ const RoomDashboard = () => {
     registerRooms(roomData);
   };
 
+  console.log(RoomsData)
 
 
   const handleCategoryChange = (selectedCategory) => {
@@ -66,8 +67,8 @@ const RoomDashboard = () => {
               </div>
        
               <div className="  md:container md:mx-auto ">
-                <label className="block mb-2 font-bold text-gray-700">
-                  Availability
+                <label className="block mb-2 font-bold text-custom-blue">
+                  Room Type
                 </label>
                 <Select
                   options={category}

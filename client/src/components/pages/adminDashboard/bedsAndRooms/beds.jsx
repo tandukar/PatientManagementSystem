@@ -1,12 +1,23 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useRegisterBedsMutation } from "./BedsAndRoomsApiSlice";
+import {
+  useRegisterBedsMutation,
+  useGetRoomsQuery,
+} from "./BedsAndRoomsApiSlice";
 import Select from "react-select";
 
 const BedDashboard = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState("");
   const [registerBeds, { isLoading, error }] = useRegisterBedsMutation();
+
+  const { data: RoomsData = [] } = useGetRoomsQuery();
+
+  console.log(RoomsData);
+
+  const handleRoomChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   const {
     register,
@@ -20,6 +31,7 @@ const BedDashboard = () => {
     console.log("selectedOption", selectedOption);
     const bedData = {
       ...data,
+      roomName: selectedOption,
     };
     registerBeds(bedData);
   };
@@ -49,7 +61,7 @@ const BedDashboard = () => {
                 <label className="form-label inline-block mb-2 text-custom-blue">
                   Room Name
                 </label>
-                <input
+                {/* <input
                   id=" roomName"
                   type="Text"
                   className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
@@ -57,7 +69,15 @@ const BedDashboard = () => {
                   {...register("roomName", {
                     required: "Room Name is required",
                   })}
-                />
+                /> */}
+
+                <select value={selectedOption} onChange={handleRoomChange}>
+                  {RoomsData.map((room) => (
+                    <option key={room.name} value={room.name}>
+                      {room.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
