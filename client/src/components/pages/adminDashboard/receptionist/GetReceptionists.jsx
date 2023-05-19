@@ -128,7 +128,7 @@ const ReceptionistList = () => {
     <div>
       <div className="flex flex-col md:flex-row">
         <div className=" md:w-1/2 p-4 w-full text-custom-blue text-xl font-bold">
-          Registered Doctors
+          Registered Receptionists
         </div>
         <div className="md:w-1/2 p-4 ">
           <div className="relative   border border-custom-blue p-2 rounded-3xl">

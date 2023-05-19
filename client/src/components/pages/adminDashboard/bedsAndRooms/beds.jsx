@@ -6,6 +6,8 @@ import {
   useGetRoomsQuery,
 } from "./BedsAndRoomsApiSlice";
 import Select from "react-select";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const BedDashboard = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -33,7 +35,14 @@ const BedDashboard = () => {
       ...data,
       roomName: selectedOption,
     };
-    registerBeds(bedData);
+    registerBeds(bedData)
+      .unwrap()
+      .then(() => {
+        toast.success("Successfully registered bed!");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -71,7 +80,11 @@ const BedDashboard = () => {
                   })}
                 /> */}
 
-                <select value={selectedOption} onChange={handleRoomChange}>
+                <select
+                  className="bg-whtie appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border-blue-500"
+                  value={selectedOption}
+                  onChange={handleRoomChange}
+                >
                   {RoomsData.map((room) => (
                     <option key={room.name} value={room.name}>
                       {room.name}

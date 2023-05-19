@@ -86,7 +86,7 @@ const CreateIpdAdmission = () => {
     try {
       const result = await registerIpd(appointmentData).unwrap();
       if (result) {
-        toast.success("Appointment created successfully");
+        toast.success("Patient Admitted Successfully");
         console.log(appointmentData);
       }
     } catch (error) {
