@@ -2,6 +2,8 @@ const router = require("express").Router();
 const Doctor = require("../model/Doctor");
 const Patient = require("../model/Patient");
 // const Ipd = require("../model/IpdAdmission");
+const Bed = require("../model/Bed");
+const Room = require("../model/Room");
 const Appointment = require("../model/Appointment");
 const IpdAdmission = require("../model/IpdAdmission");
 const Receptionist = require("../model/Receptionist");
@@ -17,6 +19,17 @@ router.post("/create", async(req, res, next) => {
         if (!patient) {
             return res.status(404).json({ message: "Patient not found" });
         }
+        const bedExists = await Bed.findOne({ number: req.body.bedNumber });
+        if (!bedExists) {
+            return res.status(400).json({ message: "Bed doesnt exists" });
+        }
+        if (bedExists.patient) {
+            return res.status(400).json({ message: "Bed is already occupied" });
+        }
+
+        //get patient name from the id
+        // let name = await Patient.findById(req.body.patient);
+        // name = name.firstname + " " + name.lastname;
         // const ipd = await IpdAdmission.find({
         //     admissionDate: req.body.admissionDate,
         // });
@@ -40,6 +53,15 @@ router.post("/create", async(req, res, next) => {
         });
 
         const savedIpd = await createIpd.save();
+        // Update the bed associated with the IPD record
+        const bed = await Bed.findOne({ number: req.body.bedNumber });
+        if (bed) {
+            bed.patient = req.body.patientId;
+            bed.patientName = patient.firstname + " " + patient.lastname;
+            bed.isAvailable = false;
+            await bed.save();
+        }
+
         res.json(savedIpd);
     } catch (err) {
         if (err.message.startsWith("Cast to ObjectId failed")) {
@@ -56,7 +78,6 @@ router.patch("/updateIpdStatus/:id", async(req, res) => {
         const updateIpdAdmission = await IpdAdmission.updateMany({ _id: req.params.id }, {
             $set: {
                 status: status,
-
             },
         });
         // res.send(updateIpdAdmission);po

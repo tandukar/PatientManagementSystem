@@ -13,6 +13,10 @@ const bedSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient'
     },
+    patientName: {
+        type: String,
+        default: ""
+    },
     isAvailable: {
         type: Boolean,
         default: true

@@ -65,7 +65,7 @@ const RecepDashboard = () => {
               />
             </div>
           )}
-          <div className="w-full md:pr-10 overflow-x-hidden p-10">
+          <div className="w-full md:pr-10 overflow-x-hidden p-10 ">
             {selectedItem === "Appointments" ? (
               <GetPatients recepId={recepId} />
             ) : selectedItem === "Patients" ? (

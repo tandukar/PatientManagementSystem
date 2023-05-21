@@ -27,18 +27,18 @@ const ViewRoomHandler = ({ onCancel, name }) => {
               <div key={bed._id} className=" px-2 mb-4">
                 <div
                   className={
-                    bed.isAvailable
-                      ? "bg-green-200 rounded-lg shadow-md p-4"
-                      : "bg-red-200 rounded-lg shadow-md p-4"
+                    bed.patient
+                      ? "bg-red-200 rounded-lg shadow-md p-4"
+                      : "bg-green-200 rounded-lg shadow-md p-4"
                   }
                 >
                   <div className="text-gray-800 font-bold">
                     Bed no.{bed.number}
                   </div>
                   <div className="text-gray-800">
-                    {bed.isAvailable
-                      ? "Available"
-                      : `Occupied by ${bed.patient}`}
+                    {bed.patient 
+                      ? `Occupied by ${bed.patientName}`
+                      : "Available"}
                   </div>
                 </div>
               </div>
@@ -58,7 +58,6 @@ const GetRooms = () => {
 
   const viewRoomHandler = (id) => {
     console.log(id);
-
     setRoomName(id);
     setShowViewRoom(true);
   };
@@ -69,29 +68,30 @@ const GetRooms = () => {
 
   return (
     <>
-      <div className="flex flex-col mt-5 ">
-        <div className=" md:w-1/2 p-4 w-full text-gray-800 text-xl font-bold">
+      <div className="flex flex-col mt-5">
+        <div className="md:w-1/2 p-4 w-full text-gray-600 text-2xl font-bold">
           Get Rooms
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {RoomsData?.map((room) => (
-            <div
-              key={room._id}
-              onClick={() => viewRoomHandler(room.name)}
-              className={
-                room.isAvailable
-                  ? "bg-green-200 rounded-lg shadow-md p-4"
-                  : "bg-red-200 rounded-lg shadow-md p-4"
-              }
-            >
-              <div className="text-gray-800 font-bold">{room.name}</div>
-              <div className="text-gray-500">{room.number}</div>
-              <div className="text-gray-500">{room.patient}</div>
-              <div className="text-gray-500">
-                {room.isAvailable ? "Available" : "Occupied"}
+          {RoomsData?.map((room) => {
+           
+
+            {console.log("room", room.beds)}
+
+            return (
+              <div
+                key={room._id}
+                onClick={() => viewRoomHandler(room.name)}
+                className="bg-purple-100 rounded-lg shadow-md p-7 cursor-pointer hover:bg-purple-200"
+              >
+                <div className="text-gray-700 font-bold">{room.name}</div>
+               
+                <div className="text-gray-500">
+                  {/* {isRoomAvailable ? "Available" : "Occupied"} */}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       {showViewRoom && (
@@ -100,4 +100,5 @@ const GetRooms = () => {
     </>
   );
 };
+
 export default GetRooms;
