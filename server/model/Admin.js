@@ -21,7 +21,16 @@ const AdminSchema = new Schema({
         type: String,
         required: true
     },
-
+    hName: {
+        type: String,
+        required: [true, 'Hospital Name required'],
+    },
+    consultCharge: {
+        type: String,
+    },
+    regCharge: {
+        type: String,
+    }
 });
 
 module.exports = Admin = mongoose.model("admins", AdminSchema);

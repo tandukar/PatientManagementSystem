@@ -12,6 +12,7 @@ import GetDoctorList from "./doctor/GetDoctorList";
 import GetRooms from "./bedsAndRooms/Rooms";
 import GetPatientAppointment from "./patient/GetAppointments";
 import CreateIpdAdmission from "./ipdAdmission/IpdAdmission";
+import Billing from "./bills/Billing";
 import { getIdFromLocalStorage } from "../utlis";
 
 const RecepDashboard = () => {
@@ -79,7 +80,9 @@ const RecepDashboard = () => {
             ) :
             selectedItem === "IpdAdmission" ? (
               <CreateIpdAdmission />
-            ) :
+            ) :selectedItem === "OPDBilling" ? (
+              <Billing />
+            ):
             
             
             

@@ -5,6 +5,7 @@ import { MdPeopleOutline } from "react-icons/md";
 import { IoIosSettings } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import Profile from "../profile/Profile";
+import { IoLogOut , IoNewspaperOutline} from "react-icons/io5";
 
 const ProfileHandler = ({ onCancel, onConfirm }) => {
   return (
@@ -114,7 +115,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
               onClick={logoutHandler}
             >
               <span className="inline-block  pr-3">
-                <IoIosSettings className="w-7 h-7" />
+                <IoLogOut className="w-7 h-7 " />
+
               </span>
               Logout
             </a>

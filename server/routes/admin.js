@@ -15,6 +15,21 @@ router.get("/:id", async(req, res) => {
 });
 
 
+// //get charges
+// router.get("/getCharges/:id", async(req, res) => {
+//     try {
+//         const findAdmin = await Admin.findById(req.params.id);
+//         //get the regCharges
+//         const regCharge = findAdmin.regCharge;
+//         //get the consultCharges
+//         const consultCharge = findAdmin.consultCharge;
+
+//     } catch (err) {
+//         res.status(400).send(err.message);
+//     }
+// });
+
+
 // update AdminPassword
 router.patch("/updatePasswordAdmin/:id", async(req, res) => {
     try {

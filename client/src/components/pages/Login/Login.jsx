@@ -1,10 +1,8 @@
 // import React from "react";
 import React, { useEffect, useState } from "react";
 import { Alert } from "@mui/material";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -99,7 +97,8 @@ const Login = () => {
                 />
               </div>
 
-              <div className="text-right font-bold text-blue-600">
+              <div className="text-right font-bold text-blue-600  cursor-pointer"
+              onClick={()=>navigate("/forgotpassword")}>
                 Forgot password?
               </div>
 

@@ -146,6 +146,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
                       GetAppointments
                     </a>
                   </li>
+                  {/* <li className="py-2">
+                    <a
+                      className=" flex items-center text-white md:text-gray-300 hover:text-white"
+                      href="#"
+                      onClick={() => onItemClick("OPDBilling")}
+                    >
+                      <span className="inline-block  pr-3">
+                        <IoNewspaperOutline className="w-7 h-7" />
+                      </span>
+                      OPD Billing
+                    </a>
+                  </li> */}
                 </ul>
               </nav>
             </div>

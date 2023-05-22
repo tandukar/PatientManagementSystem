@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 
 
 
+app.use("/api/auth", authRoute);
 
 // middleware to set the current user on the request object
 const setCurrentUser = (req, res, next) => {
@@ -59,7 +60,6 @@ const setCurrentUser = (req, res, next) => {
 
 
 //routes middlewares
-app.use("/api/auth", authRoute);
 app.use(setCurrentUser);
 app.use("/api/doctors", docRoute);
 app.use('/api/receptionists', recepRoute);

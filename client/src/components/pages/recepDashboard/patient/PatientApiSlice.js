@@ -36,8 +36,15 @@ export const patientApiSlice = apiSlice.injectEndpoints({
                 result ?
                 result.map(({ id }) => ({ type: "Patients", id })) : [{ type: "Patients", id: "LIST" }],
         }),
+
+        getOpdBill: builder.query({
+            query: (adminId) => ({
+                url: `admin/${adminId}`,
+                method: "GET",
+            }),
+        })
     }),
 });
 
-export const { useRegisterPatientMutation, useGetPatientQuery, useGetPatientInfoQuery, useGetPatientAppointmentsQuery } =
+export const { useRegisterPatientMutation, useGetPatientQuery, useGetPatientInfoQuery, useGetPatientAppointmentsQuery, useGetOpdBillQuery } =
 patientApiSlice;

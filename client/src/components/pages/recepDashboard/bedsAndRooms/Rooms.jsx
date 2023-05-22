@@ -70,7 +70,7 @@ const GetRooms = () => {
     <>
       <div className="flex flex-col mt-5">
         <div className="md:w-1/2 p-4 w-full text-gray-600 text-2xl font-bold">
-          Get Rooms
+           Rooms
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {RoomsData?.map((room) => {
