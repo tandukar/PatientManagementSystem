@@ -26,9 +26,10 @@ router.post("/create", async(req, res, next) => {
         if (bedExists.patient) {
             return res.status(400).json({ message: "Bed is already occupied" });
         }
+        console.log(req.body.recepId);
 
         //get patient name from the id
-        // let name = await Patient.findById(req.body.patient);
+        // let name =    await Patient.findById(req.body.patient);
         // name = name.firstname + " " + name.lastname;
         // const ipd = await IpdAdmission.find({
         //     admissionDate: req.body.admissionDate,
@@ -71,6 +72,36 @@ router.post("/create", async(req, res, next) => {
     }
 });
 
+
+//update room and bed
+router.patch("/updateRoomBed/:id", async(req, res) => {
+    console.log("askdfhsadkhfaksdfh", req.body)
+    const { roomNumber, bedNumber, patientId, patientName } = req.body;
+    const bedExists = await Bed.findOne({ number: bedNumber });
+
+    if (bedExists.patient) {
+        return res.status(400).json({ message: "Bed is already occupied" });
+    }
+    try {
+        const updateIpdAdmission = await IpdAdmission.updateMany({ _id: req.params.id }, {
+            $set: {
+                roomNumber: roomNumber,
+                bedNumber: bedNumber,
+            },
+        });
+        // Update the beds collection
+        const updateBeds = await Bed.updateMany({ number: bedNumber }, {
+            $set: {
+                patient: patientId,
+                patientName: patientName,
+            },
+        });
+        res.send(updateIpdAdmission);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+});
+
 // update doctor
 router.patch("/updateIpdStatus/:id", async(req, res) => {
     const { status, recepId, patientId } = req.body;
@@ -78,8 +109,24 @@ router.patch("/updateIpdStatus/:id", async(req, res) => {
         const updateIpdAdmission = await IpdAdmission.updateMany({ _id: req.params.id }, {
             $set: {
                 status: status,
+                // Update other fields based on the status
+                ...(status === "Discharged" && {
+                    dischargeDate: new Date(),
+                    roomNumber: "",
+                    bedNumber: "",
+                }),
             },
         });
+        if (status === "Discharged") {
+            // Update the beds collection
+            console.log('bedbed')
+            const updateBeds = await Bed.updateMany({ patient: patientId }, {
+                $unset: {
+                    patient: 1,
+                    patientName: 1,
+                },
+            });
+        }
         // res.send(updateIpdAdmission);po
         // console.log(updateIpdAdmission);
         // console.log("the reception id", recepId);

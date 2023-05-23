@@ -109,8 +109,8 @@ const GetPatientAppointment = ({ recepId }) => {
 
   const pdfHandler = (charge, consultCharge, hName) => (
     <Document>
-    <Page style={styles.page}>
-      <Text style={styles.heading}>{hName}</Text>
+    <Page size={[350, 700]} orientation="landscape" style={styles.page}>
+      <Text style={styles.heading}>Tax Invoice</Text>
       <View style={styles.table}>
         <View style={styles.tableRow}>
           <View style={styles.tableCell}>
@@ -140,6 +140,7 @@ const GetPatientAppointment = ({ recepId }) => {
       <Text style={styles.totalPrice}>
         Total Price: {consultCharge + charge}
       </Text>
+      <View style={styles.separator} />
     </Page>
   </Document>
   );

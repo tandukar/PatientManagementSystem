@@ -4,7 +4,8 @@ import { useRegisterRoomsMutation, useGetRoomsQuery  } from "./BedsAndRoomsApiSl
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Select from "react-select";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const RoomDashboard = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -28,13 +29,28 @@ const RoomDashboard = () => {
     formState: { errors },
   } = useForm();
 
+  // registerBeds(bedData)
+  // .unwrap()
+  // .then(() => {
+  //   toast.success("Successfully registered bed!");
+  // })
+  // .catch((error) => {
+  //   console.error(error);
+  // });
+
   const onSubmit = (data) => {
     console.log("data", data);
     console.log("selectedOption", selectedOption);
     const roomData = {
       ...data,
     };
-    registerRooms(roomData);
+    registerRooms(roomData)
+    .then(() => {
+      toast.success("Successfully registered bed!");
+    })  .catch((error) => {
+      console.error(error);
+      toast.error("Error registering bed!");
+    });
   };
 
   console.log(RoomsData)

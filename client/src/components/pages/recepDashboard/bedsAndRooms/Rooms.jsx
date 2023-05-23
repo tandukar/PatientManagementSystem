@@ -23,26 +23,30 @@ const ViewRoomHandler = ({ onCancel, name }) => {
           {/* <CreateAppointment recepId={recepId} patientId={id} /> */}
           {console.log("beds beds", BedsData)}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {BedsData?.map((bed) => (
-              <div key={bed._id} className=" px-2 mb-4">
-                <div
-                  className={
-                    bed.patient
-                      ? "bg-red-200 rounded-lg shadow-md p-4"
-                      : "bg-green-200 rounded-lg shadow-md p-4"
-                  }
-                >
-                  <div className="text-gray-800 font-bold">
-                    Bed no.{bed.number}
-                  </div>
-                  <div className="text-gray-800">
-                    {bed.patient 
-                      ? `Occupied by ${bed.patientName}`
-                      : "Available"}
+            {BedsData.length === 0 ? (
+              <div className="text-gray-800">No beds available</div>
+            ) : (
+              BedsData?.map((bed) => (
+                <div key={bed._id} className=" px-2 mb-4">
+                  <div
+                    className={
+                      bed.patient
+                        ? "bg-red-200 rounded-lg shadow-md p-4"
+                        : "bg-green-200 rounded-lg shadow-md p-4"
+                    }
+                  >
+                    <div className="text-gray-800 font-bold">
+                      Bed no.{bed.number}
+                    </div>
+                    <div className="text-gray-800">
+                      {bed.patient
+                        ? `Occupied by ${bed.patientName}`
+                        : "Available"}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+              )}
           </div>
         </div>
       </div>
@@ -70,13 +74,13 @@ const GetRooms = () => {
     <>
       <div className="flex flex-col mt-5">
         <div className="md:w-1/2 p-4 w-full text-gray-600 text-2xl font-bold">
-           Rooms
+          Rooms
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {RoomsData?.map((room) => {
-           
-
-            {console.log("room", room.beds)}
+            {
+              console.log("room", room.beds);
+            }
 
             return (
               <div
@@ -85,7 +89,7 @@ const GetRooms = () => {
                 className="bg-purple-100 rounded-lg shadow-md p-7 cursor-pointer hover:bg-purple-200"
               >
                 <div className="text-gray-700 font-bold">{room.name}</div>
-               
+
                 <div className="text-gray-500">
                   {/* {isRoomAvailable ? "Available" : "Occupied"} */}
                 </div>

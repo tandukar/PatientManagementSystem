@@ -158,7 +158,7 @@ const Appointment = (props) => {
 
               <div className="relative">
                 <div className="flex flex-row gap-5">
-                  <div className="flex w-2/3 items-center border border-gray-400 p-2 rounded-md focus-within:border-blue-500">
+                  <div className="flex w-full  items-center border border-gray-400 p-2 rounded-md focus-within:border-blue-500">
                     <input
                       type="text"
                       className="w-full pr-10 text-sm outline-none text-gray-600 p-1 "
@@ -167,7 +167,7 @@ const Appointment = (props) => {
                       onChange={(event) => setPatientNumber(event.target.value)}
                     />
                     <button
-                      className="absolute right-64 top-0 p-3"
+                      className="absolute right-14 top-0 p-3"
                       onClick={printHandler}
                     >
                       <CiSearch className="w-6 h-6" />

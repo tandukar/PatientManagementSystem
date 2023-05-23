@@ -21,11 +21,11 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-
 // Component for the confirmation pop-up used to update appointment status
 const StatusConfirmation = ({
   onCancel,
   onConfirm,
+  onDischarge,
   selectedDate,
   handleDateChange,
 }) => {
@@ -55,6 +55,12 @@ const StatusConfirmation = ({
             onClick={onConfirm}
           >
             Approve
+          </button>
+          <button
+            className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+            onClick={onDischarge}
+          >
+            Discharge
           </button>
           <button
             className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
@@ -102,17 +108,12 @@ const Ipd = () => {
     console.log("ID =", userId);
   }, []);
 
-  const {
-    data: appointments = [],
-    error,
-    isLoading,
-  } = useIpdQuery(userId);
+  const { data: appointments = [], error, isLoading } = useIpdQuery(userId);
 
   useEffect(() => {
     let totalCount = appointments.length;
     dispatch(setAppointmentCount(totalCount));
   }, [appointments, dispatch]);
-
 
   const columns = [
     { id: "name", label: "Name", minWidth: 170 },
@@ -149,9 +150,7 @@ const Ipd = () => {
         //   const appointmentDay = admissionDate.getDate();
         //   return appointmentDay === currentDay;
         // })
-        .sort(
-          (a, b) => new Date(b.admissionDate) - new Date(a.admissionDate)
-        )
+        .sort((a, b) => new Date(b.admissionDate) - new Date(a.admissionDate))
         .map((appointment) => {
           const appointmentDay = new Date(
             appointment.admissionDate
@@ -164,8 +163,9 @@ const Ipd = () => {
             appointment.patientName,
             <>
               <span className="text-teal-500 font-semibold">
-                {appointmentDay}{'  '}
-                
+                {appointmentDay}
+                {"  "}
+
                 {appointmentTime}
               </span>
             </>,
@@ -174,7 +174,7 @@ const Ipd = () => {
             <button
               type="submit"
               onClick={() =>
-                showStatusConfirmationHandler( 
+                showStatusConfirmationHandler(
                   appointment._id,
                   appointment.recepId,
                   appointment.patientId
@@ -189,7 +189,6 @@ const Ipd = () => {
               }
             >
               {appointment.status}
-              
             </button>
           );
         })
@@ -223,7 +222,21 @@ const Ipd = () => {
       newStatus: "Cancelled",
       recepId: receptionstId,
       patientId: patientId,
+    })
+      .unwrap()
+      .then((result) => {
+        setShowStatusConfirmation(false);
+      })
+      .catch((error) => console.error(error));
+  };
 
+  const dischargeStatusHandler = () => {
+    console.log("from discharge", appointmentId);
+    updateAppointmentStatus({
+      id: appointmentId,
+      newStatus: "Discharged",
+      recepId: receptionstId,
+      patientId: patientId,
     })
       .unwrap()
       .then((result) => {
@@ -320,6 +333,7 @@ const Ipd = () => {
         <StatusConfirmation
           onCancel={cancelStatusHandler}
           onConfirm={approveStatusHandler}
+          onDischarge={dischargeStatusHandler}
           handleDateChange={handleDateChange}
         />
       )}

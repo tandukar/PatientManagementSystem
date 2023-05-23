@@ -27,6 +27,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 const StatusConfirmation = ({
   onCancel,
   onConfirm,
+  onComplete,
   selectedDate,
   handleDateChange,
 }) => {
@@ -57,6 +58,13 @@ const StatusConfirmation = ({
           >
             Approve
           </button>
+          <button
+            className="bg-blue-600 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
+            onClick={onComplete}
+          >
+            Completed
+          </button>
+
           <button
             className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
             onClick={onCancel}
@@ -190,7 +198,6 @@ const AppointmentList = () => {
               }
             >
               {appointment.status}
-              
             </button>
           );
         })
@@ -224,7 +231,6 @@ const AppointmentList = () => {
       newStatus: "Cancelled",
       recepId: receptionstId,
       patientId: patientId,
-
     })
       .unwrap()
       .then((result) => {
@@ -239,6 +245,23 @@ const AppointmentList = () => {
     updateAppointmentStatus({
       id: appointmentId,
       newStatus: "Approved",
+      recepId: receptionstId,
+      newTime: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
+      patientId: patientId,
+    })
+      .unwrap()
+      .then((result) => {
+        setShowStatusConfirmation(false);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const completeStatusHandler = () => {
+    console.log(selectedDate);
+    console.log("from approve", appointmentId);
+    updateAppointmentStatus({
+      id: appointmentId,
+      newStatus: "Completed",
       recepId: receptionstId,
       newTime: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
       patientId: patientId,
@@ -320,6 +343,7 @@ const AppointmentList = () => {
         <StatusConfirmation
           onCancel={cancelStatusHandler}
           onConfirm={approveStatusHandler}
+          onComplete={completeStatusHandler}
           handleDateChange={handleDateChange}
         />
       )}

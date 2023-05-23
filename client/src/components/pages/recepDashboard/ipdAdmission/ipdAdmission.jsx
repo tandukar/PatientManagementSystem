@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 //   useRegisterAppointmentsMutation,
 //   useGetDoctorQuery,
 // } from "./AppointmentApiSlice";
+
+
 import DatePicker from "react-datepicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -15,7 +17,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Typography from "@mui/material/Typography";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import dayjs from "dayjs";
 import { CiSearch } from "react-icons/ci";
 import specialization from "../../specialization.json";
@@ -24,6 +26,9 @@ import {
   useRegisterIpdMutation,
 } from "../appointment/AppointmentApiSlice";
 import { useGetPatientInfoQuery } from "../patient/PatientApiSlice";
+
+import { getIdFromLocalStorage } from "../../../pages/utlis";
+
 const CreateIpdAdmission = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -33,11 +38,18 @@ const CreateIpdAdmission = () => {
   const [patientNumber, setpatientNumber] = useState([]);
   const [specializationTerm, setSpecializationTerm] = useState([]);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const patientType = [
     { value: "ipd", label: "Inpatient" },
     { value: "opd", label: "Outpatient" },
   ];
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const id = getIdFromLocalStorage(token);
+    setUserId(id);
+    console.log("ID =", userId);
+  }, []);
 
   const {
     register,
@@ -78,7 +90,7 @@ const CreateIpdAdmission = () => {
     const appointmentData = {
       ...data,
       admissionDate: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
-      // recepId: receptionId,
+      recepId: userId,
       patientId: patientNumber,
       doctorId: searchTerm,
     };
@@ -213,7 +225,7 @@ const CreateIpdAdmission = () => {
 
           <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">
-              Room No
+              Room Name
             </label>
 
             <TextField
@@ -231,7 +243,7 @@ const CreateIpdAdmission = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">
-              Bed Bumber
+              Bed Number
             </label>
 
             <TextField

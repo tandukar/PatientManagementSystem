@@ -70,7 +70,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
     console.log("selectedDate", selectedDate);
     const appointmentData = {
       ...data,
-      patientType: selectedOption.value,
+      // patientType: selectedOption.value,
       appointmentDate: selectedDate.format("YYYY-MM-DD hh:mm:ss"),
       recepId: receptionId,
       patientId: patient,
@@ -112,7 +112,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
 
       <div className="relative">
         <div className="flex flex-row gap-5">
-          <div className="flex w-2/3 items-center border border-gray-400 p-2 rounded-md focus-within:border-blue-500">
+          <div className="w-full items-center border border-gray-400 p-2 rounded-md focus-within:border-blue-500">
             <input
               type="text"
               className="w-full pr-10 text-sm outline-none text-gray-600 p-1 "
@@ -121,14 +121,14 @@ const CreateAppointment = ({ recepId, patientId }) => {
               onChange={(event) => setSearchTerm(event.target.value)}
             />
             <button
-              className="absolute right-60 top-0 p-3"
+              className="absolute right-3 top-0 p-3"
               onClick={printHandler}
             >
               <CiSearch className="w-6 h-6" />
             </button>
           </div>
 
-          <button
+          {/* <button
             className="w-1/3 bg-gray-600  text-white font-bold py-2 px-4 rounded "
             onClick={handleFilterClick}
           >
@@ -167,7 +167,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
         {doctorsList.length > 0 && (
@@ -206,7 +206,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
               <p className="text-red-500">{errors.reason.message}</p>
             )}
           </Grid>
-
+{/* 
           <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">
               Select patient type
@@ -218,9 +218,9 @@ const CreateAppointment = ({ recepId, patientId }) => {
               onChange={handleSelectChange}
               value={selectedOption}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">
               Room No
             </label>
@@ -237,7 +237,7 @@ const CreateAppointment = ({ recepId, patientId }) => {
             {errors.roomNo && (
               <p className="text-red-500">{errors.roomNo.message}</p>
             )}
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} sm={6}>
             <label className="block mb-2 font-bold text-gray-700">

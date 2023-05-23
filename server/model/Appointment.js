@@ -39,6 +39,7 @@ const appointmentSchema = mongoose.Schema({
     patientType: {
         type: String,
         enum: ["ipd", "opd"],
+        default: "opd",
         required: [true, "Patient Type required"],
     },
     appointmentDate: {
