@@ -11,6 +11,7 @@ import Home from "./components/pages/landingPage";
 import ForgotPassword from "./components/pages/Login/ForgotPassword";
 import Otp from "./components/pages/Login/Otp";
 import ResetPwd from "./components/pages/Login/Resetpwd";
+import Prescription from "./components/pages/docDashboard/appointment/Prescription";
 //import app.css
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/validateOtp" element={<Otp />} />
           <Route path="/resetPassword" element={<ResetPwd />} />
+          <Route path="/sendNotes" element={<Prescription />} />
         </Routes>
       </BrowserRouter>
       {}

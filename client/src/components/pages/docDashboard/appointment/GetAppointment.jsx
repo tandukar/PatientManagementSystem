@@ -22,6 +22,12 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import Prescription from "./Prescription";
+import { RxCross2 } from "react-icons/rx";
+import {useNavigate} from "react-router-dom";
+
+
+
 
 // Component for the confirmation pop-up used to update appointment status
 const StatusConfirmation = ({
@@ -60,7 +66,10 @@ const StatusConfirmation = ({
           </button>
           <button
             className="bg-blue-600 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
-            onClick={onComplete}
+            onClick={
+              onComplete
+            
+            }
           >
             Completed
           </button>
@@ -93,6 +102,7 @@ const AppointmentList = () => {
   const [updateAppointmentStatus] = useUpdateAppointmentStatusMutation();
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
+  const navigate = useNavigate();
   // Function to handle changes to the date picker
   const handleDateChange = (selectedDate) => {
     setSelectedDate(dayjs(selectedDate));
@@ -239,6 +249,14 @@ const AppointmentList = () => {
       .catch((error) => console.error(error));
   };
 
+
+
+ 
+
+
+
+
+
   const approveStatusHandler = () => {
     console.log(selectedDate);
     console.log("from approve", appointmentId);
@@ -269,6 +287,8 @@ const AppointmentList = () => {
       .unwrap()
       .then((result) => {
         setShowStatusConfirmation(false);
+        navigate(`/sendNotes?id=${patientId}`);
+
       })
       .catch((error) => console.error(error));
   };

@@ -46,9 +46,12 @@ const Otp = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center h-screen">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="text-2xl flex items-center p-10 justify-center font-bold text-gray-600">
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      
+        <form onSubmit={handleSubmit(onSubmit)} className="w-96 bg-white p-6 rounded shadow-md">
+
+          <h2 className="text-2xl mb-6 text-center font-bold text-gray-600">
+          
             Verify OTP
           </h2>
           <Grid container spacing={4}>
@@ -81,6 +84,7 @@ const Otp = () => {
             <button
               type="submit"
               className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+
             >
               Submit
             </button>

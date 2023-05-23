@@ -14,7 +14,7 @@ import { getIdFromLocalStorage } from "../utlis";
 const AdminDashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true); // State variable to track whether the sidebar is open or closed
   const [authenticated, setAuthenticated] = useState(null); // State variable to track whether the user is authenticated or not
-  const [selectedItem, setSelectedItem] = useState("Dashboard"); // State variable to track which item is currently selected in the sidebar
+  const [selectedItem, setSelectedItem] = useState("Doctors"); // State variable to track which item is currently selected in the sidebar
   const [userId, setUserId] = useState(null); // State variable to track the ID of the currently logged in user
 
   // Callback function to handle clicks on items in the sidebar

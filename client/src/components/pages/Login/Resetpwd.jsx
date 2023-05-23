@@ -50,15 +50,17 @@ const ResetPwd = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center h-screen">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <h2 className="text-2xl flex items-center p-10 justify-center font-bold text-gray-600">
+     <div className="flex items-center justify-center h-screen bg-gray-100">
+      
+      <form onSubmit={handleSubmit(onSubmit)} className="w-96 bg-white p-6 rounded shadow-md">
+
+        <h2 className="text-2xl mb-6 text-center font-bold text-gray-600">
             Reset Password
           </h2>
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <label className="block mb-2 font-bold text-gray-600">
-                Email
+                Organization Email
               </label>
 
               <TextField
@@ -121,7 +123,9 @@ const ResetPwd = () => {
           <div className=" mt-10 mb-10  text-center">
             <button
               type="submit"
-              className="bg-custom-blue hover:bg-custom-blue text-white w-60  md:w-40 sm:w20 font-bold py-2 px-4 rounded focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+              className="bg-custom-blue hover:bg-custom-blue text-white w-full py-2 px-4 rounded-md focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"
+
+
             >
               Submit
             </button>

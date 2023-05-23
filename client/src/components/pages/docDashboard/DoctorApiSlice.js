@@ -21,6 +21,14 @@ export const DoctorApiSlice = apiSlice.injectEndpoints({
                 method: "GET",
             }),
         }),
+        sendNotes: builder.mutation({
+            query: ({ prescription, patientId }) => ({
+                url: `appointments/send`,
+                method: "POST",
+                body: { prescription: prescription, patientId: patientId },
+            }),
+        }),
+
 
         updatePassword: builder.mutation({
             query: ({ id, oldPassword, newPassword }) => ({
@@ -58,4 +66,5 @@ export const {
     useIpdQuery,
     useUpdateIpdStatusMutation,
     useUpdatePasswordMutation,
+    useSendNotesMutation
 } = DoctorApiSlice;

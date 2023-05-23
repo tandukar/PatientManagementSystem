@@ -38,7 +38,7 @@ const RoomDashboard = () => {
   //   console.error(error);
   // });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data) => {  
     console.log("data", data);
     console.log("selectedOption", selectedOption);
     const roomData = {

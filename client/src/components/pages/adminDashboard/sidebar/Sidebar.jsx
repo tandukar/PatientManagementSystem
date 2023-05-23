@@ -76,7 +76,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
             <div className="flex items-center ">
               <nav>
                 <ul className="list-none text-lg mt-9">
-                  <li className="py-2 ">
+                  {/* <li className="py-2 ">
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"
                       href="#"
@@ -87,7 +87,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onItemClick }) => {
                       </span>
                       Dashboard
                     </a>
-                  </li>
+                  </li> */}
                   <li className="py-2">
                     <a
                       className=" flex items-center text-white md:text-gray-300 hover:text-white"

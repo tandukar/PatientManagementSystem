@@ -53,7 +53,44 @@ router.post("/create", async(req, res, next) => {
     }
 });
 
+//send prescription email to the patient
+router.post("/send", async(req, res) => {
+    console.log(req.body);
+    const { prescription, patientId } = req.body;
+    try {
+        const patient = await Patient.findById(patientId);
+        if (!patient) {
+            return res.status(404).send("Patient not found");
+        }
+        const patientEmail = patient.email;
+        console.log(patientEmail);
+        console.log(patient);
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: " tandukarpragyo@gmail.com",
+                pass: "yxeirihafpscekxh",
+            },
+        });
 
+        var mailList = [patientEmail];
+        let message = {
+            from: '"Admin" <tandukarpragyo@gmail.com>', // sender address
+            to: mailList, // list of receivers
+            subject: "Notes Curated by Your Doctor", // Subject line
+            html: `<h4>Hello dear patient, </h4>
+        <p>Prescription: ${prescription}</p>
+        `,
+        };
+
+        await transporter.sendMail(message).then(() => {
+            return res.json({ message: "Mail Sent" });
+        });
+    } catch (err) {
+        res.json(err.message);
+    }
+});
 
 
 // update doctor
