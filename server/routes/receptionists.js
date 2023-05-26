@@ -8,10 +8,15 @@ const nodemailer = require("nodemailer");
 router.post("/register", async(req, res) => {
     const { error } = recepRegisterValidation(req.body);
 
+    // Verify if the email has @receptionist.com
+    if (!req.body.email.endsWith("@receptionist.com")) {
+        return res.status(400).send("Invalid Email Format. Primary Email should end with @receptionist.com");
+    }
+
     if (error) return res.status(400).send(error.details[0].message);
 
-    const emailExists = await Receptionist.findOne({ email: req.body.email1 });
-    if (emailExists) return res.send("Email Already Exists");
+    const emailExists = await Receptionist.findOne({ email: req.body.email });
+    if (emailExists) return res.status(400).send("Email Already Exists");
 
     // hash password
     let defPwd = "receptionist123";

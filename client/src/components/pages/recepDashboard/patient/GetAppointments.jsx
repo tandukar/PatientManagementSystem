@@ -159,7 +159,7 @@ const GetPatientAppointment = ({ recepId }) => {
             <input
               type="text"
               className="w-full pl-10 text-sm outline-none  text-gray-600"
-              placeholder="Search..."
+              placeholder="Enter Patient Number..."
               value={searchTerm}
               onChange={(event) => setsearchTerm(event.target.value)}
             />

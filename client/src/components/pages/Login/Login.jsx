@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// import {remedial} from "../../../../public/remedial.png"
 
 const Login = () => {
   const [password, setPassword] = React.useState([]);
@@ -68,6 +69,13 @@ const Login = () => {
         <div className="md:w-3/4  ">
           <div className="flex justify-center items-center h-screen ">
             <div className="flex flex-col gap-4 max-w-screen-md mx-auto ">
+              <div className="flex flex-row text-left text-3xl font-semibold text-gray-700 items-center">
+                <div className="flex">
+                  <img src="/remedial.png" className="w-20"></img>
+                </div>
+                <div className="text-3xl mx-4">Remedial</div>
+              </div>
+
               <div className="text-left  text-3xl  ">Welcome Back</div>
               <div className="text-left text-gray-500 text-1xl mb-7 ">
                 Let's get started! Please enter your details.
@@ -81,7 +89,7 @@ const Login = () => {
                   className=" appearance-none border-2  rounded-lg w-full py-2 px-4 text-gray-500 leading-tight focus:outline-none focus:border-blue-500"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="Enter your email"
+                  placeholder="Enter your Organization Email"
                 />
               </div>
               <div className="  md:container md:mx-auto ">
@@ -97,8 +105,10 @@ const Login = () => {
                 />
               </div>
 
-              <div className="text-right font-bold text-blue-600  cursor-pointer"
-              onClick={()=>navigate("/forgotpassword")}>
+              <div
+                className="text-right font-bold text-blue-600  cursor-pointer"
+                onClick={() => navigate("/forgotpassword")}
+              >
                 Forgot password?
               </div>
 

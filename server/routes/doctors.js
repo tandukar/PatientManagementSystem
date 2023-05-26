@@ -12,6 +12,11 @@ router.post("/register", async(req, res) => {
     const { error } = docRegisterValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
+    if (!req.body.email.endsWith("@doctor.com")) {
+        return res.status(400).send("Invalid Email Format. Primary Email should end with @doctor.com");
+    }
+
+
     const emailExists = await Doctor.findOne({ email: req.body.email });
     if (emailExists) return res.send("Email Already Exists");
 

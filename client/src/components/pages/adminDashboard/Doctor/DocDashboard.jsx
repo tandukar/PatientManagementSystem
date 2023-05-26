@@ -59,7 +59,7 @@ const DocDashboard = () => {
           <div className="flex md:flex-wrap flex-row  ">
             {/* ```````````````````````````````````````` */}
             <div className="flex flex-row md:mt-9 md:h-60 w-full gap-4 p-10 bg-custom-blue1 rounded-xl text-white md:text-2xl text-xl font-bold mb-5">
-              <div className=" flex w-1/2">Registered Doctors</div>
+              <div className=" flex w-1/2">Register Doctors</div>
               <div className="flex  w-1/2 justify-center items-center">
                 <div className="md:text-8xl text-6xl font-bold text-white">
                   <div>

@@ -19,6 +19,9 @@ const initializeAdmin = async() => {
         lastname: "admin",
         email: "admin@admin.com",
         password: hashPwd,
+        consultCharge: "400",
+        hName: "Ganga Hospital",
+        regCharge: "100",
     });
     try {
         const savedAdmin = await postAdmin.save();

@@ -73,6 +73,8 @@ const Prescription = () => {
             </Grid>
           </Grid>
           <div className="mt-6 text-center">
+            <p className="text-red-600">*Send notes if you want or you can simply go back.</p>
+
             <button
               type="submit"
               className="bg-custom-blue hover:bg-custom-blue text-white w-full py-2 px-4 rounded-md focus:ring-2 focus:ring-blue-500 ring-offset-2 outline-none focus:bg-blue-500 focus:shadow-lg"

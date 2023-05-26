@@ -27,15 +27,19 @@ const RecepDashboard = () => {
   const [registerReceptionist, { error, isLoading }] =
     useRegisterReceptionistsMutation();
 
-  const onSubmit = (data) => {
-    console.log("data", data);
-    // console.log("selectedOption", selectedOption);
+    const onSubmit = async (data) => {
+      const payload = { ...data, sex: selectedOption.value };
+      const response = await registerReceptionist(payload);
+      console.log(response.error);
+      if (response.error.originalStatus == 200) {
+        toast.success("Receptionist registered successfully");
+      }else{
+        toast.error(response.error.data);
+      }
 
-    const payload = { ...data, sex: selectedOption.value };
-    registerReceptionist(payload);
-    toast.success("Receptionist registered successfully");
-    console.log(payload);
-  };
+  
+    };
+    
 
   const handleSelectChange = (selectedOption) => {
     setSelectedOption(selectedOption);
